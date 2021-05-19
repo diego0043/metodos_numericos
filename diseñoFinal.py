@@ -52,7 +52,7 @@ class Ui_MainWindow(object):
         self.label_8.setGeometry(QtCore.QRect(10, 10, 71, 16))
         self.label_8.setObjectName("label_8")
         self.label_9 = QtWidgets.QLabel(self.centralwidget)
-        self.label_9.setGeometry(QtCore.QRect(620, 20, 121, 16))
+        self.label_9.setGeometry(QtCore.QRect(620, 20, 200, 16))
         self.label_9.setObjectName("label_8")
         self.comboBox = QtWidgets.QComboBox(self.centralwidget)
         self.comboBox.setGeometry(QtCore.QRect(10, 30, 31, 22))
@@ -142,11 +142,17 @@ class Ui_MainWindow(object):
         self.label.setGeometry(QtCore.QRect(240, 20, 101, 16))
         self.label.setObjectName("label")
         self.radioButton = QtWidgets.QRadioButton(self.centralwidget)
-        self.radioButton.setGeometry(QtCore.QRect(620, 40, 82, 17))
+        self.radioButton.setGeometry(QtCore.QRect(620, 40, 82, 17))# posicion x , posicion y , largo, ancho
         self.radioButton.setObjectName("radioButton")
         self.radioButton_2 = QtWidgets.QRadioButton(self.centralwidget)
-        self.radioButton_2.setGeometry(QtCore.QRect(660, 40, 82, 17))
+        self.radioButton_2.setGeometry(QtCore.QRect(700, 40, 82, 17))
         self.radioButton_2.setObjectName("radioButton_2")
+        self.radioButton_3 = QtWidgets.QRadioButton(self.centralwidget)
+        self.radioButton_3.setGeometry(QtCore.QRect(780, 40, 82, 17))
+        self.radioButton_3.setObjectName("radioButton")
+        self.radioButton_4 = QtWidgets.QRadioButton(self.centralwidget)
+        self.radioButton_4.setGeometry(QtCore.QRect(860, 40, 82, 17))
+        self.radioButton_4.setObjectName("radioButton")
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
@@ -164,7 +170,7 @@ class Ui_MainWindow(object):
         self.label_6.setText(_translate("MainWindow", "#3"))
         self.label_7.setText(_translate("MainWindow", "Numero de cifras significativas"))
         self.label_8.setText(_translate("MainWindow", "¿Que unidad?"))
-        self.label_9.setText(_translate("MainWindow", "¿Desea ver el polinomio?"))
+        self.label_9.setText(_translate("MainWindow", "Seleccione el grado de la función spline"))
         self.comboBox.setItemText(0, _translate("MainWindow", "1"))
         self.comboBox.setItemText(1, _translate("MainWindow", "2"))
         self.comboBox.setItemText(2, _translate("MainWindow", "3"))
@@ -185,8 +191,11 @@ class Ui_MainWindow(object):
         self.tableWidget.setSortingEnabled(False)
         self.tableWidget.verticalHeader().setDefaultSectionSize(20)
         self.tableWidget_2.setVisible(False)
-        self.radioButton.setText(_translate("MainWindow", "Si"))
-        self.radioButton_2.setText(_translate("MainWindow", "No"))
+        self.radioButton.setText(_translate("MainWindow", "Grado #0"))
+        self.radioButton_2.setText(_translate("MainWindow", "Grado #1"))
+        self.radioButton_3.setText(_translate("MainWindow", "Grado #2"))
+        self.radioButton_4.setText(_translate("MainWindow", "Grado #3"))
+
         self.comboBox.setCurrentIndex(-1)
         
         # Validacion para solo aceptar numeros y signos en los txt
@@ -224,6 +233,8 @@ class Ui_MainWindow(object):
         self.pushButton_6.setVisible(False)
         self.radioButton.setVisible(False)
         self.radioButton_2.setVisible(False)
+        self.radioButton_3.setVisible(False)
+        self.radioButton_4.setVisible(False)
         self.label_9.setVisible(False)
 
     # En este metodo vamos a capturar la posicion del primer combobox y luego dependiendo
@@ -352,12 +363,16 @@ class Ui_MainWindow(object):
             self.comboBox_2.addItem("")
             self.comboBox_2.addItem("")
             self.comboBox_2.addItem("")
+            self.comboBox_2.addItem("")
+            self.comboBox_2.addItem("")
             
             self.comboBox_2.setItemText(0,  "Seleccione un metodo")
             self.comboBox_2.setItemText(1,  "Interpolación Lineal")
             self.comboBox_2.setItemText(2,  "Interpolación cuadratica")
             self.comboBox_2.setItemText(3,  "Interpolación de lagrange")
             self.comboBox_2.setItemText(4,  "Interpolación de Newton")
+            self.comboBox_2.setItemText(5,  "Interpolación de Hermite")
+            self.comboBox_2.setItemText(6,  "Función Spline")
 
             #Mostramos el comboBox 
             self.comboBox_2.setVisible(True)
@@ -421,6 +436,8 @@ class Ui_MainWindow(object):
             self.tableWidget_2.setVisible(False)
             self.radioButton.setVisible(False)
             self.radioButton_2.setVisible(False)
+            self.radioButton_3.setVisible(False)
+            self.radioButton_4.setVisible(False)
             self.label_9.setVisible(False)
             
             # <---- dejamos solo los componentes que usa metodo punto fijo y los de newton -->
@@ -448,6 +465,8 @@ class Ui_MainWindow(object):
             self.tableWidget_2.setVisible(False)
             self.radioButton.setVisible(False)
             self.radioButton_2.setVisible(False)
+            self.radioButton_3.setVisible(False)
+            self.radioButton_4.setVisible(False)
             self.label_9.setVisible(False)
 
             if queMetodo >=1 and queMetodo <= 2:
@@ -552,31 +571,70 @@ class Ui_MainWindow(object):
 
             #Deseleccionamos los radio button
 
-            self.radioButton.setAutoExclusive(False)
-            self.radioButton.setChecked(False)
-            self.radioButton.setAutoExclusive(True)
-            self.radioButton_2.setAutoExclusive(False)
-            self.radioButton_2.setChecked(False)
-            self.radioButton_2.setAutoExclusive(True)
+            
+            if queMetodo >= 1 and queMetodo <= 5:
+                self.label_9.setText("¿Desea ver el polinomio?")
+                self.radioButton.setAutoExclusive(False)
+                self.radioButton.setChecked(False)
+                self.radioButton.setAutoExclusive(True)
+                self.radioButton_2.setAutoExclusive(False)
+                self.radioButton_2.setChecked(False)
+                self.radioButton_2.setAutoExclusive(True)
+                self.radioButton_3.setVisible(False)
+                self.radioButton_3.setAutoExclusive(True)
+                self.radioButton_4.setVisible(False)
+                self.radioButton_4.setAutoExclusive(False)
+                self.radioButton.setText("Si")
+                self.radioButton_2.setText("No")
+                self.radioButton.setGeometry(QtCore.QRect(620, 40, 82, 17))
+                self.radioButton_2.setGeometry(QtCore.QRect(660,40,82,17))
+                
+                
+            else:
+                self.label_9.setText("Seleccione el grado de la función Spline")
+                self.radioButton.setAutoExclusive(False)
+                self.radioButton.setChecked(False)
+                self.radioButton.setAutoExclusive(True)
+                self.radioButton_2.setAutoExclusive(False)
+                self.radioButton_2.setChecked(False)
+                self.radioButton_2.setAutoExclusive(True)
 
-            if queMetodo == 1:
+                self.radioButton_3.setAutoExclusive(False)
+                self.radioButton_3.setChecked(False)
+                self.radioButton_3.setAutoExclusive(True)
+
+                self.radioButton_4.setAutoExclusive(False)
+                self.radioButton_4.setChecked(False)
+                self.radioButton_4.setAutoExclusive(True)
+
+                self.radioButton.setText("Grado #0")
+                self.radioButton_2.setText("Grado #1")
+                self.radioButton_3.setText("Grado #2")
+                self.radioButton_4.setText("Grado #3")
+                self.radioButton.setGeometry(QtCore.QRect(620, 40, 82, 17))
+                self.radioButton_2.setGeometry(QtCore.QRect(700,40,82,17))
+                self.radioButton_3.setVisible(True)
+                self.radioButton_4.setVisible(True)
+
+            if queMetodo == 1:#Lineal
                 cuantasFilasYColumnas = 3
                 self.configuracionTablaUnidad3(4)     
-            elif queMetodo == 2:
+            elif queMetodo == 2:#Cuadratica
                 cuantasFilasYColumnas = 4
                 self.configuracionTablaUnidad3(5)
-            elif queMetodo == 3:
+            elif queMetodo == 3:#Lagrange
                 cuantasFilasYColumnas = 3
                 self.configuracionTablaUnidad3(4)
-            elif queMetodo == 4:
+            elif queMetodo == 4:#Newton
                 cuantasFilasYColumnas = 3
                 self.configuracionTablaUnidad3(4)
-            elif queMetodo == 5:
+            elif queMetodo == 5:#Hermite
                 cuantasFilasYColumnas = 3
                 self.configuracionTablaUnidad3(4)
+            elif queMetodo == 6:#función spline grado 0
+                cuantasFilasYColumnas = 3
+                self.configuracionTablaUnidad3(5)
 
-            
-   
     def limpiarCampos(self, MainWindow):
         # aun falta poner los campos correctamente
         self.lineEdit.setText("")
@@ -776,7 +834,7 @@ class Ui_MainWindow(object):
             elif metodo == 10:#Bairstown
                 self.crearTable(MainWindow, metodo, 0, 0, 0, 0)
 
-            s
+            
 
 
 
