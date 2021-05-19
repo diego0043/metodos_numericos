@@ -1,0 +1,10 @@
+<RCC>
+  <qresource prefix="newPrefix">
+    <file>barra.png</file>
+    <file>barra2.png</file>
+    <file>btnCalcular.png</file>
+    <file>btnCancelar.png</file>
+    <file>btnExportar.png</file>
+    <file>btnGraficar.png</file>
+  </qresource>
+</RCC>
