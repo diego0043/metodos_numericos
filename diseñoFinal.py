@@ -6,17 +6,14 @@ from PySide2 import QtCore, QtGui, QtWidgets
 from PySide2.QtCore import (QCoreApplication, QPropertyAnimation, QDate, QDateTime, QMetaObject, QObject, QPoint, QRect, QSize, QTime, QUrl, Qt, QEvent)
 from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont, QFontDatabase, QIcon, QKeySequence, QLinearGradient, QPalette, QPainter, QPixmap, QRadialGradient)
 from PySide2.QtWidgets import *
-from ui_splash_screen import Ui_SplashScreen
 import meto2 as metodos
 import matplotlib.pyplot as plt
 import numpy as np
 import math as mt
-import sys
-import platform
 
 counter = 0
 
-app = QtWidgets.QApplication(sys.argv)
+
 tamanioInicialTabla = 183
 posicionX = 1
 posicionY = 1
@@ -1397,103 +1394,4 @@ class Ui_MainWindow(object):
 
             else:
                 print("Seleccione una acción en los radio button")
-
-
-# desde esta linea hasta la 818 es para la pantalla de inicio y aún hay un error al correrlo
-
-#Pantalla de carga Splash del inicio
-class SplashScreen(QMainWindow):
-    
-    def __init__(self):
-        QMainWindow.__init__(self)
-        self.ui = Ui_SplashScreen()
-        self.ui.setupUi(self)
-
-        ## UI ==> INTERFACE CODES
-        ########################################################################
-
-        ## REMOVE TITLE BAR
-        self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
-        self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
-
-
-        ## DROP SHADOW EFFECT
-        self.shadow = QGraphicsDropShadowEffect(self)
-        self.shadow.setBlurRadius(20)
-        self.shadow.setXOffset(0)
-        self.shadow.setYOffset(0)
-        self.shadow.setColor(QColor(0, 0, 0, 60))
-        self.ui.dropShadowFrame.setGraphicsEffect(self.shadow)
-
-        ## QTIMER ==> START
-        self.timer = QtCore.QTimer()
-        self.timer.timeout.connect(self.progress)
-        # TIMER IN MILLISECONDS
-        self.timer.start(2)
-
-        # CHANGE DESCRIPTION
-
-        # Initial Text
-        self.ui.label_description.setText("<strong>WELCOME</strong> ING XENIA")
-
-        # Change Texts
-        QtCore.QTimer.singleShot(1500, lambda: self.ui.label_description.setText("<strong>CARGANDO</strong> METODOS"))
-        QtCore.QTimer.singleShot(3000, lambda: self.ui.label_description.setText("<strong>CARGANDO</strong> INTERFAZ DE USUARIO"))
-
-
-        ## SHOW ==> MAIN WINDOW
-        ########################################################################
-        self.show()
-        ## ==> END ##
-
-    ## ==> APP FUNCTIONS
-    ########################################################################
-    def progress(self):
-
-        global counter
-        global app
-
-        # SET VALUE TO PROGRESS BAR
-        self.ui.progressBar.setValue(counter)
-
-        # CLOSE SPLASH SCREE AND OPEN APP
-        if counter > 100:
-            # STOP TIMER
-            self.timer.stop()
-
-            # SHOW MAIN WINDOW
-
-            app.exec_()
-            self.close()
-            del app
-
-
-
-        
-            
-            MainWindow = QtWidgets.QMainWindow()
-            ui = Ui_MainWindow()
-            ui.setupUi(MainWindow)
-            MainWindow.show()
-            sys.exit(app.exec_())
-      
-            # CLOSE SPLASH SCREEN
-            
-
-        # INCREASE COUNTER
-        counter += 1
-
-if __name__ == "__main__":
-    '''
-    #LO que estaba antes 
-    app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
-    sys.exit(app.exec_())
-    '''
-
-    window = SplashScreen()
-    sys.exit(app.exec_())
 

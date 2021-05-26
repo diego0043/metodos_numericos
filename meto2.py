@@ -1,3 +1,4 @@
+from numpy.lib.shape_base import column_stack
 import sympy as sp
 import numpy as np
 import math
@@ -1360,7 +1361,6 @@ def interpolacionNewton(puntosX,puntosY,valor):
 
 def interpolacionHermite(puntosX,listaY,listaDiff):
 
-
     xi = np.array(puntosX)
     n = len(xi)
 
@@ -1427,29 +1427,139 @@ def interpolacionHermite(puntosX,listaY,listaDiff):
 
     print(valor)
 
+def resolverMatrices(lista,lista2): #metodo para resolver matrices
+    #Los determinantes que usaremos
+    #
+    a = np.matrix(lista)
+    b = np.matrix(lista2)
+
+    listaResultados = (a**-1)*b 
+
+    return listaResultados
+
+def trazadoresCubicos(listaX, listaY, tipo):
+
+    listaResultados = []
+    intervalos = []
+    intervalorsY = []
+
+    n = len(listaX)
+    a , b , c, d= sp.symbols('a b c d')
+
+    #Creamos los intervalos con los que vamos a trabajar en sublistas 
+    #Esto se hace en todos los metodos entonces lo hacemos desde aqui
+    for i in range(0,n-1,1):
+        intervalos.append([listaX[i],listaX[i+1]])
+        intervalorsY.append([listaY[i],listaY[i+1]])
+
+    if tipo == 0:
+        print("función spline de grado cero")
+
+    elif tipo == 1: 
+
+        #Elnúmero de ecuaciones depende del numero de intervalos encontrados 
+        #De cada intervalo obtendremos 2 ecuaciones las cuales se resuelven entre ellas 2 de una vez
+
+        ecuacionesSimbolicas = []
+        soluciones = []
+
+        #Encontramos los valores de a y b respectivamente 
+        contador = 0
+        contador2 = 0
+
+        for i in range(0,len(intervalos),1):
+            D = (intervalos[contador2][contador]*1) - (intervalos[contador2][contador+1]*1)
+            Dx = (intervalorsY[contador2][contador]*1) - (intervalorsY[contador2][contador+1]*1)
+            Dy = (intervalos[contador2][contador]*intervalorsY[contador2][contador+1]) - (intervalos[contador2][contador+1]*intervalorsY[contador2][contador])
+            soluciones.append(Dx/D)
+            soluciones.append(Dy/D)
+
+            contador2 += 1
 
 
+        contador3 = 0
+        for i in range(0,len(intervalos),1):
+            ecuacionesSimbolicas.append(soluciones[contador3]*x+soluciones[contador3+1])
+            contador3 += 2
 
-    
+        contador3 = 1
+        solucionesEcuaciones = []
+        for i in range(0,len(ecuacionesSimbolicas),1):
+            salida = "Intervalo "+str(intervalos[i])+" ----> "+str(ecuacionesSimbolicas[i])
+            solucionesEcuaciones.append(salida)
+           # print(ecuacionesSimbolicas[i])
 
-    
+        for i in solucionesEcuaciones:
+            print(i)
+
+    elif tipo == 2:
+        soluciones = []
+        ecuacionesSimbolicas = []
+
+        #Llenamos la lista con ceros 
+       
+
+        #Hacemos la lista con los datos para hacer la matriz 
+       # for i in range(0,len(),1):
+            #for in range()
+        
+    elif tipo == 3:  # Funciones spline grado 3
+
+        listaConCeros_1 = []
+        listaConCeros = []
+        soluciones = []
+        ecuaciones_Para_Matriz = []
 
         
+        for j in range(0, 4, 1):
+            listaConCeros_1.append(0)
 
 
+        for i in range(0,len(intervalos)-1,1):
+            for j in range(0, 4, 1):
+                listaConCeros.append(0)
+
+        # Hacemos la lista con los datos para hacer la matriz
+        contador = 0
+        columna = 0
+        contador2 = 0
+
+        for i in range(0, len(intervalos)*2, 1):
+            if i % 2 == 0 and i != 0:
+                contador += 1
+
+            if contador2 < 2:
+                ecuaciones_Para_Matriz.append([(intervalos[contador][columna]**3), (intervalos[contador][columna]**2), (intervalos[contador][columna]), 1]+listaConCeros_1)
+            else:
+                ecuaciones_Para_Matriz.append(listaConCeros_1+[(intervalos[contador][columna]**3), (intervalos[contador][columna]**2), (intervalos[contador][columna]), 1])
 
 
+            if columna == 0:
+                columna = 1
+            elif columna == 1:
+                columna = 0
+
+            contador2 += 1
+
+        # Numero de variables al derivar = len(intervalos) - 1
+        columna = 1
+         
+
+        for i in range(0, len(intervalos)-1, 1):  # Primer derivada
+
+            ecuaciones_Para_Matriz.append([3*(intervalos[i][columna]**2), 2*(intervalos[i][columna]), 1, 0, -3*(intervalos[i+1][columna-1]**2), -2*(intervalos[i+1][columna-1]), -1, 0]+listaConCeros_1)
+
+        for i in range(0, len(intervalos)-1, 1):  # Segunda derivada
+
+            ecuaciones_Para_Matriz.append([6*(intervalos[i][columna]), 2, 0, 0, -6*(intervalos[i+1][columna-1]), -2, 0, 0]+listaConCeros_1)
 
 
+        # Libres que igualamos a cero
+
+        ecuaciones_Para_Matriz.append([6*(intervalos[0][0]), 2, 0, 0]+listaConCeros_1)
+
+        ecuaciones_Para_Matriz.append([6*(intervalos[len(intervalos)-1][1]), 2, 0, 0]+listaConCeros_1)
 
 
-            
-
-
-
-        
-    
-
-
-
-
+        print(ecuaciones_Para_Matriz)
+       
