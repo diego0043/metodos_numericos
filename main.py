@@ -5,9 +5,12 @@ from PySide2.QtCore import (QCoreApplication, QPropertyAnimation, QDate, QDateTi
 from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont, QFontDatabase, QIcon, QKeySequence, QLinearGradient, QPalette, QPainter, QPixmap, QRadialGradient)
 from PySide2.QtWidgets import *
 
+#Importamos la carpeta donde estan los metodos numéricos
+from metodosYformularios import *
+
 # GUI FILE
-from ui_splash_screen import Ui_SplashScreen
-from diseñoFinal import Ui_MainWindow
+from metodosYformularios.ui_splash_screen import Ui_SplashScreen
+from metodosYformularios.diseñoFinal import Ui_MainWindow
 
 # GLOBALS
 counter = 0
