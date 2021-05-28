@@ -84,24 +84,26 @@ def pedirCifrasSignificativas(cifras):
         if bandera == 1:
             return cifras
         else:
-            return "Falso"
+            return "falsisimo"
 
 #Esta funcion nos evalua una funcion en un valor ya sea que haya que derivar o no
 def evaluarFuncion(funcion, valor, seDeriva, ordenDerivada):
-    funcioon = 0
-    if seDeriva == 1:
-        if ordenDerivada == 1:
-            funcioon = sp.sympify(funcion)
-            gxValor = sp.diff(funcioon, x).subs([(x, valor), (e, cmath.e)])
-            return gxValor
+    try:
+        funcioon = 0
+        if seDeriva == 1:
+            if ordenDerivada == 1:
+                funcioon = sp.sympify(funcion)
+                gxValor = sp.diff(funcioon, x).subs([(x, valor), (e, cmath.e)])
+                return gxValor
+            else:
+                funcioon = sp.sympify(funcion)
+                gxValor = sp.Derivative(funcion, x, 2).subs([(x, valor), (e, cmath.e)])
+                return gxValor
         else:
-            funcioon = sp.sympify(funcion)
-            gxValor = sp.Derivative(funcion, x, 2).subs(
-                [(x, valor), (e, 2.7182)])
-            return gxValor
-    else:
-        resultado = sp.sympify(funcion).subs([(x, valor), (e, cmath.e)])
-        return resultado
+            resultado = sp.sympify(funcion).subs([(x, valor), (e, cmath.e)])
+            return resultado
+    except:
+        return "falsisimo"
 
 #Calculamos el error Ea
 def calcularEa(xr, xrAnterior):
