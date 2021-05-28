@@ -83,7 +83,7 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         self.label_4 = QtWidgets.QLabel(self.centralwidget)
-        self.label_4.setGeometry(QtCore.QRect(400, 70, 21, 16))
+        self.label_4.setGeometry(QtCore.QRect(400, 80, 21, 16))
         self.label_4.setObjectName("label_4")
         self.label_4.setFont(font)
         self.label_4.setStyleSheet("color: rgb(134, 155, 208);")
@@ -95,7 +95,7 @@ class Ui_MainWindow(object):
         font.setWeight(75)
         
         self.label_5 = QtWidgets.QLabel(self.centralwidget)
-        self.label_5.setGeometry(QtCore.QRect(400, 110, 20, 20))
+        self.label_5.setGeometry(QtCore.QRect(400, 120, 20, 20))
         self.label_5.setObjectName("label_5")
         self.label_5.setFont(font)
         self.label_5.setStyleSheet("color: rgb(134, 155, 208);")
@@ -107,7 +107,7 @@ class Ui_MainWindow(object):
         font.setWeight(75)
         
         self.label_6 = QtWidgets.QLabel(self.centralwidget)
-        self.label_6.setGeometry(QtCore.QRect(490, 70, 21, 16))
+        self.label_6.setGeometry(QtCore.QRect(500, 80, 21, 16))
         self.label_6.setObjectName("label_6")
         self.label_6.setFont(font)
         self.label_6.setStyleSheet("color: rgb(134, 155, 208);")
@@ -180,7 +180,7 @@ class Ui_MainWindow(object):
         font.setPointSize(12)
         font.setBold(True)
         self.lineEdit_2 = QtWidgets.QLineEdit(self.centralwidget)
-        self.lineEdit_2.setGeometry(QtCore.QRect(430, 70, 51, 34))
+        self.lineEdit_2.setGeometry(QtCore.QRect(430, 75, 51, 24))
         self.lineEdit_2.setStyleSheet("background-color: rgb(242, 242, 242);\n""image: url(recursos/barra.png);\n""border:0px;\n""color:  rgb(232, 137, 137)")
         self.lineEdit_2.setObjectName("lineEdit_2")
         self.lineEdit_2.setFont(font)
@@ -193,7 +193,7 @@ class Ui_MainWindow(object):
 
 
         self.lineEdit_3 = QtWidgets.QLineEdit(self.centralwidget)
-        self.lineEdit_3.setGeometry(QtCore.QRect(430, 110, 51, 20))
+        self.lineEdit_3.setGeometry(QtCore.QRect(430, 115, 51, 24))
         self.lineEdit_3.setStyleSheet("background-color: rgb(242, 242, 242);\n""image: url(recursos/barra.png);\n""border:0px;\n""color:  rgb(232, 137, 137)")
         self.lineEdit_3.setObjectName("lineEdit_3")
         self.lineEdit_3.setFont(font)
@@ -204,7 +204,7 @@ class Ui_MainWindow(object):
         font.setBold(True)
 
         self.lineEdit_4 = QtWidgets.QLineEdit(self.centralwidget)
-        self.lineEdit_4.setGeometry(QtCore.QRect(520, 70, 51, 34))
+        self.lineEdit_4.setGeometry(QtCore.QRect(530, 75, 51, 24))
         self.lineEdit_4.setStyleSheet("background-color: rgb(242, 242, 242);\n""image: url(recursos/barra.png);\n""border:0px;\n""color:  rgb(232, 137, 137)")
         self.lineEdit_4.setEchoMode(QtWidgets.QLineEdit.Normal)
         self.lineEdit_4.setObjectName("lineEdit_4")
@@ -216,7 +216,7 @@ class Ui_MainWindow(object):
         font.setBold(True)
 
         self.lineEdit_5 = QtWidgets.QLineEdit(self.centralwidget)
-        self.lineEdit_5.setGeometry(QtCore.QRect(660, 70, 51, 34))
+        self.lineEdit_5.setGeometry(QtCore.QRect(660, 70, 51, 24))
         self.lineEdit_5.setStyleSheet("background-color: rgb(242, 242, 242);\n""image: url(recursos/barra.png);\n""border:0px;\n""color:  rgb(232, 137, 137)")
         self.lineEdit_5.setObjectName("lineEdit_5")
         self.lineEdit_5.setFont(font)
@@ -316,7 +316,7 @@ class Ui_MainWindow(object):
         font.setBold(True)
 
         self.lineEdit = QtWidgets.QLineEdit(self.centralwidget)
-        self.lineEdit.setGeometry(QtCore.QRect(200, 130, 131, 34))
+        self.lineEdit.setGeometry(QtCore.QRect(200, 130, 131, 24))
         self.lineEdit.setStyleSheet("background-color: rgb(242, 242, 242);\n""image: url(recursos/barra2.png);\n""border:0px;\n""color:  rgb(232, 137, 137)")
         self.lineEdit.setObjectName("lineEdit")
         self.lineEdit.setFont(font)
