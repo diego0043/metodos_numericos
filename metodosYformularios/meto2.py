@@ -1429,6 +1429,13 @@ def interpolacionHermite(puntosX,listaY,listaDiff):
 
     print(valor)
 
+def interpolacionHermite2(valores):
+    print(valores)
+    
+
+
+
+
 def resolverMatrices(lista,lista2): #metodo para resolver matrices
     #Los determinantes que usaremos
     #
