@@ -12,6 +12,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import math as mt
 import sys
+from sympy.plotting import plot
 
 counter = 0
 
@@ -1424,37 +1425,10 @@ class Ui_MainWindow(object):
     def graficar(self):
         queMetodo = self.comboBox_2.currentIndex()
         if queMetodo >= 0 and queMetodo <= 6 or queMetodo == 9:
-            x = []
-            y = []
-            i = 0
-
-            for j in range(-50, 51):
-                x.append(i)
-                y.append(i)
-
             try:
-                def f1(x):
-                    funcion = metodos.evaluarFuncion(self.lineEdit.text(), x, 0, 0)
-                    return funcion
-
-                # asignamos un rango de valores a graficar
-                var = range(start=-100, stop=100,step=0.01)
-
-                plt.plot(var, [f1(i) for i in var], label='Funcion 1')
-
-                plt.xlim(-50, 50)
-                plt.ylim(-50, 50)
-
-                plt.plot(x, y)
-                plt.axvline(0, color='r')
-                plt.axhline(0, color='r')
-
-                plt.xlabel("Eje X")
-                plt.ylabel("Eje Y")
-                plt.grid()
-                plt.title("Representacion de la función")
-                # colocamos la leyenda en la parte inferior derecha
-                plt.show()
+                funcion = str(self.lineEdit.text())
+                p1 = plot(funcion,show=False ,line_color='#96ADEA', ylabel='Y', xlabel= 'X', legend=str(funcion),size=(6,5),xlim=(-25,25),toolbar=None)
+                p1.show()
             except:
                 print("Algo salio mal")
 
@@ -1462,9 +1436,6 @@ class Ui_MainWindow(object):
 
             coeficientes = metodos.coefs(self.lineEdit.text())
             coeficientes.reverse()
-
-            print(coeficientes)
-
             tamanio = len(coeficientes)
 
             funGraficar = ""
@@ -1496,37 +1467,10 @@ class Ui_MainWindow(object):
 
             print(funGraficar)
 
-            x = []
-            y = []
-            i = 0
-
-            for j in range(-50, 51):
-                x.append(i)
-                y.append(i)
-
             try:
-                def f1(x):
-                    funcion = metodos.evaluarFuncion(funGraficar, x, 0, 0)
-                    return funcion
-
-                # asignamos un rango de valores a graficar
-                var = range(-100, 100)
-
-                plt.plot(var, [f1(i) for i in var], label='Funcion 1')
-
-                plt.xlim(-50, 50)
-                plt.ylim(-50, 50)
-
-                plt.plot(x, y)
-                plt.axvline(0, color='r')
-                plt.axhline(0, color='r')
-
-                plt.xlabel("Eje X")
-                plt.ylabel("Eje Y")
-                plt.grid()
-                plt.title("Representacion de la función")
-                # colocamos la leyenda en la parte inferior derecha
-                plt.show()
+                funcion = str(funGraficar)
+                p1 = plot(funcion,show=False ,line_color='#96ADEA', ylabel='Y', xlabel= 'X', legend=str(funcion),size=(6,5),xlim=(-25,25),toolbar=None)
+                p1.show()
             except:
                 print("Algo salio mal")
 
