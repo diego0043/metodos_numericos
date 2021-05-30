@@ -152,19 +152,7 @@ class Ui_MainWindow(object):
         self.comboBox = QtWidgets.QComboBox(self.centralwidget)
         self.comboBox.setGeometry(QtCore.QRect(10, 40, 31, 22))
         self.comboBox.setObjectName("comboBox")
-        self.comboBox.setStyleSheet("QComboBox {\n""border: 1px solid;\n""border-radius: 7px;\n""border-color: #96adea;\n""background-color: rgb(242, 242, 242);\n""color : #1905ff;\n""\n""}\n"
-"QComboBox QAbstractItemView {\n"
-"    border: 2px solid \'#96adea\';\n"
-"    selection-background-color: #96adea;\n"
-"    background-color: rgb(242, 242, 242);\n"
-"    color: \'ffffff\'\n"
-"}\n"
-"QComboBox:hover{\n"
-"    border-color: #1905ff;\n"
-"\n"
-"}\n"
-"\n"
-"")
+        self.comboBox.setStyleSheet("QComboBox {\n""border: 1px solid;\n""border-radius: 7px;\n""border-color: #96adea;\n""background-color: rgb(242, 242, 242);\n""color : #1905ff;\n""\n""}\n""QComboBox QAbstractItemView {\n""border: 2px solid \'#96adea\';\n""selection-background-color: #96adea;\n""background-color: rgb(242, 242, 242);\n""color: \'ffffff\'\n""}\n""QComboBox:hover{\n""border-color: #1905ff;\n""\n""}\n""\n""")
         self.comboBox.addItem("")
         self.comboBox.addItem("")
         self.comboBox.addItem("")
@@ -234,60 +222,17 @@ class Ui_MainWindow(object):
         self.tableWidget_2.setRowCount(0)
         self.pushButton = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton.setGeometry(QtCore.QRect(360, 180, 100, 50))
-        self.pushButton.setStyleSheet("QPushButton {\n"
-"    border: 2px solid;\n"
-"    border-radius: 20px;\n"
-"    font: 12pt \"MS Shell Dlg 2\";\n"
-"    border-color: rgb(150, 173, 234);\n"
-"    color: \'#96ADEA\'\n"
-"}\n"
-"\n"
-"QPushButton:hover {\n"
-"    background-color: rgb(150, 173, 234);\n"
-"    color: \'#ffffff\';\n"
-"}\n"
-"")
+        self.pushButton.setStyleSheet("QPushButton {\n""border: 2px solid;\n""border-radius: 20px;\n""font: 12pt \"MS Shell Dlg 2\";\n""border-color: rgb(150, 173, 234);\n""color: \'#96ADEA\'\n""}\n""\n""QPushButton:hover {\n""background-color: rgb(150, 173, 234);\n""color: \'#ffffff\';\n""}\n""")
         self.pushButton.setObjectName("pushButton")
         self.pushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.pushButton_2 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_2.setGeometry(QtCore.QRect(490, 180, 100, 50))
-        self.pushButton_2.setStyleSheet("QPushButton {\n"
-"    border: 2px solid;\n"
-"    color: \'#E88989\';\n"
-"    border-color: rgb(232, 137, 137);\n"
-"    border-radius: 20px;\n"
-"    font: 12pt \"MS Shell Dlg 2\";\n"
-"\n"
-"}\n"
-"QPushButton:hover {\n"
-"    background-color: rgb(232, 137, 137);\n"
-"    color: \'#ffffff\'\n"
-"\n"
-"\n"
-"}")
+        self.pushButton_2.setStyleSheet("QPushButton {\n""border: 2px solid;\n""color: \'#E88989\';\n""border-color: rgb(232, 137, 137);\n""border-radius: 20px;\n""font: 12pt \"MS Shell Dlg 2\";\n""\n""}\n""QPushButton:hover {\n""background-color: rgb(232, 137, 137);\n""color: \'#ffffff\'\n""\n""\n""}")
         self.pushButton_2.setObjectName("pushButton_2")
         self.pushButton_2.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.pushButton_3 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_3.setGeometry(QtCore.QRect(430, 510, 100, 50))
-        self.pushButton_3.setStyleSheet("QPushButton {\n"
-"    border: 2px solid;\n"
-"    border-radius: 20px;\n"
-"    font: 12pt \"MS Shell Dlg 2\";\n"
-"    border-color: rgb(150, 173, 234);\n"
-"    color: \'#96ADEA\'\n"
-"}\n"
-"\n"
-"QPushButton:hover {\n"
-"    background-color: rgb(150, 173, 234);\n"
-"    color: \'#ffffff\';\n"
-"}\n"
-"/*\n"
-"QPushButton:pressed {\n"
-"    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,\n"
-"                                      stop: 0 #dadbde, stop: 1 #96adea);\n"
-"\n"
-"}*/")
-
+        self.pushButton_3.setStyleSheet("QPushButton {\n"" border: 2px solid;\n"" border-radius: 20px;\n"" font: 12pt \"MS Shell Dlg 2\";\n"" border-color: rgb(150, 173, 234);\n""    color: \'#96ADEA\'\n""}\n""\n""QPushButton:hover {\n""    background-color: rgb(150, 173, 234);\n""    color: \'#ffffff\';\n""}\n""/*\n""QPushButton:pressed {\n"" background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,\n"" stop: 0 #dadbde, stop: 1 #96adea);\n""\n""}*/")
         self.pushButton_3.setObjectName("pushButton_3")
         self.pushButton_3.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.pushButton_5 = QtWidgets.QPushButton(self.centralwidget)
@@ -327,26 +272,7 @@ class Ui_MainWindow(object):
         self.comboBox_2 = QtWidgets.QComboBox(self.centralwidget)
         self.comboBox_2.setGeometry(QtCore.QRect(180, 50, 141, 22))
         self.comboBox_2.setObjectName("comboBox_2")
-        self.comboBox_2.setStyleSheet("QComboBox {\n"
-"    border: 1px solid;\n"
-"    border-radius: 7px;\n"
-"    border-color: #96adea;\n"
-"    background-color: rgb(242, 242, 242);\n"
-"    color : #1905ff;\n"
-"\n"
-"}\n"
-"QComboBox QAbstractItemView {\n"
-"    border: 2px solid \'#96adea\';\n"
-"    selection-background-color: #96adea;\n"
-"    background-color: rgb(242, 242, 242);\n"
-"    color: \'ffffff\'\n"
-"}\n"
-"QComboBox:hover{\n"
-"    border-color: #1905ff;\n"
-"\n"
-"}\n"
-"\n"
-"")
+        self.comboBox_2.setStyleSheet("QComboBox {\n""border: 1px solid;\n""border-radius: 7px;\n""border-color: #96adea;\n""background-color: rgb(242, 242, 242);\n""color : #1905ff;\n""\n""}\n""QComboBox QAbstractItemView {\n""border: 2px solid \'#96adea\';\n""selection-background-color: #96adea;\n""background-color: rgb(242, 242, 242);\n""color: \'ffffff\'\n""}\n""QComboBox:hover{\n""    border-color: #1905ff;\n""\n""}\n""\n""")
         self.comboBox_2.activated[str].connect(self.metodos_de_cada_unidad)
 
         font = QtGui.QFont()

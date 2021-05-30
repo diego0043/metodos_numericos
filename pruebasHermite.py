@@ -36,9 +36,9 @@ def hermite(lista_valores, punto_evaluar):
 
     #llenamos la lista de apolloX y apolloY
 
-    for i in range(0,len(listaX),1): # cada iteración representa un punto en x 
-        for i in valores_derivadas[i]:
-            print(i)
+    #for i in range(0,len(listaX),1): # cada iteración representa un punto en x 
+        #for i in valores_derivadas[i]:
+            #print(i)
 
 
 hermite(listaVAlores,1)
