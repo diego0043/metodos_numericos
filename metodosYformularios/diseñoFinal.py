@@ -11,6 +11,7 @@ import metodosYformularios.meto2 as metodos
 import matplotlib.pyplot as plt
 import numpy as np
 import math as mt
+import sys
 
 counter = 0
 
@@ -37,6 +38,7 @@ class Ui_MainWindow(object):
         self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame.setObjectName("frame")
+        #self.frame.mouseMoveEvent = moveWindow
         self.pushButton_6 = QtWidgets.QPushButton(self.frame)
         self.pushButton_6.setGeometry(QtCore.QRect(730, 10, 16, 16))
         self.pushButton_6.setMinimumSize(QtCore.QSize(16, 16))
@@ -56,6 +58,8 @@ class Ui_MainWindow(object):
         self.pushButton_7.setStyleSheet("QPushButton {\n""border: none;\n""background-color: rgb(246, 180, 180);\n""border-radius: 8px;\n""}\n""QPushButton:hover {        \n""background-color: rgba(255, 0, 0, 150);\n""}")
         self.pushButton_7.setText("")
         self.pushButton_7.setObjectName("pushButton_7")
+        self.pushButton_7.clicked.connect(lambda: self.close())
+
         self.pushButton_8 = QtWidgets.QPushButton(self.frame)
         self.pushButton_8.setGeometry(QtCore.QRect(700, 10, 16, 16))
         self.pushButton_8.setMinimumSize(QtCore.QSize(16, 16))
@@ -148,14 +152,7 @@ class Ui_MainWindow(object):
         self.comboBox = QtWidgets.QComboBox(self.centralwidget)
         self.comboBox.setGeometry(QtCore.QRect(10, 40, 31, 22))
         self.comboBox.setObjectName("comboBox")
-        self.comboBox.setStyleSheet("QComboBox {\n"
-"    border: 1px solid;\n"
-"    border-radius: 7px;\n"
-"    border-color: #96adea;\n"
-"    background-color: rgb(242, 242, 242);\n"
-"    color : #1905ff;\n"
-"\n"
-"}\n"
+        self.comboBox.setStyleSheet("QComboBox {\n""border: 1px solid;\n""border-radius: 7px;\n""border-color: #96adea;\n""background-color: rgb(242, 242, 242);\n""color : #1905ff;\n""\n""}\n"
 "QComboBox QAbstractItemView {\n"
 "    border: 2px solid \'#96adea\';\n"
 "    selection-background-color: #96adea;\n"
@@ -284,7 +281,13 @@ class Ui_MainWindow(object):
 "    background-color: rgb(150, 173, 234);\n"
 "    color: \'#ffffff\';\n"
 "}\n"
-"}")
+"/*\n"
+"QPushButton:pressed {\n"
+"    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,\n"
+"                                      stop: 0 #dadbde, stop: 1 #96adea);\n"
+"\n"
+"}*/")
+
         self.pushButton_3.setObjectName("pushButton_3")
         self.pushButton_3.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.pushButton_5 = QtWidgets.QPushButton(self.centralwidget)
@@ -1416,23 +1419,22 @@ class Ui_MainWindow(object):
             self.insertar_datos_a_tabla_unidad3(4,puntos,float(listaX[macht]))
 
     #Metodos que se controlan con los botones 
-
     def limpiar_Campos(self):
 
         #limpiamos los lineEdit
-        self.ui.lineEdit.setText("")
-        self.ui.lineEdit_2.setText("")
-        self.ui.lineEdit_3.setText("")
-        self.ui.lineEdit_4.setText("")
-        self.ui.lineEdit_5.setText("")
+        self.lineEdit.setText("")
+        self.lineEdit_2.setText("")
+        self.lineEdit_3.setText("")
+        self.lineEdit_4.setText("")
+        self.lineEdit_5.setText("")
 
         #limpiamos el combobox
-        self.ui.comboBox_2.setCurrentIndex(-1)
+        self.comboBox_2.setCurrentIndex(-1)
 
         #Limpiamos tablas
 
-        self.ui.tableWidget.clear()
-        self.ui.tableWidget_2.clear()
+        self.tableWidget.clear()
+        self.tableWidget_2.clear()
 
     def calcular(self):
         unidad = self.comboBox.currentIndex()
@@ -1581,7 +1583,19 @@ class Ui_MainWindow(object):
             except:
                 print("Algo salio mal")
 
+    def close(self):
+        sys.exit()
 
+    def mousePressEvent(self, event):
+        self.clickPosition = event.globalPos()
+    '''
+    def moveWindow(e):
+        if self.isMaximized() == False:
+            if e.buttons() == Qt.LeftButton:
+                self.move(self.pos() + e.globalPos() - self.clickPosition)
+                self.clickPosition = e.globalPos()
+                e.accept()
+    '''
 
 
 
