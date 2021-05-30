@@ -27,58 +27,74 @@ class Ui_MainWindow(object):
         if MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.resize(1000, 600)
-        MainWindow.setMinimumSize(QSize(1000, 600))
+        MainWindow.setMinimumSize(QSize(1000, 650))
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         MainWindow.setWindowFlags(QtCore.Qt.FramelessWindowHint)
-
+        MainWindow.setStyleSheet("Background-color: rgb(242, 242, 242);")
+        
+        # Frame donde se encuentran los botones de cerrar, minimizar y maximizar
         self.frame = QtWidgets.QFrame(self.centralwidget)
-        self.frame.setGeometry(QtCore.QRect(200, 0, 1000, 31))
+        self.frame.setGeometry(QtCore.QRect(0, 0, 1000, 31))
         self.frame.setStyleSheet("")
-        self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame.setFrameShape(QtWidgets.QFrame.NoFrame) #poner Noframe
         self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame.setObjectName("frame")
         #self.frame.mouseMoveEvent = moveWindow
-        self.pushButton_6 = QtWidgets.QPushButton(self.frame)
-        self.pushButton_6.setGeometry(QtCore.QRect(730, 10, 16, 16))
-        self.pushButton_6.setMinimumSize(QtCore.QSize(16, 16))
-        self.pushButton_6.setMaximumSize(QtCore.QSize(17, 17))
-        self.pushButton_6.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.pushButton_6.setStyleSheet("QPushButton {\n""border: none;\n""background-color: rgb(167, 227, 171);\n""border-radius: 8px;\n""}\n""QPushButton:hover { \n""background-color: rgb(55, 255, 0);\n""}")
-        self.pushButton_6.setText("")
-        self.pushButton_6.setObjectName("pushButton_2")
-        self.pushButton_7 = QtWidgets.QPushButton(self.frame)
-        self.pushButton_7.setGeometry(QtCore.QRect(760, 10, 16, 16))
-        self.pushButton_7.setMinimumSize(QtCore.QSize(16, 16))
-        self.pushButton_7.setMaximumSize(QtCore.QSize(17, 17))
-        font = QtGui.QFont()
-        font.setPointSize(8)
-        self.pushButton_7.setFont(font)
-        self.pushButton_7.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.pushButton_7.setStyleSheet("QPushButton {\n""border: none;\n""background-color: rgb(246, 180, 180);\n""border-radius: 8px;\n""}\n""QPushButton:hover {        \n""background-color: rgba(255, 0, 0, 150);\n""}")
-        self.pushButton_7.setText("")
-        self.pushButton_7.setObjectName("pushButton_7")
-        self.pushButton_7.clicked.connect(lambda: self.close())
 
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_10 = QtWidgets.QLabel(self.frame)
+        self.label_10.setGeometry(QtCore.QRect(5, 8, 200, 16))
+        self.label_10.setObjectName("label_10")
+        self.label_10.setFont(font)
+        self.label_10.setStyleSheet("color: rgb(134, 155, 208);")
+        # btn minimizat
         self.pushButton_8 = QtWidgets.QPushButton(self.frame)
-        self.pushButton_8.setGeometry(QtCore.QRect(700, 10, 16, 16))
+        self.pushButton_8.setGeometry(QtCore.QRect(900, 10, 16, 16))
         self.pushButton_8.setMinimumSize(QtCore.QSize(16, 16))
         self.pushButton_8.setMaximumSize(QtCore.QSize(17, 17))
         self.pushButton_8.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.pushButton_8.setStyleSheet("QPushButton {\n""border: none;\n""border-radius: 8px;\n""background-color: rgb(246, 221, 164);\n""}\n""QPushButton:hover {    \n""background-color: rgb(255, 255, 0);\n""}")
         self.pushButton_8.setText("")
         self.pushButton_8.setObjectName("pushButton_6")
+
+        # btn maximizar
+        self.pushButton_6 = QtWidgets.QPushButton(self.frame)
+        self.pushButton_6.setGeometry(QtCore.QRect(930, 10, 16, 16))
+        self.pushButton_6.setMinimumSize(QtCore.QSize(16, 16))
+        self.pushButton_6.setMaximumSize(QtCore.QSize(17, 17))
+        self.pushButton_6.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.pushButton_6.setStyleSheet("QPushButton {\n""border: none;\n""background-color: rgb(167, 227, 171);\n""border-radius: 8px;\n""}\n""QPushButton:hover { \n""background-color: rgb(55, 255, 0);\n""}")
+        self.pushButton_6.setText("")
+        self.pushButton_6.setObjectName("pushButton_2")
+
+        
+        # btn cerrar
+        self.pushButton_7 = QtWidgets.QPushButton(self.frame)
+        self.pushButton_7.setGeometry(QtCore.QRect(960, 10, 16, 16))
+        self.pushButton_7.setMinimumSize(QtCore.QSize(16, 16))
+        self.pushButton_7.setMaximumSize(QtCore.QSize(17, 17))
+        self.pushButton_7.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.pushButton_7.setStyleSheet("QPushButton {\n""border: none;\n""background-color: rgb(246, 180, 180);\n""border-radius: 8px;\n""}\n""QPushButton:hover {        \n""background-color: rgba(255, 0, 0, 150);\n""}")
+        self.pushButton_7.setText("")
+        self.pushButton_7.setObjectName("pushButton_7")
+        self.pushButton_7.clicked.connect(lambda: self.close())
+
+        
         
         font = QtGui.QFont()
         font.setFamily("Segoe UI")
         font.setPointSize(10)
         font.setBold(True)
         font.setWeight(75)
-        
         self.label_3 = QtWidgets.QLabel(self.centralwidget)
         self.label_3.setFont(font)
         self.label_3.setStyleSheet("color: rgb(134, 155, 208);")
-        self.label_3.setGeometry(QtCore.QRect(400, 30, 211, 16))
+        self.label_3.setGeometry(QtCore.QRect(400, 45, 211, 16))
         self.label_3.setObjectName("label_3")
 
         font = QtGui.QFont()
@@ -87,7 +103,7 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         self.label_4 = QtWidgets.QLabel(self.centralwidget)
-        self.label_4.setGeometry(QtCore.QRect(400, 80, 21, 16))
+        self.label_4.setGeometry(QtCore.QRect(400, 83, 21, 16))
         self.label_4.setObjectName("label_4")
         self.label_4.setFont(font)
         self.label_4.setStyleSheet("color: rgb(134, 155, 208);")
@@ -99,7 +115,7 @@ class Ui_MainWindow(object):
         font.setWeight(75)
         
         self.label_5 = QtWidgets.QLabel(self.centralwidget)
-        self.label_5.setGeometry(QtCore.QRect(400, 120, 20, 20))
+        self.label_5.setGeometry(QtCore.QRect(400, 123, 20, 20))
         self.label_5.setObjectName("label_5")
         self.label_5.setFont(font)
         self.label_5.setStyleSheet("color: rgb(134, 155, 208);")
@@ -111,7 +127,7 @@ class Ui_MainWindow(object):
         font.setWeight(75)
         
         self.label_6 = QtWidgets.QLabel(self.centralwidget)
-        self.label_6.setGeometry(QtCore.QRect(500, 80, 21, 16))
+        self.label_6.setGeometry(QtCore.QRect(500, 83, 21, 16))
         self.label_6.setObjectName("label_6")
         self.label_6.setFont(font)
         self.label_6.setStyleSheet("color: rgb(134, 155, 208);")
@@ -121,7 +137,7 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         self.label_7 = QtWidgets.QLabel(self.centralwidget)
-        self.label_7.setGeometry(QtCore.QRect(660, 30, 191, 20))
+        self.label_7.setGeometry(QtCore.QRect(660, 45, 191, 20))
         self.label_7.setObjectName("label_7")
         self.label_7.setFont(font)
         self.label_7.setStyleSheet("color: rgb(134, 155, 208);")
@@ -132,7 +148,7 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         self.label_8 = QtWidgets.QLabel(self.centralwidget)
-        self.label_8.setGeometry(QtCore.QRect(10, 20, 91, 16))
+        self.label_8.setGeometry(QtCore.QRect(10, 45, 91, 16))
         self.label_8.setObjectName("label_8")
         self.label_8.setFont(font)
         self.label_8.setStyleSheet("color: rgb(134, 155, 208);")
@@ -144,15 +160,15 @@ class Ui_MainWindow(object):
         font.setWeight(75)
         
         self.label_9 = QtWidgets.QLabel(self.centralwidget)
-        self.label_9.setGeometry(QtCore.QRect(620, 30, 220, 16))
+        self.label_9.setGeometry(QtCore.QRect(620, 45, 270, 16))
         self.label_9.setObjectName("label_8")
         self.label_9.setFont(font)
         self.label_9.setStyleSheet("color: rgb(134, 155, 208);")
 
         self.comboBox = QtWidgets.QComboBox(self.centralwidget)
-        self.comboBox.setGeometry(QtCore.QRect(10, 40, 31, 22))
+        self.comboBox.setGeometry(QtCore.QRect(10, 70, 40, 22))
         self.comboBox.setObjectName("comboBox")
-        self.comboBox.setStyleSheet("QComboBox {\n""border: 1px solid;\n""border-radius: 7px;\n""border-color: #96adea;\n""background-color: rgb(242, 242, 242);\n""color : #1905ff;\n""\n""}\n""QComboBox QAbstractItemView {\n""border: 2px solid \'#96adea\';\n""selection-background-color: #96adea;\n""background-color: rgb(242, 242, 242);\n""color: \'ffffff\'\n""}\n""QComboBox:hover{\n""border-color: #1905ff;\n""\n""}\n""\n""")
+        self.comboBox.setStyleSheet(u"QComboBox {\n""border: 1px solid;\n""border-radius: 7px;\n""border-color: rgb(232, 137, 137);\n""background-color: rgb(242, 242, 242);\n""color : rgb(232, 137, 137);\n""\n""}\n""QComboBox QAbstractItemView {\n""border:  rgb(232, 137, 137)';\n""selection-background-color: rgb(232, 137, 137);\n""background-color: rgb(242, 242, 242);\n""color: 'ffffff'\n""}\n""QComboBox:hover{\n""border-color: #ff0000;\n""background-color: rgb(211, 46, 84);\n""\n""}\n""\n""")
         self.comboBox.addItem("")
         self.comboBox.addItem("")
         self.comboBox.addItem("")
@@ -207,7 +223,7 @@ class Ui_MainWindow(object):
         self.lineEdit_5.setFont(font)
 
         self.tableWidget = QtWidgets.QTableWidget(self.centralwidget)
-        self.tableWidget.setGeometry(QtCore.QRect(30, 261, 931, 200))
+        self.tableWidget.setGeometry(QtCore.QRect(30, 311, 931, 200))
         self.tableWidget.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.tableWidget.setStyleSheet("background-color: rgb(242, 242, 242);")
         self.tableWidget.setObjectName("tableWidget")
@@ -215,33 +231,33 @@ class Ui_MainWindow(object):
         self.tableWidget.setRowCount(0)
         self.tableWidget.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
         self.tableWidget_2 = QtWidgets.QTableWidget(self.centralwidget)
-        self.tableWidget_2.setGeometry(QtCore.QRect(90, 75, 823, 81))
+        self.tableWidget_2.setGeometry(QtCore.QRect(90, 95, 823, 81))
         self.tableWidget_2.setStyleSheet("background-color: rgb(242, 242, 242);")
         self.tableWidget_2.setObjectName("tableWidget_2")
         self.tableWidget_2.setColumnCount(0)
         self.tableWidget_2.setRowCount(0)
         self.pushButton = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton.setGeometry(QtCore.QRect(360, 180, 100, 50))
+        self.pushButton.setGeometry(QtCore.QRect(360, 230, 100, 50))
         self.pushButton.setStyleSheet("QPushButton {\n""border: 2px solid;\n""border-radius: 20px;\n""font: 12pt \"MS Shell Dlg 2\";\n""border-color: rgb(150, 173, 234);\n""color: \'#96ADEA\'\n""}\n""\n""QPushButton:hover {\n""background-color: rgb(150, 173, 234);\n""color: \'#ffffff\';\n""}\n""")
         self.pushButton.setObjectName("pushButton")
         self.pushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.pushButton_2 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_2.setGeometry(QtCore.QRect(490, 180, 100, 50))
+        self.pushButton_2.setGeometry(QtCore.QRect(490, 230, 100, 50))
         self.pushButton_2.setStyleSheet("QPushButton {\n""border: 2px solid;\n""color: \'#E88989\';\n""border-color: rgb(232, 137, 137);\n""border-radius: 20px;\n""font: 12pt \"MS Shell Dlg 2\";\n""\n""}\n""QPushButton:hover {\n""background-color: rgb(232, 137, 137);\n""color: \'#ffffff\'\n""\n""\n""}")
         self.pushButton_2.setObjectName("pushButton_2")
         self.pushButton_2.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.pushButton_3 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_3.setGeometry(QtCore.QRect(430, 510, 100, 50))
+        self.pushButton_3.setGeometry(QtCore.QRect(425, 560, 100, 50))
         self.pushButton_3.setStyleSheet("QPushButton {\n"" border: 2px solid;\n"" border-radius: 20px;\n"" font: 12pt \"MS Shell Dlg 2\";\n"" border-color: rgb(150, 173, 234);\n""    color: \'#96ADEA\'\n""}\n""\n""QPushButton:hover {\n""    background-color: rgb(150, 173, 234);\n""    color: \'#ffffff\';\n""}\n""/*\n""QPushButton:pressed {\n"" background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,\n"" stop: 0 #dadbde, stop: 1 #96adea);\n""\n""}*/")
         self.pushButton_3.setObjectName("pushButton_3")
         self.pushButton_3.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.pushButton_5 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_5.setGeometry(QtCore.QRect(30, 80, 32, 32))
+        self.pushButton_5.setGeometry(QtCore.QRect(30, 95, 32, 32))
         self.pushButton_5.setStyleSheet("background-color: rgb(242, 242, 242);\n""border:opx;\n""background-image : url(recursos/agregar.png);")
         self.pushButton_5.setObjectName("pushButton_5")
         self.pushButton_5.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.pushButton_6 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_6.setGeometry(QtCore.QRect(30, 120, 32, 32))
+        self.pushButton_6.setGeometry(QtCore.QRect(30, 135, 32, 32))
         self.pushButton_6.setStyleSheet("background-color: rgb(242, 242, 242);\n""border:opx;\n""background-image : url(recursos/quitar.png);")
         self.pushButton_6.setObjectName("pushButton_6")
         self.pushButton_6.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
@@ -253,7 +269,7 @@ class Ui_MainWindow(object):
         font.setWeight(75)
         
         self.label_2 = QtWidgets.QLabel(self.centralwidget)
-        self.label_2.setGeometry(QtCore.QRect(200, 100, 111, 16))
+        self.label_2.setGeometry(QtCore.QRect(200, 118, 111, 16))
         self.label_2.setObjectName("label_2")
         self.label_2.setFont(font)
         self.label_2.setStyleSheet("color: rgb(134, 155, 208);")
@@ -264,15 +280,15 @@ class Ui_MainWindow(object):
         font.setBold(True)
 
         self.lineEdit = QtWidgets.QLineEdit(self.centralwidget)
-        self.lineEdit.setGeometry(QtCore.QRect(200, 130, 131, 24))
+        self.lineEdit.setGeometry(QtCore.QRect(200, 145, 131, 24))
         self.lineEdit.setStyleSheet("background-color: rgb(242, 242, 242);\n""image: url(recursos/barra2.png);\n""border:0px;\n""color:  rgb(232, 137, 137)")
         self.lineEdit.setObjectName("lineEdit")
         self.lineEdit.setFont(font)
 
         self.comboBox_2 = QtWidgets.QComboBox(self.centralwidget)
-        self.comboBox_2.setGeometry(QtCore.QRect(180, 50, 141, 22))
+        self.comboBox_2.setGeometry(QtCore.QRect(180, 80, 160, 22))
         self.comboBox_2.setObjectName("comboBox_2")
-        self.comboBox_2.setStyleSheet("QComboBox {\n""border: 1px solid;\n""border-radius: 7px;\n""border-color: #96adea;\n""background-color: rgb(242, 242, 242);\n""color : #1905ff;\n""\n""}\n""QComboBox QAbstractItemView {\n""border: 2px solid \'#96adea\';\n""selection-background-color: #96adea;\n""background-color: rgb(242, 242, 242);\n""color: \'ffffff\'\n""}\n""QComboBox:hover{\n""    border-color: #1905ff;\n""\n""}\n""\n""")
+        self.comboBox_2.setStyleSheet(u"QComboBox {\n""border: 1px solid;\n""border-radius: 7px;\n""border-color: rgb(232, 137, 137);\n""background-color: rgb(242, 242, 242);\n""color : rgb(232, 137, 137);\n""\n""}\n""QComboBox QAbstractItemView {\n""border:  rgb(232, 137, 137)';\n""selection-background-color: rgb(232, 137, 137);\n""background-color: rgb(242, 242, 242);\n""color: 'ffffff'\n""}\n""QComboBox:hover{\n""border-color: #ff0000;\n""background-color: rgb(211, 46, 84);\n""\n""}\n""\n""")
         self.comboBox_2.activated[str].connect(self.metodos_de_cada_unidad)
 
         font = QtGui.QFont()
@@ -282,22 +298,22 @@ class Ui_MainWindow(object):
         font.setWeight(75)
         
         self.label = QtWidgets.QLabel(self.centralwidget)
-        self.label.setGeometry(QtCore.QRect(200, 30, 140, 16))
+        self.label.setGeometry(QtCore.QRect(200, 45, 140, 16))
         self.label.setObjectName("label")
         self.label.setFont(font)
         self.label.setStyleSheet("color: rgb(134, 155, 208);")
 
         self.radioButton = QtWidgets.QRadioButton(self.centralwidget)
-        self.radioButton.setGeometry(QtCore.QRect(620, 50, 82, 17))# posicion x , posicion y , largo, ancho
+        self.radioButton.setGeometry(QtCore.QRect(620, 70, 82, 17))# posicion x , posicion y , largo, ancho
         self.radioButton.setObjectName("radioButton")
         self.radioButton_2 = QtWidgets.QRadioButton(self.centralwidget)
-        self.radioButton_2.setGeometry(QtCore.QRect(700, 50, 82, 17))
+        self.radioButton_2.setGeometry(QtCore.QRect(700, 70, 82, 17))
         self.radioButton_2.setObjectName("radioButton_2")
         self.radioButton_3 = QtWidgets.QRadioButton(self.centralwidget)
-        self.radioButton_3.setGeometry(QtCore.QRect(780, 55, 82, 17))
+        self.radioButton_3.setGeometry(QtCore.QRect(780, 70, 82, 17))
         self.radioButton_3.setObjectName("radioButton")
         self.radioButton_4 = QtWidgets.QRadioButton(self.centralwidget)
-        self.radioButton_4.setGeometry(QtCore.QRect(860, 55, 82, 17))
+        self.radioButton_4.setGeometry(QtCore.QRect(860, 70, 82, 17))
         self.radioButton_4.setObjectName("radioButton")
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
@@ -317,6 +333,7 @@ class Ui_MainWindow(object):
         self.label_7.setText(_translate("MainWindow", "Numero de cifras significativas"))
         self.label_8.setText(_translate("MainWindow", "¿Que unidad?"))
         self.label_9.setText(_translate("MainWindow", "Seleccione el grado de la función spline"))
+        self.label_10.setText("Analisis Numèrico")
         self.pushButton.setText(_translate("MainWindow", "CALCULAR"))
         self.pushButton_2.setText(_translate("MainWindow", "LIMPIAR"))
         self.pushButton_3.setText(_translate("MainWindow", "GRAFICAR"))
@@ -394,10 +411,13 @@ class Ui_MainWindow(object):
         self.pushButton_6.setVisible(False)
         self.radioButton.setVisible(False)
         self.radioButton_2.setVisible(False)
+        self.radioButton_3.setVisible(False)
+        self.radioButton_4.setVisible(False)
         self.label_9.setVisible(False)
         
         if cual == 0: #Metodos de la primera unidad 
-            self.comboBox_2.setGeometry(QtCore.QRect(200, 60, 161, 21))
+            self.comboBox_2.setGeometry(QtCore.QRect(200, 80, 161, 21))
+            
             # Siempre limpiamos el combobox para evitar duplicados o cosas raras
             self.comboBox_2.clear()
 
@@ -451,7 +471,7 @@ class Ui_MainWindow(object):
             self.label.setVisible(True)
 
         elif cual == 1:  # Metodos de la segunda unidad
-            self.comboBox_2.setGeometry(QtCore.QRect(200, 60, 141, 21))
+            self.comboBox_2.setGeometry(QtCore.QRect(200, 80, 141, 21))
             # Siempre limpiamos el combobox para evitar duplicados o cosas raras
             self.comboBox_2.clear()
             self.comboBox_2.addItem("")
@@ -502,7 +522,7 @@ class Ui_MainWindow(object):
             self.label.setVisible(True)
         
         elif cual == 2: #Metodos de la unidad 3
-            self.comboBox_2.setGeometry(QtCore.QRect(360, 30, 161, 21))
+            self.comboBox_2.setGeometry(QtCore.QRect(360, 45, 161, 21))
 
             self.comboBox_2.clear()
             self.comboBox_2.addItem("")
@@ -543,16 +563,17 @@ class Ui_MainWindow(object):
         queMetodo = self.comboBox_2.currentIndex()
         queUnidad = self.comboBox.currentIndex()
 
+        self.pushButton_5.setVisible(False)
+        self.pushButton_6.setVisible(False)
+        self.tableWidget_2.setVisible(False)
+        self.radioButton.setVisible(False)
+        self.radioButton_2.setVisible(False)
+        self.radioButton_3.setVisible(False)
+        self.radioButton_4.setVisible(False)
+        self.label_9.setVisible(False)
+
         if queUnidad == 0:
 
-            self.pushButton_5.setVisible(False)
-            self.pushButton_6.setVisible(False)
-            self.tableWidget_2.setVisible(False)
-            self.radioButton.setVisible(False)
-            self.radioButton_2.setVisible(False)
-            self.radioButton_3.setVisible(False)
-            self.radioButton_4.setVisible(False)
-            self.label_9.setVisible(False)
             
             # <---- dejamos solo los componentes que usa metodo punto fijo y los de newton -->
             self.label_4.setText("#1")
@@ -698,8 +719,8 @@ class Ui_MainWindow(object):
                 self.radioButton_4.setAutoExclusive(False)
                 self.radioButton.setText("Si")
                 self.radioButton_2.setText("No")
-                self.radioButton.setGeometry(QtCore.QRect(620, 55, 82, 17))
-                self.radioButton_2.setGeometry(QtCore.QRect(660,55,82,17))
+                self.radioButton.setGeometry(QtCore.QRect(620, 70, 82, 17))
+                self.radioButton_2.setGeometry(QtCore.QRect(660,70,82,17))
                 
                 
             else:
@@ -723,8 +744,8 @@ class Ui_MainWindow(object):
                 self.radioButton_2.setText("Grado #1")
                 self.radioButton_3.setText("Grado #2")
                 self.radioButton_4.setText("Grado #3")
-                self.radioButton.setGeometry(QtCore.QRect(620, 55, 82, 17))
-                self.radioButton_2.setGeometry(QtCore.QRect(700,55,82,17))
+                self.radioButton.setGeometry(QtCore.QRect(620, 70, 82, 17))
+                self.radioButton_2.setGeometry(QtCore.QRect(700,70,82,17))
                 self.radioButton_3.setVisible(True)
                 self.radioButton_4.setVisible(True)
 
@@ -1509,20 +1530,12 @@ class Ui_MainWindow(object):
             except:
                 print("Algo salio mal")
 
+
+    # metodos que controlan los botones de cerrar, maximizar y minimizar
     def close(self):
         sys.exit()
 
-    def mousePressEvent(self, event):
-        self.clickPosition = event.globalPos()
-    '''
-    def moveWindow(e):
-        if self.isMaximized() == False:
-            if e.buttons() == Qt.LeftButton:
-                self.move(self.pos() + e.globalPos() - self.clickPosition)
-                self.clickPosition = e.globalPos()
-                e.accept()
-    '''
-
+   
 
 
 
