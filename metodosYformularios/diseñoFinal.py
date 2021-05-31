@@ -13,6 +13,10 @@ import numpy as np
 import math as mt
 import sys
 from sympy.plotting import plot
+import cmath
+
+GLOBAL_STATE = 0
+
 
 counter = 0
 
@@ -62,7 +66,7 @@ class Ui_MainWindow(object):
         self.pushButton_8.setStyleSheet("QPushButton {\n""border: none;\n""border-radius: 8px;\n""background-color: rgb(246, 221, 164);\n""}\n""QPushButton:hover {    \n""background-color: rgb(255, 255, 0);\n""}")
         self.pushButton_8.setText("")
         self.pushButton_8.setObjectName("pushButton_6")
-
+        
         # btn maximizar
         self.pushButton_6 = QtWidgets.QPushButton(self.frame)
         self.pushButton_6.setGeometry(QtCore.QRect(930, 10, 16, 16))
@@ -83,7 +87,6 @@ class Ui_MainWindow(object):
         self.pushButton_7.setStyleSheet("QPushButton {\n""border: none;\n""background-color: rgb(246, 180, 180);\n""border-radius: 8px;\n""}\n""QPushButton:hover {        \n""background-color: rgba(255, 0, 0, 150);\n""}")
         self.pushButton_7.setText("")
         self.pushButton_7.setObjectName("pushButton_7")
-        self.pushButton_7.clicked.connect(lambda: self.close())
 
         
         
@@ -328,6 +331,17 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
 
         self.label_3.setText(_translate("MainWindow", "Puntos en los que vamos a evaluar"))
+
+        self.pushButton_8.setToolTip(QCoreApplication.translate("MainWindow", u"Minimizar", None))
+        self.pushButton_8.setText("")
+
+        self.pushButton_7.setToolTip(QCoreApplication.translate("MainWindow", u"Cerrar", None))
+        self.pushButton_7.setText("")
+
+        self.pushButton_6.setToolTip(QCoreApplication.translate("MainWindow", u"Maximizar", None))
+        self.pushButton_6.setText("")
+
+
         self.label_4.setText(_translate("MainWindow", "#1"))
         self.label_5.setText(_translate("MainWindow", "#2"))
         self.label_6.setText(_translate("MainWindow", "#3"))
@@ -1427,59 +1441,47 @@ class Ui_MainWindow(object):
         if queMetodo >= 0 and queMetodo <= 6 or queMetodo == 9:
             try:
                 funcion = str(self.lineEdit.text())
-                p1 = plot(funcion,show=False ,line_color='#96ADEA', ylabel='Y', xlabel= 'X', legend=str(funcion),size=(6,5),xlim=(-25,25),toolbar=None)
+                funcionFinal = ''
+                title = 'Funcion: '+str(self.lineEdit.text())
+
+                for i in range(0,len(funcion)):
+                    if funcion[i] == 'e':
+                        if funcion[i+1] == '^':
+                            funcionFinal += str(cmath.e)
+                        else:
+                            funcionFinal += funcion[i]
+                    else:
+                        funcionFinal += funcion[i]
+
+                print(funcionFinal)
+                print(funcion)
+
+                p1 = plot(funcionFinal,show=False ,line_color='#96ADEA', ylabel='Y', xlabel= 'X',title=title,size=(6,5),xlim=(-25,25),ylim=(-25,25))
                 p1.show()
             except:
                 print("Algo salio mal")
 
         elif queMetodo >=7 and queMetodo <= 8 or queMetodo == 10:
-
-            coeficientes = metodos.coefs(self.lineEdit.text())
-            coeficientes.reverse()
-            tamanio = len(coeficientes)
-
-            funGraficar = ""
-
-            #Hacemos una funcion que si se pueda graficar 
-            for x in  range(len(coeficientes)):
-                if coeficientes[x] != 0:
-                    if coeficientes[x] > 0:
-                        if x == 0:
-                            funGraficar += str(coeficientes[x]) + "*x^"+str(tamanio-1)
-                            tamanio = tamanio -1
-                        else:
-                            if x == (len(coeficientes)-1):
-                                funGraficar += "+" + str(coeficientes[x])
-                                tamanio = tamanio -1
-                            else:
-                                funGraficar += "+" + str(coeficientes[x]) + "*x^"+str(tamanio-1)
-                                tamanio = tamanio -1
-                    else:
-                        if x == (len(coeficientes)-1):
-                                funGraficar += str(coeficientes[x])
-                                tamanio = tamanio -1
-                        else:
-                            funGraficar += str(coeficientes[x]) + "*x^"+str(tamanio-1)
-                            tamanio = tamanio -1
-                else:
-                    funGraficar +=  "+0*x^"+str(tamanio-1)
-                    tamanio = tamanio -1
-
-            print(funGraficar)
-
             try:
-                funcion = str(funGraficar)
-                p1 = plot(funcion,show=False ,line_color='#96ADEA', ylabel='Y', xlabel= 'X', legend=str(funcion),size=(6,5),xlim=(-25,25),toolbar=None)
+                funcion = str(self.lineEdit.text())
+                funcionFinal = ''
+                title = 'Funcion: '+str(self.lineEdit.text())
+
+                for i in range(0,len(funcion)):
+                    if funcion[i] == 'e':
+                        if funcion[i+1] == '^':
+                            funcionFinal += str(cmath.e)
+                        else:
+                            funcionFinal += funcion[i]
+                    else:
+                        funcionFinal += funcion[i]
+                
+                p1 = plot(funcionFinal,show=False ,line_color='#96ADEA', ylabel='Y', xlabel= 'X',title=title,size=(6,5),xlim=(-25,25),ylim=(-25,25))
                 p1.show()
             except:
                 print("Algo salio mal")
 
 
-    # metodos que controlan los botones de cerrar, maximizar y minimizar
-    def close(self):
-        sys.exit()
-
-   
 
 
 

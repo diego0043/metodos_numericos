@@ -12,6 +12,8 @@ from metodosYformularios import *
 from metodosYformularios.ui_splash_screen import Ui_SplashScreen
 from metodosYformularios.diseñoFinal import Ui_MainWindow
 
+from metodosYformularios.ui_functions import *
+
 # GLOBALS
 counter = 0
 jumper = 10
@@ -23,6 +25,23 @@ class MainWindow(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
        
+        def moveWindow(event):
+            # RESTORE BEFORE MOVE
+            if UIFunctions.returnStatus() == 1:
+                UIFunctions.maximize_restore(self)
+
+            # IF LEFT CLICK MOVE WINDOW
+            if event.buttons() == Qt.LeftButton:
+                self.move(self.pos() + event.globalPos() - self.dragPos)
+                self.dragPos = event.globalPos()
+                event.accept()
+        
+        self.ui.frame.mouseMoveEvent = moveWindow
+    
+        UIFunctions.uiDefinitions(self)
+        
+    def mousePressEvent(self, event):
+        self.dragPos = event.globalPos()
 ## ==> SPLASHSCREEN WINDOW
 class SplashScreen(QMainWindow):
     def __init__(self):
