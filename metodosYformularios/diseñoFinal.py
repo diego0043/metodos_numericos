@@ -1,3 +1,4 @@
+from re import T
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import Qt, QRegExp
 from PyQt5.QtWidgets import (QApplication, QDialog, QPushButton, QTableWidget,QTableWidgetItem, QAbstractItemView, QHeaderView, QMenu,QActionGroup, QAction, QMessageBox)
@@ -6,6 +7,7 @@ from PySide2 import QtCore, QtGui, QtWidgets
 from PySide2.QtCore import (QCoreApplication, QPropertyAnimation, QDate, QDateTime, QMetaObject, QObject, QPoint, QRect, QSize, QTime, QUrl, Qt, QEvent)
 from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont, QFontDatabase, QIcon, QKeySequence, QLinearGradient, QPalette, QPainter, QPixmap, QRadialGradient)
 from PySide2.QtWidgets import *
+from sympy.core.symbol import symbols
 from metodosYformularios import *
 import metodosYformularios.meto2 as metodos
 import matplotlib.pyplot as plt
@@ -19,6 +21,8 @@ GLOBAL_STATE = 0
 
 
 counter = 0
+etiquetaHermite = "y'"
+filasHermite = 2
 
 tamanioInicialTabla = 183
 posicionX = 1
@@ -57,7 +61,8 @@ class Ui_MainWindow(object):
         self.label_10.setObjectName("label_10")
         self.label_10.setFont(font)
         self.label_10.setStyleSheet("color: rgb(134, 155, 208);")
-        # btn minimizat
+
+        # btn minimizar
         self.pushButton_8 = QtWidgets.QPushButton(self.frame)
         self.pushButton_8.setGeometry(QtCore.QRect(900, 10, 16, 16))
         self.pushButton_8.setMinimumSize(QtCore.QSize(16, 16))
@@ -68,14 +73,14 @@ class Ui_MainWindow(object):
         self.pushButton_8.setObjectName("pushButton_6")
         
         # btn maximizar
-        self.pushButton_6 = QtWidgets.QPushButton(self.frame)
-        self.pushButton_6.setGeometry(QtCore.QRect(930, 10, 16, 16))
-        self.pushButton_6.setMinimumSize(QtCore.QSize(16, 16))
-        self.pushButton_6.setMaximumSize(QtCore.QSize(17, 17))
-        self.pushButton_6.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.pushButton_6.setStyleSheet("QPushButton {\n""border: none;\n""background-color: rgb(167, 227, 171);\n""border-radius: 8px;\n""}\n""QPushButton:hover { \n""background-color: rgb(55, 255, 0);\n""}")
-        self.pushButton_6.setText("")
-        self.pushButton_6.setObjectName("pushButton_2")
+        self.pushButton_9 = QtWidgets.QPushButton(self.frame)
+        self.pushButton_9.setGeometry(QtCore.QRect(930, 10, 16, 16))
+        self.pushButton_9.setMinimumSize(QtCore.QSize(16, 16))
+        self.pushButton_9.setMaximumSize(QtCore.QSize(17, 17))
+        self.pushButton_9.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.pushButton_9.setStyleSheet("QPushButton {\n""border: none;\n""background-color: rgb(167, 227, 171);\n""border-radius: 8px;\n""}\n""QPushButton:hover { \n""background-color: rgb(55, 255, 0);\n""}")
+        self.pushButton_9.setText("")
+        self.pushButton_9.setObjectName("pushButton_2")
 
         
         # btn cerrar
@@ -226,8 +231,19 @@ class Ui_MainWindow(object):
         self.lineEdit_5.setObjectName("lineEdit_5")
         self.lineEdit_5.setFont(font)
 
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(12)
+        font.setBold(True)
+
+        self.lineEdit_6 = QtWidgets.QLineEdit(self.centralwidget)
+        self.lineEdit_6.setGeometry(QtCore.QRect(900, 150, 51, 24))
+        self.lineEdit_6.setStyleSheet("background-color: rgb(242, 242, 242);\n""image: url(recursos/barra.png);\n""border:0px;\n""color:  rgb(232, 137, 137)")
+        self.lineEdit_6.setObjectName("lineEdit_6")
+        self.lineEdit_6.setFont(font)
+
         self.tableWidget = QtWidgets.QTableWidget(self.centralwidget)
-        self.tableWidget.setGeometry(QtCore.QRect(30, 311, 931, 200))
+        self.tableWidget.setGeometry(QtCore.QRect(30, 330, 931, 200))
         self.tableWidget.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.tableWidget.setStyleSheet("background-color: rgb(242, 242, 242);")
         self.tableWidget.setObjectName("tableWidget")
@@ -235,42 +251,70 @@ class Ui_MainWindow(object):
         self.tableWidget.setRowCount(0)
         self.tableWidget.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
         self.tableWidget_2 = QtWidgets.QTableWidget(self.centralwidget)
-        self.tableWidget_2.setGeometry(QtCore.QRect(90, 95, 823, 81))
+        self.tableWidget_2.setGeometry(QtCore.QRect(170, 120, 823, 81))
         self.tableWidget_2.setStyleSheet("background-color: rgb(242, 242, 242);")
         self.tableWidget_2.setObjectName("tableWidget_2")
         self.tableWidget_2.setColumnCount(0)
         self.tableWidget_2.setRowCount(0)
+
         self.pushButton = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton.setGeometry(QtCore.QRect(360, 230, 100, 50))
+        self.pushButton.setGeometry(QtCore.QRect(360, 255, 100, 50))
         self.pushButton.setStyleSheet("QPushButton {\n""border: 2px solid;\n""border-radius: 20px;\n""font: 12pt \"MS Shell Dlg 2\";\n""border-color: rgb(150, 173, 234);\n""color: \'#96ADEA\'\n""}\n""\n""QPushButton:hover {\n""background-color: rgb(150, 173, 234);\n""color: \'#ffffff\';\n""}\n""")
         self.pushButton.setObjectName("pushButton")
         self.pushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.pushButton_2 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_2.setGeometry(QtCore.QRect(490, 230, 100, 50))
+        self.pushButton_2.setGeometry(QtCore.QRect(490, 255, 100, 50))
         self.pushButton_2.setStyleSheet("QPushButton {\n""border: 2px solid;\n""color: \'#E88989\';\n""border-color: rgb(232, 137, 137);\n""border-radius: 20px;\n""font: 12pt \"MS Shell Dlg 2\";\n""\n""}\n""QPushButton:hover {\n""background-color: rgb(232, 137, 137);\n""color: \'#ffffff\'\n""\n""\n""}")
         self.pushButton_2.setObjectName("pushButton_2")
         self.pushButton_2.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.pushButton_3 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_3.setGeometry(QtCore.QRect(425, 560, 100, 50))
+        self.pushButton_3.setGeometry(QtCore.QRect(425, 575, 100, 50))
         self.pushButton_3.setStyleSheet("QPushButton {\n"" border: 2px solid;\n"" border-radius: 20px;\n"" font: 12pt \"MS Shell Dlg 2\";\n"" border-color: rgb(150, 173, 234);\n""    color: \'#96ADEA\'\n""}\n""\n""QPushButton:hover {\n""    background-color: rgb(150, 173, 234);\n""    color: \'#ffffff\';\n""}\n""/*\n""QPushButton:pressed {\n"" background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,\n"" stop: 0 #dadbde, stop: 1 #96adea);\n""\n""}*/")
         self.pushButton_3.setObjectName("pushButton_3")
         self.pushButton_3.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+
+
+        self.label_12 = QtWidgets.QLabel(self.centralwidget)
+        self.label_12.setGeometry(QtCore.QRect(10, 110, 80, 16))
+        self.label_12.setStyleSheet("color: \'#96ADEA\'\n""")
+        self.label_12.setObjectName("label_12")
+
         self.pushButton_5 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_5.setGeometry(QtCore.QRect(30, 95, 32, 32))
-        self.pushButton_5.setStyleSheet("background-color: rgb(242, 242, 242);\n""border:opx;\n""background-image : url(recursos/agregar.png);")
+        self.pushButton_5.setGeometry(QtCore.QRect(10, 127, 65, 40))
+        self.pushButton_5.setStyleSheet("QPushButton {\n""border: 2px solid;\n""border-radius: 15px;\n""font: 7pt \"MS Shell Dlg 2\";\n""border-color: rgb(150, 173, 234);\n""color: \'#96ADEA\'\n""}\n""\n""QPushButton:hover {\n""background-color: rgb(150, 173, 234);\n""color: \'#ffffff\';\n""}\n""")
         self.pushButton_5.setObjectName("pushButton_5")
         self.pushButton_5.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        
         self.pushButton_6 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_6.setGeometry(QtCore.QRect(30, 135, 32, 32))
-        self.pushButton_6.setStyleSheet("background-color: rgb(242, 242, 242);\n""border:opx;\n""background-image : url(recursos/quitar.png);")
+        self.pushButton_6.setGeometry(QtCore.QRect(85, 127, 65, 40))
+        self.pushButton_6.setStyleSheet("QPushButton {\n""border: 2px solid;\n""color: \'#E88989\';\n""border-color: rgb(232, 137, 137);\n""border-radius: 15px;\n""font: 7pt \"MS Shell Dlg 2\";\n""}\n""QPushButton:hover {\n""background-color: rgb(232, 137, 137);\n""color: \'#ffffff\'\n""\n""\n""}")
         self.pushButton_6.setObjectName("pushButton_6")
         self.pushButton_6.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+
+        self.label_13 = QtWidgets.QLabel(self.centralwidget)
+        self.label_13.setGeometry(QtCore.QRect(10, 174, 80, 16))
+        self.label_13.setStyleSheet("color: \'#96ADEA\'\n""")
+        self.label_13.setObjectName("label_12")
+
+        self.pushButton_10 = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_10.setGeometry(QtCore.QRect(10, 192, 65, 40))
+        self.pushButton_10.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.pushButton_10.setStyleSheet("QPushButton {\n""border: 2px solid;\n""border-radius: 15px;\n""font: 8pt \"MS Shell Dlg 2\";\n""border-color: rgb(150, 173, 234);\n""color: \'#96ADEA\'\n""}\n""\n""QPushButton:hover {\n""background-color: rgb(150, 173, 234);\n""color: \'#ffffff\';\n""}\n""")
+        self.pushButton_10.setObjectName("pushButton_10")
+
+        self.pushButton_11 = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_11.setGeometry(QtCore.QRect(85, 192, 65, 40))
+        self.pushButton_11.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.pushButton_11.setStyleSheet("QPushButton {\n""border: 2px solid;\n""color: \'#E88989\';\n""border-color: rgb(232, 137, 137);\n""border-radius: 15px;\n""font: 8pt \"MS Shell Dlg 2\";\n""}\n""QPushButton:hover {\n""background-color: rgb(232, 137, 137);\n""color: \'#ffffff\'\n""\n""\n""}")
+        self.pushButton_11.setObjectName("pushButton_11")
 
         font = QtGui.QFont()
         font.setFamily("Segoe UI")
         font.setPointSize(10)
         font.setBold(True)
         font.setWeight(75)
+
+
         
         self.label_2 = QtWidgets.QLabel(self.centralwidget)
         self.label_2.setGeometry(QtCore.QRect(200, 118, 111, 16))
@@ -307,6 +351,31 @@ class Ui_MainWindow(object):
         self.label.setFont(font)
         self.label.setStyleSheet("color: rgb(134, 155, 208);")
 
+        #label para interpolacion de hermite
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_11 = QtWidgets.QLabel(self.frame)
+        self.label_11.setGeometry(QtCore.QRect(870, 70, 100, 16))
+        self.label_11.setObjectName("label_11")
+        self.label_11.setFont(font)
+        self.label_11.setStyleSheet("color: rgb(134, 155, 208);")
+
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_14 = QtWidgets.QLabel(self.frame)
+        self.label_14.setGeometry(QtCore.QRect(900 ,130, 200, 16))
+        self.label_14.setObjectName("label_14")
+        self.label_14.setFont(font)
+        self.label_14.setStyleSheet("color: rgb(134, 155, 208);")
+
+       
+
         self.radioButton = QtWidgets.QRadioButton(self.centralwidget)
         self.radioButton.setGeometry(QtCore.QRect(620, 70, 82, 17))# posicion x , posicion y , largo, ancho
         self.radioButton.setObjectName("radioButton")
@@ -338,8 +407,8 @@ class Ui_MainWindow(object):
         self.pushButton_7.setToolTip(QCoreApplication.translate("MainWindow", u"Cerrar", None))
         self.pushButton_7.setText("")
 
-        self.pushButton_6.setToolTip(QCoreApplication.translate("MainWindow", u"Maximizar", None))
-        self.pushButton_6.setText("")
+        self.pushButton_9.setToolTip(QCoreApplication.translate("MainWindow", u"Maximizar", None))
+        self.pushButton_9.setText("")
 
 
         self.label_4.setText(_translate("MainWindow", "#1"))
@@ -347,11 +416,18 @@ class Ui_MainWindow(object):
         self.label_6.setText(_translate("MainWindow", "#3"))
         self.label_7.setText(_translate("MainWindow", "Numero de cifras significativas"))
         self.label_8.setText(_translate("MainWindow", "¿Que unidad?"))
+        self.label_14.setText(_translate("MainWindow", "Evaluar en: "))
         self.label_9.setText(_translate("MainWindow", "Seleccione el grado de la función spline"))
         self.label_10.setText("Analisis Numèrico")
+        self.label_12.setText(_translate("MainWindow","COLUMNAS:"))
         self.pushButton.setText(_translate("MainWindow", "CALCULAR"))
         self.pushButton_2.setText(_translate("MainWindow", "LIMPIAR"))
         self.pushButton_3.setText(_translate("MainWindow", "GRAFICAR"))
+        self.pushButton_5.setText(_translate("MainWindow", "AGREGAR \n""COLUMNA"))
+        self.pushButton_6.setText(_translate("MainWindow", "ELIMINAR \n""COLUMNA"))
+        self.pushButton_10.setText(_translate("MainWindow", "AGREGAR \n""FILA"))
+        self.pushButton_11.setText(_translate("MainWindow", "ELIMINAR \n""FILA"))
+        self.label_13.setText(_translate("MainWindows","FILAS"))
         self.comboBox.setItemText(0, _translate("MainWindow", "1"))
         self.comboBox.setItemText(1, _translate("MainWindow", "2"))
         self.comboBox.setItemText(2, _translate("MainWindow", "3"))
@@ -364,6 +440,8 @@ class Ui_MainWindow(object):
         self.pushButton_3.clicked.connect(self.graficar)
         self.pushButton_5.clicked.connect(self.control_agregar_columna_tabla_Unidad3)
         self.pushButton_6.clicked.connect(self.control_eliminar_columna_tabla_Unidad3)
+        self.pushButton_10.clicked.connect(self.control_agregar_fila_tabla_Unidad3)
+        self.pushButton_11.clicked.connect(self.control_eliminar_fila_tabla_Unidad3)
         self.tableWidget.setEditTriggers(QAbstractItemView.NoEditTriggers)
         self.tableWidget.setTextElideMode(Qt.ElideRight)
         self.tableWidget.setWordWrap(False)
@@ -403,13 +481,19 @@ class Ui_MainWindow(object):
         self.label_5.setVisible(False)
         self.label_6.setVisible(False)
         self.label_7.setVisible(False)
+        self.label_12.setVisible(False)
+        self.label_13.setVisible(False)
         self.lineEdit.setVisible(False)
         self.lineEdit_2.setVisible(False)
         self.lineEdit_3.setVisible(False)
         self.lineEdit_4.setVisible(False)
         self.lineEdit_5.setVisible(False)
+        self.lineEdit_6.setVisible(False)
         self.pushButton_5.setVisible(False)
         self.pushButton_6.setVisible(False)
+        self.pushButton_10.setVisible(False)
+        self.pushButton_11.setVisible(False)
+        self.label_14.setVisible(False)
         self.radioButton.setVisible(False)
         self.radioButton_2.setVisible(False)
         self.radioButton_3.setVisible(False)
@@ -588,7 +672,6 @@ class Ui_MainWindow(object):
         self.label_9.setVisible(False)
 
         if queUnidad == 0:
-
             
             # <---- dejamos solo los componentes que usa metodo punto fijo y los de newton -->
             self.label_4.setText("#1")
@@ -657,7 +740,6 @@ class Ui_MainWindow(object):
                 self.lineEdit_4.setVisible(False)
                 self.lineEdit_3.setVisible(False)
                 self.label_5.setVisible(False)
-                self.label_6.setVisible(False)
 
             elif queMetodo >= 7 and queMetodo <= 8:
                 # <---- dejamos solo los componentes que usa metodo de cero de polinomios --->
@@ -691,7 +773,6 @@ class Ui_MainWindow(object):
                 self.lineEdit_5.setVisible(True)
                 self.lineEdit_4.setVisible(True)
                 self.lineEdit.setVisible(True)
-                self.label_6.setVisible(True)
 
             elif queMetodo == 10:
 
@@ -710,17 +791,13 @@ class Ui_MainWindow(object):
 
                 self.lineEdit_5.setVisible(False)
                 self.lineEdit_4.setVisible(False)
-                self.label_6.setVisible(False)
                 self.label_7.setVisible(False)
 
         elif queUnidad == 2: #Configuramos la tabla
 
             global cuantasFilasYColumnas
-
-            #Deseleccionamos los radio button
-
-            
-            if queMetodo >= 1 and queMetodo <= 5:
+            if queMetodo >= 1 and queMetodo <= 6:
+                self.tableWidget_2.setGeometry(QtCore.QRect(170, 120, 704, 81))
                 self.label_9.setText("¿Desea ver el polinomio?")
                 self.radioButton.setAutoExclusive(False)
                 self.radioButton.setChecked(False)
@@ -736,9 +813,37 @@ class Ui_MainWindow(object):
                 self.radioButton_2.setText("No")
                 self.radioButton.setGeometry(QtCore.QRect(620, 70, 82, 17))
                 self.radioButton_2.setGeometry(QtCore.QRect(660,70,82,17))
-                
-                
-            else:
+                self.pushButton_5.setVisible(True)
+                self.pushButton_6.setVisible(True)
+                self.pushButton_10.setVisible(False)
+                self.pushButton_11.setVisible(False)
+                self.label_12.setVisible(True)
+                self.label_13.setVisible(False)
+                self.lineEdit_6.setVisible(False)
+                self.label_14.setVisible(False)
+
+            if queMetodo == 1:#Lineal
+                cuantasFilasYColumnas = 3
+                self.creacion_tabla_por_defecto_unidad3(4,0)     
+            elif queMetodo == 2:#Cuadratica
+                cuantasFilasYColumnas = 4
+                self.creacion_tabla_por_defecto_unidad3(5,0)
+            elif queMetodo == 3:#Lagrange
+                cuantasFilasYColumnas = 3
+                self.creacion_tabla_por_defecto_unidad3(4,0)
+            elif queMetodo == 4:#Newton
+                cuantasFilasYColumnas = 3
+                self.creacion_tabla_por_defecto_unidad3(4,0)
+            elif queMetodo == 5:#Hermite
+                self.tableWidget_2.setGeometry(QtCore.QRect(170, 120, 704, 116))
+                self.pushButton_10.setVisible(True)
+                self.pushButton_11.setVisible(True)
+                self.lineEdit_6.setVisible(True)
+                self.label_14.setVisible(True)
+                self.label_13.setVisible(True)
+                cuantasFilasYColumnas = 2
+                self.creacion_tabla_por_defecto_unidad3(3,1)
+            elif queMetodo == 6:#función spline
                 self.label_9.setText("Seleccione el grado de la función Spline")
                 self.radioButton.setAutoExclusive(False)
                 self.radioButton.setChecked(False)
@@ -746,6 +851,8 @@ class Ui_MainWindow(object):
                 self.radioButton_2.setAutoExclusive(False)
                 self.radioButton_2.setChecked(False)
                 self.radioButton_2.setAutoExclusive(True)
+                self.lineEdit_6.setVisible(True)
+                self.label_14.setVisible(True)
 
                 self.radioButton_3.setAutoExclusive(False)
                 self.radioButton_3.setChecked(False)
@@ -763,29 +870,14 @@ class Ui_MainWindow(object):
                 self.radioButton_2.setGeometry(QtCore.QRect(700,70,82,17))
                 self.radioButton_3.setVisible(True)
                 self.radioButton_4.setVisible(True)
-
-            if queMetodo == 1:#Lineal
+                self.tableWidget_2.setGeometry(QtCore.QRect(170, 120, 704, 81))
                 cuantasFilasYColumnas = 3
-                self.creacion_tabla_por_defecto_unidad3(4)     
-            elif queMetodo == 2:#Cuadratica
-                cuantasFilasYColumnas = 4
-                self.creacion_tabla_por_defecto_unidad3(5)
-            elif queMetodo == 3:#Lagrange
-                cuantasFilasYColumnas = 3
-                self.creacion_tabla_por_defecto_unidad3(4)
-            elif queMetodo == 4:#Newton
-                cuantasFilasYColumnas = 3
-                self.creacion_tabla_por_defecto_unidad3(4)
-            elif queMetodo == 5:#Hermite
-                cuantasFilasYColumnas = 3
-                self.creacion_tabla_por_defecto_unidad3(4)
-            elif queMetodo == 6:#función spline grado 0
-                cuantasFilasYColumnas = 3
-                self.creacion_tabla_por_defecto_unidad3(5)
+                self.creacion_tabla_por_defecto_unidad3(5,0)
 
     #Metodos que controlan las tablas ó que trabajan con las tablas 
-    def creacion_tabla_por_defecto_unidad3(self,columnas):
+    def creacion_tabla_por_defecto_unidad3(self,columnas,si_es_hermite):
         #Limpiamos la tabla
+
         self.tableWidget_2.setRowCount(0)
         self.tableWidget_2.setColumnCount(0)
 
@@ -798,30 +890,60 @@ class Ui_MainWindow(object):
         self.tableWidget_2.verticalHeader().setDefaultSectionSize(38)
         self.tableWidget_2.horizontalHeader().setDefaultSectionSize(60)
 
-        #Definimos las dimensiones 
-        self.tableWidget_2.setColumnCount(columnas)
-        self.tableWidget_2.setRowCount(2)
+        if si_es_hermite == 0:
+            #Definimos las dimensiones 
+            self.tableWidget_2.setColumnCount(columnas)
+            self.tableWidget_2.setRowCount(2)
 
-        #Mostramos los radio button
-        self.radioButton.setVisible(True)
-        self.radioButton_2.setVisible(True)
-        self.label_9.setVisible(True)
+            #Mostramos los radio button
+            self.radioButton.setVisible(True)
+            self.radioButton_2.setVisible(True)
+            self.label_9.setVisible(True)
 
-        for x in range(0,2):
-            for y in range(0,3):
-                if y == 0 and x == 0:
-                    salida = "    X"
-                    self.tableWidget_2.setItem(x, y, QtWidgets.QTableWidgetItem(salida))
-                    self.tableWidget_2.setColumnWidth(y, 8)
-                elif y == 0 and x == 1:
-                    salida = "    Y"
-                    self.tableWidget_2.setItem(x, y, QtWidgets.QTableWidgetItem(salida))
-                    self.tableWidget_2.setColumnWidth(y, 8)
-                else:
-                    salida = ""
-                    self.tableWidget_2.setItem(x, y, QtWidgets.QTableWidgetItem(salida))
+            for x in range(0,2):
+                for y in range(0,3):
+                    if y == 0 and x == 0:
+                        salida = "    X"
+                        self.tableWidget_2.setItem(x, y, QtWidgets.QTableWidgetItem(salida))
+                        self.tableWidget_2.setColumnWidth(y, 8)
+                    elif y == 0 and x == 1:
+                        salida = "    Y"
+                        self.tableWidget_2.setItem(x, y, QtWidgets.QTableWidgetItem(salida))
+                        self.tableWidget_2.setColumnWidth(y, 8)
+                    else:
+                        salida = ""
+                        self.tableWidget_2.setItem(x, y, QtWidgets.QTableWidgetItem(salida))
 
-        self.tableWidget_2.setVisible(True)
+            self.tableWidget_2.setVisible(True)
+
+        else:
+            #Definimos las dimensiones 
+            self.tableWidget_2.setColumnCount(columnas)
+            self.tableWidget_2.setRowCount(3)
+            self.tableWidget_2.verticalHeader().setDefaultSectionSize(38)
+            self.tableWidget_2.horizontalHeader().setDefaultSectionSize(100)
+
+             #Mostramos los radio button
+            self.radioButton.setVisible(True)
+            self.radioButton_2.setVisible(True)
+            self.label_9.setVisible(True)
+
+            for x in range(0,2):
+                for y in range(0,3):
+                    if y == 0 and x == 0:
+                        salida = "    X"
+                        self.tableWidget_2.setItem(x, y, QtWidgets.QTableWidgetItem(salida))
+                    elif y == 1 and x == 0:
+                        salida = "    Y"
+                        self.tableWidget_2.setItem(x, y, QtWidgets.QTableWidgetItem(salida))
+                    elif y == 2 and x == 0:
+                        salida = "    Y'"
+                        self.tableWidget_2.setItem(x, y, QtWidgets.QTableWidgetItem(salida))
+                    else:
+                        salida = ""
+                        self.tableWidget_2.setItem(x, y, QtWidgets.QTableWidgetItem(salida))
+
+            self.tableWidget_2.setVisible(True)
 
     def insertar_datos_a_tabla_unidad2(self,metodo):
 
@@ -832,7 +954,6 @@ class Ui_MainWindow(object):
         funcion = self.lineEdit.text()     #función a evaluar
         cifras  = self.lineEdit_5.text()   #numero de cifras significativas 
 
-        #Hacemos una pequeña validacion para corroborar que los valores seán correctos
 
         #Si nos devuelven la palabra: 'falsisimo' estan malos 
         x1Prueba = metodos.pedirValoresIniciales(x1)
@@ -880,7 +1001,6 @@ class Ui_MainWindow(object):
                     if row == 0: #Encabezado o header
                         salida = lst[row][column]
                         self.tableWidget.setItem(row, column, QtWidgets.QTableWidgetItem(str(salida)))
-                        self.tableWidget.item(row,column).setBackground(QtGui.QColor(11,133,192))
                         self.tableWidget.setColumnWidth(column, len_Col)
                     else:
                         if column == 0:
@@ -1174,7 +1294,7 @@ class Ui_MainWindow(object):
             else:
                 print("Seleccione una acción en los radio button")
 
-        elif metodo == 4:#Interpolacion de lagrange
+        elif metodo == 4:#Interpolacion de newton
 
             lst = metodos.interpolacionNewton(puntos[0], puntos[1], valor)
 
@@ -1209,21 +1329,99 @@ class Ui_MainWindow(object):
             else:
                 print("Seleccione una acción en los radio button")
 
+        elif metodo == 5:# polinomio de hermite
+            lst = metodos.interpolacionHermite(puntos, valor)
+
+            if self.radioButton.isChecked():
+
+                self.tableWidget.setColumnCount(2)
+                self.tableWidget.setRowCount(2)
+
+                self.tableWidget.setItem(0, 0, QtWidgets.QTableWidgetItem("Polinomio"))
+                self.tableWidget.setColumnWidth(0, 100)
+
+                self.tableWidget.setItem(0, 1, QtWidgets.QTableWidgetItem(str(lst[0])))
+                self.tableWidget.setColumnWidth(1, 830)
+
+                self.tableWidget.setItem(1, 0, QtWidgets.QTableWidgetItem("Resultado"))
+                self.tableWidget.setColumnWidth(0, 100)
+
+                self.tableWidget.setItem(1, 1, QtWidgets.QTableWidgetItem(str(lst[1])))
+                self.tableWidget.setColumnWidth(1, 830)
+
+            elif self.radioButton_2.isChecked():
+
+                self.tableWidget.setColumnCount(2)
+                self.tableWidget.setRowCount(1)
+
+                self.tableWidget.setItem(0, 0, QtWidgets.QTableWidgetItem("Valor"))
+                self.tableWidget.setColumnWidth(0, 100)
+
+                self.tableWidget.setItem(0, 1, QtWidgets.QTableWidgetItem(str(lst[1])))
+                self.tableWidget.setColumnWidth(1, 830)
+
+            else:
+                print("Seleccione una acción en los radio button")
+
+        elif metodo == 6:# funciones splines
+
+            if self.radioButton.isChecked(): #cero
+                lst = metodos.trazadoresCubicos(puntos[0],puntos[1], 0)
+
+            elif self.radioButton_2.isChecked():#uno
+                lst = metodos.trazadoresCubicos(puntos[0],puntos[1], 1)
+
+            elif self.radioButton_3.isChecked():#dos
+                lst = metodos.trazadoresCubicos(puntos[0],puntos[1], 2)
+
+            elif self.radioButton_4.isChecked():#tres
+                lst = metodos.trazadoresCubicos(puntos[0],puntos[1], 3)
+
+            else:
+                print("Seleccione una acción en los radio button")
+
+
     def control_agregar_columna_tabla_Unidad3(self):
         global  cuantasFilasYColumnas 
+        global etiquetaHermite
         metodo = self.comboBox_2.currentIndex()
 
         if metodo == 0:
             print("Seleccione un metodo primero ")
+
         elif metodo == 1:
             print("Solamente se puede trabajar con 2 puntos")
-        else:
-            if cuantasFilasYColumnas == 13:
-                print("Maximo numero de columnas alcanzado")
-            else:
-                self.tableWidget_2.insertColumn(cuantasFilasYColumnas+1)
-                cuantasFilasYColumnas += 1
 
+        else:
+
+            if metodo >= 1 and metodo <= 4:
+                if cuantasFilasYColumnas == 11:
+                    print("Maximo numero de columnas alcanzado")
+                else:
+                    self.tableWidget_2.insertColumn(cuantasFilasYColumnas+1)
+                    cuantasFilasYColumnas += 1
+
+            if metodo == 5:
+                if cuantasFilasYColumnas == 6:
+                    print("Maximo de columnas alcanzado")
+                else:
+                    if etiquetaHermite == "y'":
+                        etiquetaHermite += "'"
+                        salida = etiquetaHermite
+                    else:
+                        etiquetaHermite += "'"
+                        salida = etiquetaHermite
+                    
+                    self.tableWidget_2.insertColumn(cuantasFilasYColumnas+1)
+                    self.tableWidget_2.setItem(0, cuantasFilasYColumnas+1, QtWidgets.QTableWidgetItem(salida))
+                    cuantasFilasYColumnas += 1
+            if metodo == 6:
+                if cuantasFilasYColumnas == 10:
+                    print("Maximo de columnas alcanzado")
+                else:
+                    self.tableWidget_2.insertColumn(cuantasFilasYColumnas+1)
+                    cuantasFilasYColumnas += 1
+        
     def control_eliminar_columna_tabla_Unidad3(self):
         global cuantasFilasYColumnas
         metodo = self.comboBox_2.currentIndex()
@@ -1257,7 +1455,7 @@ class Ui_MainWindow(object):
                 cuantasFilasYColumnas = cuantasFilasYColumnas-1
 
         elif metodo == 5:#hermite
-            if cuantasFilasYColumnas == 3:
+            if cuantasFilasYColumnas == 2:
                 print("Se neecesitan al menos 2 puntos")
             else:
                 self.tableWidget_2.removeColumn(cuantasFilasYColumnas)
@@ -1270,115 +1468,173 @@ class Ui_MainWindow(object):
                 self.tableWidget_2.removeColumn(cuantasFilasYColumnas)
                 cuantasFilasYColumnas = cuantasFilasYColumnas-1
 
+    def control_agregar_fila_tabla_Unidad3(self):
+        global filasHermite
+        metodo = self.comboBox_2.currentIndex()
+
+        if metodo == 5:
+            self.tableWidget_2.insertRow(filasHermite+1)
+            filasHermite += 1
+
+    def control_eliminar_fila_tabla_Unidad3(self):
+        global filasHermite
+        if filasHermite == 2:
+            print("se necesitan de al menos un par de valores ")
+        else:
+            self.tableWidget_2.removeRow(filasHermite)
+            filasHermite = filasHermite - 1
+
     def encontrar_puntos_para_metodos_unidad3(self,metodo):
-        global cuantasFilasYColumnas 
+        global cuantasFilasYColumnas, filasHermite
         listaX = []
         listaY = []
         puntos = []
         listaXapoyo = []
         listaYapoyo = []
-       
-        #Agregamos los puntos a listas separadas 
-        for x in range(0,2):
-            for y in range(0,cuantasFilasYColumnas+1):
-                if x == 0:
-                    if y != 0:
-                        listaX.append(self.tableWidget_2.item(x,y).text())
-                elif x == 1:
-                    if y != 0:
-                        try:
-                            listaY.append(self.tableWidget_2.item(x,y).text())
-                        except:
-                            listaY.append('?')
+        listaValoresHermite = []
         
-        #Buscamos la posicion donde se desea interpolar
-        for i in range(0,len(listaY)):
-                if listaY[i] == '?':
-                    macht = i
+        if metodo == 5:
 
-        #Lineal
-        if metodo == 1: 
-
-            puntos_2 = []
-            puntos_2.append(listaX[macht-1])#X0
-            puntos_2.append(listaY[macht-1])#Y0
-            puntos_2.append(listaX[macht+1])#X1
-            puntos_2.append(listaY[macht+1])#Y1
-
-            puntos = []
-            puntos.append(puntos_2)
-
-            self.insertar_datos_a_tabla_unidad3(1,puntos,float(listaX[macht]))
-
-        #Cuadratica
-        elif metodo == 2:
-
-            #Creamos las listas que serian los pares x,y
-            for i in range(0,len(listaY)):
-                if listaY[i] != '?':
+            print(cuantasFilasYColumnas,filasHermite)
+            #Agregamos los puntos a listas separadas 
+            for x in range(0,cuantasFilasYColumnas+1):
+                listaX = []
+                listaXapoyo = []
+                for j in range(1,filasHermite+1):
                     try:
-                        esNumero = float(listaY[i])
-                        if esNumero<=0 or esNumero>=0:
-                            listaXapoyo.append(float(listaX[i]))
-                            listaYapoyo.append(float(listaY[i]))
+                        listaX.append(self.tableWidget_2.item(j,x).text())
                     except:
-                        funcion = "1*"+str(listaY[i])
-                        valor = metodos.evaluarFuncion(funcion,1,0,0)
-                        listaXapoyo.append(float(listaX[i]))
-                        listaYapoyo.append(float(valor))
-            
-            puntos = []
-            puntos.append(listaXapoyo)
-            puntos.append(listaYapoyo)
-
-            self.insertar_datos_a_tabla_unidad3(2,puntos,listaX[macht])
-
-        #lagrange
-        elif metodo == 3:
-
-            #Encontramos los puntos x,y
-            for i in range(0,len(listaY)):
-                if listaY[i] != '?':
-                    try:
-                        esNumero = float(listaY[i])
-                        if esNumero<=0 or esNumero>=0:
-                            listaXapoyo.append(float(listaX[i]))
-                            listaYapoyo.append(float(listaY[i]))
-                    except:
-                        funcion = "1*"+str(listaY[i])
-                        valor = metodos.evaluarFuncion(funcion,1,0,0)
-                        listaXapoyo.append(float(listaX[i]))
-                        listaYapoyo.append(float(valor))
-
-            puntos = []
-            puntos.append(listaXapoyo)
-            puntos.append(listaYapoyo)
-
-            self.insertar_datos_a_tabla_unidad3(3,puntos,float(listaX[macht]))
-
-        #Newton
-        elif metodo == 4:
-
-            #Encontramos los pares x,y
-            for i in range(0,len(listaY)):
-                if listaY[i] != '?':
-                    try:
-                        esNumero = float(listaY[i])
-                        if esNumero<=0 or esNumero>=0:
-                            listaXapoyo.append(float(listaX[i]))
-                            listaYapoyo.append(float(listaY[i]))
-                    except:
-                        funcion = "1*"+str(listaY[i])
-                        valor = metodos.evaluarFuncion(funcion,1,0,0)
-                        listaXapoyo.append(float(listaX[i]))
-                        listaYapoyo.append(float(valor))
+                        listaX.append('')
+                for x in listaX:
+                    if x == '':
+                        listaXapoyo.append(x)
+                    else:
+                        listaXapoyo.append(float(x))
                 
+                listaValoresHermite.append(listaXapoyo)
 
-            puntos = []
-            puntos.append(listaXapoyo)
-            puntos.append(listaYapoyo)
+            self.insertar_datos_a_tabla_unidad3(5,listaValoresHermite,self.lineEdit_6.text()) 
 
-            self.insertar_datos_a_tabla_unidad3(4,puntos,float(listaX[macht]))
+        elif metodo == 6:
+             #Agregamos los puntos a listas separadas 
+            for x in range(0,2):
+                for y in range(0,cuantasFilasYColumnas+1):
+                    if x == 0:
+                        listaX.append(self.tableWidget_2.item(x,y).text())
+                    elif x == 1:
+                        listaY.append(self.tableWidget_2.item(x,y).text())
+                
+            for i in listaX:
+                listaXapoyo.append(float(i))
+            
+            for i in listaY:
+                listaYapoyo.append(float(i))
+
+            puntos = [listaXapoyo,listaYapoyo]
+            self.insertar_datos_a_tabla_unidad3(6,puntos,self.lineEdit_6.text())
+          
+        else:
+            #Agregamos los puntos a listas separadas 
+            for x in range(0,2):
+                for y in range(0,cuantasFilasYColumnas+1):
+                    if x == 0:
+                        if y != 0:
+                            listaX.append(self.tableWidget_2.item(x,y).text())
+                    elif x == 1:
+                        if y != 0:
+                            try:
+                                listaY.append(self.tableWidget_2.item(x,y).text())
+                            except:
+                                listaY.append('?')
+            
+            #Buscamos la posicion donde se desea interpolar
+            for i in range(0,len(listaY)):
+                    if listaY[i] == '?':
+                        macht = i
+
+            #Lineal
+            if metodo == 1: 
+
+                puntos_2 = []
+                puntos_2.append(listaX[macht-1])#X0
+                puntos_2.append(listaY[macht-1])#Y0
+                puntos_2.append(listaX[macht+1])#X1
+                puntos_2.append(listaY[macht+1])#Y1
+
+                puntos = []
+                puntos.append(puntos_2)
+
+                self.insertar_datos_a_tabla_unidad3(1,puntos,float(listaX[macht]))
+
+            #Cuadratica
+            elif metodo == 2:
+
+                #Creamos las listas que serian los pares x,y
+                for i in range(0,len(listaY)):
+                    if listaY[i] != '?':
+                        try:
+                            esNumero = float(listaY[i])
+                            if esNumero<=0 or esNumero>=0:
+                                listaXapoyo.append(float(listaX[i]))
+                                listaYapoyo.append(float(listaY[i]))
+                        except:
+                            funcion = "1*"+str(listaY[i])
+                            valor = metodos.evaluarFuncion(funcion,1,0,0)
+                            listaXapoyo.append(float(listaX[i]))
+                            listaYapoyo.append(float(valor))
+                
+                puntos = []
+                puntos.append(listaXapoyo)
+                puntos.append(listaYapoyo)
+
+                self.insertar_datos_a_tabla_unidad3(2,puntos,listaX[macht])
+
+            #lagrange
+            elif metodo == 3:
+
+                #Encontramos los puntos x,y
+                for i in range(0,len(listaY)):
+                    if listaY[i] != '?':
+                        try:
+                            esNumero = float(listaY[i])
+                            if esNumero<=0 or esNumero>=0:
+                                listaXapoyo.append(float(listaX[i]))
+                                listaYapoyo.append(float(listaY[i]))
+                        except:
+                            funcion = "1*"+str(listaY[i])
+                            valor = metodos.evaluarFuncion(funcion,1,0,0)
+                            listaXapoyo.append(float(listaX[i]))
+                            listaYapoyo.append(float(valor))
+
+                puntos = []
+                puntos.append(listaXapoyo)
+                puntos.append(listaYapoyo)
+
+                self.insertar_datos_a_tabla_unidad3(3,puntos,float(listaX[macht]))
+
+            #Newton
+            elif metodo == 4:
+
+                #Encontramos los pares x,y
+                for i in range(0,len(listaY)):
+                    if listaY[i] != '?':
+                        try:
+                            esNumero = float(listaY[i])
+                            if esNumero<=0 or esNumero>=0:
+                                listaXapoyo.append(float(listaX[i]))
+                                listaYapoyo.append(float(listaY[i]))
+                        except:
+                            funcion = "1*"+str(listaY[i])
+                            valor = metodos.evaluarFuncion(funcion,1,0,0)
+                            listaXapoyo.append(float(listaX[i]))
+                            listaYapoyo.append(float(valor))
+                    
+
+                puntos = []
+                puntos.append(listaXapoyo)
+                puntos.append(listaYapoyo)
+
+                self.insertar_datos_a_tabla_unidad3(4,puntos,float(listaX[macht]))
 
     #Metodos que se controlan con los botones 
     def limpiar_Campos(self):
@@ -1398,12 +1654,16 @@ class Ui_MainWindow(object):
         self.tableWidget.clear()
         self.tableWidget_2.clear()
 
+        self.tableWidget.setRowCount(0)
+        self.tableWidget.setColumnCount(0)
+
     def calcular(self):
         unidad = self.comboBox.currentIndex()
         metodo = self.comboBox_2.currentIndex()
 
         if unidad   == 0: #Metodos de la unidad 1
             print("aun falta esta parte")
+
         elif unidad == 1: #Metodos de la unidad 2
             if metodo == 1: #Biseccion
                 self.insertar_datos_a_tabla_unidad2(1)
@@ -1427,16 +1687,22 @@ class Ui_MainWindow(object):
                 self.insertar_datos_a_tabla_unidad2(10)
             
         elif unidad == 2: #Metodos de la unidad 3
-            if metodo == 1:
+            if metodo == 1:# lineal
                 self.encontrar_puntos_para_metodos_unidad3(1)
-            elif metodo == 2:
+            elif metodo == 2:# cuadratica
                 self.encontrar_puntos_para_metodos_unidad3(2)
-            elif metodo == 3:
+            elif metodo == 3:# lagrange
                 self.encontrar_puntos_para_metodos_unidad3(3)
-            elif metodo == 4:
+            elif metodo == 4:# newton
                 self.encontrar_puntos_para_metodos_unidad3(4)
-
+            elif metodo == 5:# hermite
+                self.encontrar_puntos_para_metodos_unidad3(5)
+            elif metodo == 6:# funciones spline
+                self.encontrar_puntos_para_metodos_unidad3(6)
+                
     def graficar(self):
+        x = symbols('x')
+        y = symbols('y')
         queMetodo = self.comboBox_2.currentIndex()
         if queMetodo >= 0 and queMetodo <= 6 or queMetodo == 9:
             try:
@@ -1453,10 +1719,7 @@ class Ui_MainWindow(object):
                     else:
                         funcionFinal += funcion[i]
 
-                print(funcionFinal)
-                print(funcion)
-
-                p1 = plot(funcionFinal,show=False ,line_color='#96ADEA', ylabel='Y', xlabel= 'X',title=title,size=(6,5),xlim=(-25,25),ylim=(-25,25))
+                p1 = plot((funcionFinal,(x,-100,100)),box_background= 'red',show=False ,line_color='#96ADEA', ylabel='Y', xlabel= 'X',title=title,size=(6,5),xlim=(-25,25),ylim=(-25,25))
                 p1.show()
             except:
                 print("Algo salio mal")
