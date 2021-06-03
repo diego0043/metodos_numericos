@@ -446,7 +446,7 @@ class Ui_MainWindow(object):
         self.tableWidget.setTextElideMode(Qt.ElideRight)
         self.tableWidget.setWordWrap(False)
         self.tableWidget.setSortingEnabled(False)
-        self.tableWidget.verticalHeader().setDefaultSectionSize(20)
+        self.tableWidget.verticalHeader().setDefaultSectionSize(30)
         self.tableWidget_2.setVisible(False)
         self.radioButton.setText(_translate("MainWindow", "Grado #0"))
         self.radioButton_2.setText(_translate("MainWindow", "Grado #1"))
@@ -872,7 +872,7 @@ class Ui_MainWindow(object):
                 self.radioButton_4.setVisible(True)
                 self.tableWidget_2.setGeometry(QtCore.QRect(170, 120, 704, 81))
                 cuantasFilasYColumnas = 3
-                self.creacion_tabla_por_defecto_unidad3(5,0)
+                self.creacion_tabla_por_defecto_unidad3(4,0)
 
     #Metodos que controlan las tablas ó que trabajan con las tablas 
     def creacion_tabla_por_defecto_unidad3(self,columnas,si_es_hermite):
@@ -1366,20 +1366,54 @@ class Ui_MainWindow(object):
         elif metodo == 6:# funciones splines
 
             if self.radioButton.isChecked(): #cero
-                lst = metodos.trazadoresCubicos(puntos[0],puntos[1], 0)
+
+                lst = metodos.trazadoresCubicos(puntos[0],puntos[1], 0,valor)
+                rows = len(lst)
+                
+                self.tableWidget.setColumnCount(1)
+                self.tableWidget.setRowCount(rows)
+                for row in range(0,rows):
+                    self.tableWidget.setItem(row,0, QtWidgets.QTableWidgetItem(str(lst[row])))
+                    self.tableWidget.setColumnWidth(0,830)
 
             elif self.radioButton_2.isChecked():#uno
-                lst = metodos.trazadoresCubicos(puntos[0],puntos[1], 1)
+
+                lst = metodos.trazadoresCubicos(puntos[0],puntos[1], 1,valor)
+                rows = len(lst)
+
+                self.tableWidget.setColumnCount(1)
+                self.tableWidget.setRowCount(rows)
+
+                for row in range(0,rows):
+                    self.tableWidget.setItem(row,0, QtWidgets.QTableWidgetItem(str(lst[row])))
+                    self.tableWidget.setColumnWidth(0,830)
 
             elif self.radioButton_3.isChecked():#dos
-                lst = metodos.trazadoresCubicos(puntos[0],puntos[1], 2)
+
+                lst = metodos.trazadoresCubicos(puntos[0],puntos[1], 2,valor)
+                rows = len(lst)
+
+                self.tableWidget.setColumnCount(1)
+                self.tableWidget.setRowCount(rows)
+
+                for row in range(0,rows):
+                    self.tableWidget.setItem(row,0, QtWidgets.QTableWidgetItem(str(lst[row])))
+                    self.tableWidget.setColumnWidth(0,830)
 
             elif self.radioButton_4.isChecked():#tres
-                lst = metodos.trazadoresCubicos(puntos[0],puntos[1], 3)
+
+                lst = metodos.trazadoresCubicos(puntos[0],puntos[1], 3, valor)
+                rows = len(lst)
+
+                self.tableWidget.setColumnCount(1)
+                self.tableWidget.setRowCount(rows)
+
+                for row in range(0,rows):
+                    self.tableWidget.setItem(row,0, QtWidgets.QTableWidgetItem(str(lst[row])))
+                    self.tableWidget.setColumnWidth(0,830)
 
             else:
                 print("Seleccione una acción en los radio button")
-
 
     def control_agregar_columna_tabla_Unidad3(self):
         global  cuantasFilasYColumnas 
@@ -1518,7 +1552,7 @@ class Ui_MainWindow(object):
         elif metodo == 6:
              #Agregamos los puntos a listas separadas 
             for x in range(0,2):
-                for y in range(0,cuantasFilasYColumnas+1):
+                for y in range(1,cuantasFilasYColumnas+1):
                     if x == 0:
                         listaX.append(self.tableWidget_2.item(x,y).text())
                     elif x == 1:

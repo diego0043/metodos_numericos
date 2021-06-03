@@ -1542,7 +1542,7 @@ def resolverMatrices(lista,lista2): #metodo para resolver matrices
 
     return listaResultados
 
-def trazadoresCubicos(listaX, listaY, tipo):
+def trazadoresCubicos(listaX, listaY, tipo,valor):
 
     listaResultados = []
     intervalos = []
@@ -1594,10 +1594,13 @@ def trazadoresCubicos(listaX, listaY, tipo):
         solucionesEcuaciones = []
         for i in range(0, len(ecuacionesSimbolicas), 1):
             salida = "Intervalo " + \
-                str(intervalos[i])+" ----> "+str(ecuacionesSimbolicas[i])
+                str(intervalos[i])+" ----> "+str(ecuacionesSimbolicas[i]) + "; Valor: ----> " +\
+                    str(evaluarFuncion(ecuacionesSimbolicas[i],valor,0,0))
             solucionesEcuaciones.append(salida)
            # print(ecuacionesSimbolicas[i])
 
+        for i in solucionesEcuaciones:
+            listaResultados.append(i)
         return listaResultados
 
     elif tipo == 2:  # Funciones spline grado 2
@@ -1713,10 +1716,13 @@ def trazadoresCubicos(listaX, listaY, tipo):
         solucionesEcuaciones = []
         for i in range(0, len(ecuacionesSimbolicas), 1):
             salida = "Intervalo " + \
-                str(intervalos[i])+" ----> "+str(ecuacionesSimbolicas[i])
+                str(intervalos[i])+" ----> "+str(ecuacionesSimbolicas[i]) + "; Valor: "+\
+                    str(evaluarFuncion(ecuacionesSimbolicas[i],valor,0,0))
             solucionesEcuaciones.append(salida)
            # print(ecuacionesSimbolicas[i])
 
+        for i in solucionesEcuaciones:
+            listaResultados.append(i)
         return listaResultados
 
     elif tipo == 3:  # Funciones spline grado 3
@@ -1852,8 +1858,11 @@ def trazadoresCubicos(listaX, listaY, tipo):
         solucionesEcuaciones = []
         for i in range(0, len(ecuacionesSimbolicas), 1):
             salida = "Intervalo " + \
-                str(intervalos[i])+" ----> "+str(ecuacionesSimbolicas[i])
+                str(intervalos[i])+" ----> "+str(ecuacionesSimbolicas[i]) + "; Valor: "+\
+                    str(evaluarFuncion(ecuacionesSimbolicas[i],valor,0,0))
             solucionesEcuaciones.append(salida)
            # print(ecuacionesSimbolicas[i])
 
+        for i in solucionesEcuaciones:
+            listaResultados.append(i)
         return listaResultados
