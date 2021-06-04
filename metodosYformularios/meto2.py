@@ -1454,7 +1454,7 @@ def interpolacionHermite(lista_valores, punto_evaluar):
                 # Calculamos en que columna vamos para saber que derivada necesitamos
 
                 # Operacion realizada si da 0/0
-                valor = derivadasRepetidas[cualFilaEs] / \
+                valor = derivadasRepetidas[cualFilaEs-1] / \
                     math.factorial(cualColumnaEs)  # Error
 
             if j == 0:  # Agregamos el valor inicial a los valores de b
@@ -1515,14 +1515,16 @@ def interpolacionHermite(lista_valores, punto_evaluar):
 
         elif i == 1:
             variableAyuda = x-columna_deX[contador]
-            polinomio = polinomio+valores_b[i]*x-columna_deX[contador]
-            polinomios.append(valores_b[i]*x-columna_deX[contador])
+            #print("Variable ", i, ":", variableAyuda)
+            polinomio = polinomio+((valores_b[i])*(x-columna_deX[contador]))
+            polinomios.append((valores_b[i])*(x-columna_deX[contador]))
             contador += 1
 
         else:
-            variableAyuda = variableAyuda * (x-columna_deX[contador])
-            polinomio = polinomio+valores_b[i]*variableAyuda
-            polinomios.append(valores_b[i]*variableAyuda)
+            variableAyuda = ((variableAyuda) * (x-columna_deX[contador]))
+            #print("Variable ", i, ":", variableAyuda)
+            polinomio = polinomio+((valores_b[i])*(variableAyuda))
+            polinomios.append((valores_b[i])*(variableAyuda))
             contador += 1
 
     polinomio2 = sp.expand(polinomio)
@@ -1558,7 +1560,16 @@ def trazadoresCubicos(listaX, listaY, tipo,valor):
         intervalorsY.append([listaY[i], listaY[i+1]])
 
     if tipo == 0: #funcion spline grado cero
-        print("función spline de grado cero")
+        solucionesEcuaciones = []
+        for i in range(0, len(intervalos), 1):
+            salida = "Intervalo " + \
+                str(intervalos[i])+" ----> "+str(listaY[i])
+            solucionesEcuaciones.append(salida)
+
+        for i in solucionesEcuaciones:
+            listaResultados.append(i)
+        
+        return listaResultados
 
     elif tipo == 1: #funcion spline grado 1
 

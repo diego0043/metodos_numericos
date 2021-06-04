@@ -175,9 +175,9 @@ class Ui_MainWindow(object):
         self.label_9.setStyleSheet("color: rgb(134, 155, 208);")
 
         self.comboBox = QtWidgets.QComboBox(self.centralwidget)
-        self.comboBox.setGeometry(QtCore.QRect(10, 70, 40, 22))
+        self.comboBox.setGeometry(QtCore.QRect(10, 65, 60, 23))
         self.comboBox.setObjectName("comboBox")
-        self.comboBox.setStyleSheet(u"QComboBox {\n""border: 1px solid;\n""border-radius: 7px;\n""border-color: rgb(232, 137, 137);\n""background-color: rgb(242, 242, 242);\n""color : rgb(232, 137, 137);\n""\n""}\n""QComboBox QAbstractItemView {\n""border:  rgb(232, 137, 137)';\n""selection-background-color: rgb(232, 137, 137);\n""background-color: rgb(242, 242, 242);\n""color: 'ffffff'\n""}\n""QComboBox:hover{\n""border-color: #ff0000;\n""background-color: rgb(211, 46, 84);\n""\n""}\n""\n""")
+        self.comboBox.setStyleSheet("QComboBox{\n""background-color: rgb(242, 242, 242);\n""border-radius: 5px;\n""border: 2px solid rgb(232, 137, 137);\n""padding: 5px;\n""padding-left: 10px;\n""color: rgb(216, 55, 55)\n""}\n""QComboBox:hover{\n""border: 2px solid rgb(216, 55, 55);\n""border_left-color: rgb(215,55,55);\n""}\n""QComboBox::drop-down {\n""subcontrol-origin: padding;\n""subcontrol-position: top right;\n""width: 25px; \n""border-left-width: 3px;\n""border-left-color: rgb(232, 137, 137);\n""border-left-style: solid;\n""border-top-right-radius: 3px;\n""border-bottom-right-radius: 3px;    \n""background-image: url(recursos/row_baja.png);\n""background-position: center;\n""background-repeat: no-reperat;\n"" }\n""QComboBox QAbstractItemView {\n""color: rgb(216, 55, 55);    \n""background-color: rgb(242, 242, 242);\n""padding: 5px;\n""selection-background-color: rgb(232, 137 , 137);\n""}\n""")
         self.comboBox.addItem("")
         self.comboBox.addItem("")
         self.comboBox.addItem("")
@@ -334,9 +334,9 @@ class Ui_MainWindow(object):
         self.lineEdit.setFont(font)
 
         self.comboBox_2 = QtWidgets.QComboBox(self.centralwidget)
-        self.comboBox_2.setGeometry(QtCore.QRect(180, 80, 160, 22))
+        self.comboBox_2.setGeometry(QtCore.QRect(180, 80, 170, 35))
         self.comboBox_2.setObjectName("comboBox_2")
-        self.comboBox_2.setStyleSheet(u"QComboBox {\n""border: 1px solid;\n""border-radius: 7px;\n""border-color: rgb(232, 137, 137);\n""background-color: rgb(242, 242, 242);\n""color : rgb(232, 137, 137);\n""\n""}\n""QComboBox QAbstractItemView {\n""border:  rgb(232, 137, 137)';\n""selection-background-color: rgb(232, 137, 137);\n""background-color: rgb(242, 242, 242);\n""color: 'ffffff'\n""}\n""QComboBox:hover{\n""border-color: #ff0000;\n""background-color: rgb(211, 46, 84);\n""\n""}\n""\n""")
+        self.comboBox_2.setStyleSheet("QComboBox{\n""background-color: rgb(242, 242, 242);\n""border-radius: 5px;\n""border: 2px solid rgb(232, 137, 137);\n""padding: 5px;\n""padding-left: 10px;\n""color: rgb(216, 55, 55)\n""}\n""QComboBox:hover{\n""border: 2px solid rgb(216, 55, 55);\n""border_left-color: rgb(215,55,55);\n""}\n""QComboBox::drop-down {\n""subcontrol-origin: padding;\n""subcontrol-position: top right;\n""width: 25px; \n""border-left-width: 3px;\n""border-left-color: rgb(232, 137, 137);\n""border-left-style: solid;\n""border-top-right-radius: 3px;\n""border-bottom-right-radius: 3px;    \n""background-image: url(recursos/row_baja.png);\n""background-position: center;\n""background-repeat: no-reperat;\n"" }\n""QComboBox QAbstractItemView {\n""color: rgb(216, 55, 55);    \n""background-color: rgb(242, 242, 242);\n""padding: 5px;\n""selection-background-color: rgb(232, 137 , 137);\n""}\n""")
         self.comboBox_2.activated[str].connect(self.metodos_de_cada_unidad)
 
         font = QtGui.QFont()
@@ -377,17 +377,25 @@ class Ui_MainWindow(object):
        
 
         self.radioButton = QtWidgets.QRadioButton(self.centralwidget)
-        self.radioButton.setGeometry(QtCore.QRect(620, 70, 82, 17))# posicion x , posicion y , largo, ancho
+        self.radioButton.setGeometry(QtCore.QRect(620, 78, 82, 23))# posicion x , posicion y , largo, ancho
         self.radioButton.setObjectName("radioButton")
+        self.radioButton.setStyleSheet("QRadioButton::indicator {\n""border: 2px solid #96adea;\n""width: 15px;\n""height: 15px;\n""border-radius: 9px;\n""background: rgb(242,242,242);\n""}\n""QRadioButton::indicator:hover {\n""border: 2px solid #7284b1;\n""}\n""QRadioButton::indicator:checked {\n""background: 2px solid #96adea;\n""border: 2px solid #7284b1;    \n""}\n""")
+     
         self.radioButton_2 = QtWidgets.QRadioButton(self.centralwidget)
-        self.radioButton_2.setGeometry(QtCore.QRect(700, 70, 82, 17))
+        self.radioButton_2.setGeometry(QtCore.QRect(700, 78, 82, 23))
         self.radioButton_2.setObjectName("radioButton_2")
+        self.radioButton_2.setStyleSheet("QRadioButton::indicator {\n""border: 2px solid #96adea;\n""width: 15px;\n""height: 15px;\n""border-radius: 9px;\n""background: rgb(242,242,242);\n""}\n""QRadioButton::indicator:hover {\n""border: 2px solid #7284b1;\n""}\n""QRadioButton::indicator:checked {\n""background: 2px solid #96adea;\n""border: 2px solid #7284b1;    \n""}\n""")
+
         self.radioButton_3 = QtWidgets.QRadioButton(self.centralwidget)
-        self.radioButton_3.setGeometry(QtCore.QRect(780, 70, 82, 17))
+        self.radioButton_3.setGeometry(QtCore.QRect(780, 78, 82, 23))
         self.radioButton_3.setObjectName("radioButton")
+        self.radioButton_3.setStyleSheet("QRadioButton::indicator {\n""border: 2px solid #96adea;\n""width: 15px;\n""height: 15px;\n""border-radius: 9px;\n""background: rgb(242,242,242);\n""}\n""QRadioButton::indicator:hover {\n""border: 2px solid #7284b1;\n""}\n""QRadioButton::indicator:checked {\n""background: 2px solid #96adea;\n""border: 2px solid #7284b1;    \n""}\n""")
+
         self.radioButton_4 = QtWidgets.QRadioButton(self.centralwidget)
-        self.radioButton_4.setGeometry(QtCore.QRect(860, 70, 82, 17))
+        self.radioButton_4.setGeometry(QtCore.QRect(860, 78, 82, 23))
         self.radioButton_4.setObjectName("radioButton")
+        self.radioButton_4.setStyleSheet("QRadioButton::indicator {\n""border: 2px solid #96adea;\n""width: 15px;\n""height: 15px;\n""border-radius: 9px;\n""background: rgb(242,242,242);\n""}\n""QRadioButton::indicator:hover {\n""border: 2px solid #7284b1;\n""}\n""QRadioButton::indicator:checked {\n""background: 2px solid #96adea;\n""border: 2px solid #7284b1;    \n""}\n""")
+
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
@@ -515,7 +523,7 @@ class Ui_MainWindow(object):
         self.label_9.setVisible(False)
         
         if cual == 0: #Metodos de la primera unidad 
-            self.comboBox_2.setGeometry(QtCore.QRect(200, 80, 161, 21))
+            self.comboBox_2.setGeometry(QtCore.QRect(200, 80, 172, 24))
             
             # Siempre limpiamos el combobox para evitar duplicados o cosas raras
             self.comboBox_2.clear()
@@ -570,7 +578,7 @@ class Ui_MainWindow(object):
             self.label.setVisible(True)
 
         elif cual == 1:  # Metodos de la segunda unidad
-            self.comboBox_2.setGeometry(QtCore.QRect(200, 80, 141, 21))
+            self.comboBox_2.setGeometry(QtCore.QRect(200, 80, 172, 24))
             # Siempre limpiamos el combobox para evitar duplicados o cosas raras
             self.comboBox_2.clear()
             self.comboBox_2.addItem("")
@@ -621,7 +629,7 @@ class Ui_MainWindow(object):
             self.label.setVisible(True)
         
         elif cual == 2: #Metodos de la unidad 3
-            self.comboBox_2.setGeometry(QtCore.QRect(360, 45, 161, 21))
+            self.comboBox_2.setGeometry(QtCore.QRect(360, 45, 172, 24))
 
             self.comboBox_2.clear()
             self.comboBox_2.addItem("")
@@ -811,8 +819,8 @@ class Ui_MainWindow(object):
                 self.radioButton_4.setAutoExclusive(False)
                 self.radioButton.setText("Si")
                 self.radioButton_2.setText("No")
-                self.radioButton.setGeometry(QtCore.QRect(620, 70, 82, 17))
-                self.radioButton_2.setGeometry(QtCore.QRect(660,70,82,17))
+                self.radioButton.setGeometry(QtCore.QRect(620, 78, 82, 23))
+                self.radioButton_2.setGeometry(QtCore.QRect(660,78,82,23))
                 self.pushButton_5.setVisible(True)
                 self.pushButton_6.setVisible(True)
                 self.pushButton_10.setVisible(False)
@@ -866,8 +874,8 @@ class Ui_MainWindow(object):
                 self.radioButton_2.setText("Grado #1")
                 self.radioButton_3.setText("Grado #2")
                 self.radioButton_4.setText("Grado #3")
-                self.radioButton.setGeometry(QtCore.QRect(620, 70, 82, 17))
-                self.radioButton_2.setGeometry(QtCore.QRect(700,70,82,17))
+                self.radioButton.setGeometry(QtCore.QRect(620, 78, 82, 23))
+                self.radioButton_2.setGeometry(QtCore.QRect(700,78,82,23))
                 self.radioButton_3.setVisible(True)
                 self.radioButton_4.setVisible(True)
                 self.tableWidget_2.setGeometry(QtCore.QRect(170, 120, 704, 81))
