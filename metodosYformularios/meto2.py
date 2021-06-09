@@ -4,8 +4,9 @@ import numpy as np
 import math
 import cmath
 import re
-from sympy import cos, sin, tan, cot, sec, csc, sinh, cosh, tanh, csch, sech, coth
+from sympy import cos, sin, tan, cot, sec, csc, sinh, cosh, tanh, csch, sech, coth, ln
 from numpy.polynomial import Polynomial as P
+from sympy.core.function import expand
 from sympy.simplify.radsimp import numer
 
 
@@ -1378,6 +1379,7 @@ def interpolacionHermite(lista_valores, punto_evaluar):
     valores_b = []  # Se guardaran todos los valores de b (b0,b1,b2)
 
     columna_deX = []  # Aqui se guardaran los valores de x y sus repeticiones si tenen derivadas
+    cualXEs = []  # Aqui se guardaran las posiciones de las x repetidamente, dependiendo de que fila sea
 
     # Se utilizara para repetir los valores de derivada que utilizaremos en la tabla mas adelante
     derivadasRepetidas = []
@@ -1390,6 +1392,7 @@ def interpolacionHermite(lista_valores, punto_evaluar):
 
     # Hasta cuantas derivadas hay de cada derivada
     for i in range(0, len(valores_derivadas[contador]), 1):
+        cualXEs.append(i)
         # Agregando valores de la columna de X a columna_deX con todas sus repeticiones
         columna_deX.append(valores_x[contadorColumna])
         # Llenamos la columna_calculada con los valores de F(x) correspondientes
@@ -1401,6 +1404,7 @@ def interpolacionHermite(lista_valores, punto_evaluar):
                 # derivadasRepetidas.append("")
                 break
             else:
+                cualXEs.append(i)
                 # Agregando valores de la columna de X a columna_deX con todas sus repeticiones
                 columna_deX.append(valores_x[contadorColumna])
                 # Llenamos la columna_calculada con los valores de F(x) correspondientes
@@ -1453,9 +1457,12 @@ def interpolacionHermite(lista_valores, punto_evaluar):
             except ZeroDivisionError:
                 # Calculamos en que columna vamos para saber que derivada necesitamos
 
-                # Operacion realizada si da 0/0
-                valor = derivadasRepetidas[cualFilaEs-1] / \
-                    math.factorial(cualColumnaEs)  # Error
+               # Operacion realizada si da 0/0
+                for k in range(0, len(valores_derivadas), 1):
+                    if k == (cualColumnaEs-1):
+                        print(k)
+                        valor = valores_derivadas[k][cualXEs[cualFilaEs]] \
+                            / math.factorial(cualColumnaEs)
 
             if j == 0:  # Agregamos el valor inicial a los valores de b
                 valores_b.append(valor)
@@ -1877,3 +1884,51 @@ def trazadoresCubicos(listaX, listaY, tipo,valor):
         for i in solucionesEcuaciones:
             listaResultados.append(i)
         return listaResultados
+
+def encontrarDerivada(funcion,queDerivada):
+    print("derivacion")
+    funcioon = sp.sympify(funcion)
+    gxValor = sp.diff(funcioon, x,queDerivada)
+    return gxValor
+  
+def diferenciacionNumericaAdelante(funcion,puntoInicial,h):
+    listaResultados = [] #lista donde estaran las respuestas 
+
+    #lista donde guardamos los valores de la primera diferencia
+
+    #variables donde guardaremos el numerador
+    numerador1 = 0
+
+    numerador1 = evaluarFuncion(funcion,puntoInicial+h,0,0) + evaluarFuncion(funcion,puntoInicial,0,0)*(-1)
+
+    #guardamos la primera diferencia
+    listaResultados.append((numerador1)/h)
+
+
+    numerador1 = evaluarFuncion(funcion,puntoInicial+(2*h),0,0)*(-1) + evaluarFuncion(funcion,puntoInicial+h,0,0)*(4) + evaluarFuncion(funcion,puntoInicial,0,0)*(-3)
+    numerador2 = sp.expand_log(numerador1,force=True)
+    #guardamos la segunda diferencia 
+    listaResultados.append(numerador2/(2*h))
+
+    print(listaResultados)
+
+    
+
+    #calculamos los errores para la primera y la segunda diferencia 
+
+    lista_errores = []
+    valor_verdadero = evaluarFuncion(funcion,puntoInicial,1,1)
+    valor_apro1 = listaResultados[0]
+    valor_apro2 = listaResultados[1]
+
+    #primer error 
+    listaResultados.append(abs((valor_verdadero-valor_apro1)/valor_verdadero))
+    listaResultados.append(listaResultados[2]*100)
+
+    #segundo error 
+    listaResultados.append(abs((valor_verdadero-valor_apro2)/valor_verdadero))
+    listaResultados.append(listaResultados[4]*100)
+
+   # for i in listaResultados:
+       # print(i)
+
