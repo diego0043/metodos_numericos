@@ -11,6 +11,16 @@ p1 = plot(funcion,show=False ,line_color='#96ADEA', ylabel='Y', xlabel= 'X',titl
 p1.show()
 '''
 
-from metodosYformularios import meto2 
+from metodosYformularios import metodos_unidad_4
+from fractions import Fraction
+import decimal
 
-meto2.diferenciacionNumericaAdelante('ln(x)',5,0.1)
+#metodos_unidad_4.diferenciacionNumericaAdelante('ln(x)',5,0.1)
+
+#metodos_unidad_4.diferenciacionNumericaAtras('ln(x)',5,0.05)
+
+#lista_valores = [[1,1.1,1.2,1.3,1.4,1.5],[2.5,2.436851,2.372895,2.308785,2.245066,2.182179]]
+#metodos_unidad_4.diferenciacionNumericaCentrada('',1.3,0.1,lista_valores)   
+
+#metodos_unidad_4.diferenciacionNumericaTresPuntos('ln(x)*sin(x)',3,0.1,[])
+metodos_unidad_4.diferenciacionNumericaCincoPuntos('ln(x)*tan(x)',4.2,0.1,[])

@@ -9,7 +9,7 @@ from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont, QFo
 from PySide2.QtWidgets import *
 from sympy.core.symbol import symbols
 from metodosYformularios import *
-import metodosYformularios.meto2 as metodos
+import metodosYformularios.metodos_Unidad_2y3 as metodos
 import matplotlib.pyplot as plt
 import numpy as np
 import math as mt
