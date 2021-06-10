@@ -23,4 +23,14 @@ import decimal
 #metodos_unidad_4.diferenciacionNumericaCentrada('',1.3,0.1,lista_valores)   
 
 #metodos_unidad_4.diferenciacionNumericaTresPuntos('ln(x)*sin(x)',3,0.1,[])
-metodos_unidad_4.diferenciacionNumericaCincoPuntos('ln(x)*tan(x)',4.2,0.1,[])
+#metodos_unidad_4.diferenciacionNumericaCincoPuntos('ln(x)*tan(x)',4.2,0.1,[])
+#metodos_unidad_4.diferenciacion_numerica_adelante_orden_superior('cos(x)',2,0.1,[])
+
+
+#salida = metodos_unidad_4.metodo_richardson('ln(x)',0.7,0.1,5)
+
+#for i in salida:
+    #
+    # print(i)
+
+salida = metodos_unidad_4.regla_del_trapecio_simple('e^(x^2)',0,1)
