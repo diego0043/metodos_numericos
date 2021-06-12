@@ -717,6 +717,8 @@ def regla_del_trapecio_compuesta(funcion,a,b,intervalos): #Diego
 
 def integracion_simpson_unTercio_simple(): #Milton
     print("falta")
+    for i in range(0,10):
+        print(i)
 
 def integracion_simpson_unTercio_compuesta(): #Milton
     print("falta")
@@ -738,3 +740,4 @@ def integracion_simpson_unTercio_adaptativo(): #kelvin
 
 def ultimo():  #kelvin
     print("me toco a mi")
+    print("algo")
