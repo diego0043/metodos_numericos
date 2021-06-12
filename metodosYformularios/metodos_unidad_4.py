@@ -471,6 +471,7 @@ def diferenciacion_numerica_cinco_puntos(funcion,puntoInicial,h,tablaValores):
 
 # <------------- Derivadas de orden superior --------------------->
 
+ ## falta ##
 def diferenciacion_numerica_adelante_orden_superior(funcion,puntoInicial,h,tablaValores):
     listaResultados = [] #lista donde estaran las respuestas 
     salida = ''
@@ -710,6 +711,30 @@ def regla_del_trapecio_simple(funcion,a,b):
 
     return listaResultados
 
-def regla_del_trapecio_compuesta(funcion,a,b,intervalos):
+def regla_del_trapecio_compuesta(funcion,a,b,intervalos): #Diego
     print("luego")
     print("w")
+
+def integracion_simpson_unTercio_simple(): #Milton
+    print("falta")
+
+def integracion_simpson_unTercio_compuesta(): #Milton
+    print("falta")
+
+def integracion_simpson_tresOctavos_simple(): #Milton
+    print("falta")
+
+def integracion_simpson_tresOctavos_compuesta(): #Milton
+    print("falta")
+
+def integracion_rosemberg(): #Diego
+    print("falta")
+
+def integracion_gauss(): #Diego
+    print("falta")
+
+def integracion_simpson_unTercio_adaptativo(): #kelvin
+    print("falta")
+
+def ultimo():  #kelvin
+    print("falta")
