@@ -729,6 +729,8 @@ def integracion_simpson_tresOctavos_compuesta(): #Milton
 
 def integracion_rosemberg(): #Diego
     print("falta")
+    for i in range(0,100000000):
+        print("jj")
 
 def integracion_gauss(): #Diego
     print("falta")
