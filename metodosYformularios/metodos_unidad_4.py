@@ -712,4 +712,4 @@ def regla_del_trapecio_simple(funcion,a,b):
 
 def regla_del_trapecio_compuesta(funcion,a,b,intervalos):
     print("luego")
-
+    print("w")
