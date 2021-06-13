@@ -701,7 +701,7 @@ def metodo_richardson(funcion,puntoInicial,h,nivel):
 
 # <------------- Integración numérica --------------------->
 
-def regla_del_trapecio_simple(funcion,a,b,tablaValores): #Diego
+def regla_del_trapecio_simple(funcion,a,b,tablaValores):
     listaResultados = []
 
     if funcion != '':
@@ -728,7 +728,7 @@ def regla_del_trapecio_simple(funcion,a,b,tablaValores): #Diego
         else:
             print("Para resolver mediante el trapecio simple solo se utilizan 2 puntos")
 
-def regla_del_trapecio_compuesta(funcion,a,b,n,tablaValores): #Diego
+def regla_del_trapecio_compuesta(funcion,a,b,n,tablaValores):
     
     #respuesta
     listaResultados = []
@@ -912,21 +912,190 @@ def trapecio_para_dobles_y_triples(funcion,lista_a,lista_b,n,orden_integral):
         print('valor encontrado: ------------> ',resultado)
         return listaResultados
 
-def integracion_simpson_unTercio_simple(): #Milton
-    print("falta")
-    for i in range(0,10):
-        print(i)
+def integracion_simpson_unTercio_simple(funcion, a, b, listaX, listaY):
 
-def integracion_simpson_unTercio_compuesta(): #Milton
-    print("falta")
+    # Variables a utilizar
+    puntoMedio = (a + b)/2
+    respuesta = 0
 
-def integracion_simpson_tresOctavos_simple(): #Milton
-    print("falta")
+    # Si el usuario solo digito una funcion se realiza por el if:
+    if funcion != "":
 
-def integracion_simpson_tresOctavos_compuesta(): #Milton
-    print("falta")
+        # Realizas la evaluacion de los puntos en la funcion
+        funcion_Evaludad_En_A = evaluarFuncion(funcion, a, 0, 0)
+        funcion_Evaludad_En_B = evaluarFuncion(funcion, b, 0, 0)
+        funcion_Evaludad_En_PM = evaluarFuncion(funcion, puntoMedio, 0, 0)
 
-def integracion_rosemberg(funcion,a,b,nivel): #Diego
+        # Realizamos la formula de integracion de simpson
+        respuesta = (b-a)*((funcion_Evaludad_En_A +
+                           (4*funcion_Evaludad_En_PM)+funcion_Evaludad_En_B)/6)
+
+        return respuesta
+
+    # Si el usuario digito los valores de la tabla se realiza el else:
+    else:
+        # Realizamos la formula de integracion de simpson
+        respuesta = (listaX[2]-listaX[0]
+                     )((listaY[0]+(4*listaY[1])+listaY[2])/6)
+
+        return respuesta
+
+def integracion_simpson_unTercio_compuesta(funcion, a, b, n_Intervalos, valoresX, valoresY):
+
+    # Variables a utilizar
+    h = (b - a)/n_Intervalos  # Distanca de separacion entre punto y punto
+    listaX = []  # Aqui guardaremos todos los x
+    lista_Puntos_Medios = []
+    lista_Puntos_Medios_Funciones = []
+    listaX_Evaluados = []  # Aqui guardaremos todos los x evaluados en la funcion
+    valor_X_Proximo = 0  # variable auxiliadora para calcular los x
+    # variable auxiliadora para calcular los x evaluados en f(x)
+    valor_X_Funcion_Proximo = 0
+    sumatoria_Fx = 0  # aqui sumaremos todos los f(x)
+    # aqui sumaremos todos los f(x) de los puentos medios
+    sumatoria_Fx_Medios = 0
+    respuesta = 0
+
+    if funcion != "" and len(valoresX) == 0:
+        listaX.append(a)  # Agregamos la primera x
+        listaX_Evaluados.append(evaluarFuncion(funcion, a, 0, 0))
+
+        # For para calcular valore de X
+        for i in range(0, n_Intervalos, 1):
+
+            valor_X_Proximo = listaX[i] + h  # Calculamos los x
+
+            listaX.append(valor_X_Proximo)  # Agregamos los x a esta lista
+
+        # For para calcular valore de X en la funcion
+        for i in range(0, len(listaX)-1, 1):
+
+            valor_X_Funcion_Proximo = evaluarFuncion(
+                funcion, listaX[i+1], 0, 0)  # Calculamos los x
+
+            # Agregamos los x a esta lista
+            listaX_Evaluados.append(valor_X_Funcion_Proximo)
+
+        # Hacemos la suma de todos los f(x) de los x
+        for i in range(1, len(listaX_Evaluados)-1, 1):
+            sumatoria_Fx += listaX_Evaluados[i]
+
+        # Sacamos los puntos medios
+        for i in range(0, len(listaX)-1, 1):
+
+            lista_Puntos_Medios.append(
+                (listaX[i]+listaX[i+1])/2)
+
+        # Sacamos los valores de los puntos medios evaluadosen la funcion
+        for i in range(0, len(lista_Puntos_Medios), 1):
+
+            lista_Puntos_Medios_Funciones.append(evaluarFuncion(
+                funcion, lista_Puntos_Medios[i], 0, 0))
+
+            sumatoria_Fx_Medios += evaluarFuncion(
+                funcion, lista_Puntos_Medios[i], 0, 0)
+
+        respuesta = (b-a)*((listaX[0]+(4*sumatoria_Fx_Medios) +
+                           (2*sumatoria_Fx)+listaX[len(listaX)-1])/(6*n_Intervalos))
+
+        print(respuesta)
+
+    else:
+        # Hacemos la suma de todos los f(x) de los x
+        for i in range(1, len(valoresY)-1, 1):
+            sumatoria_Fx += valoresY[i]
+
+        # Sacamos los puntos medios
+        for i in range(0, len(valoresX)-1, 1):
+
+            lista_Puntos_Medios.append(
+                (valoresX[i]+valoresX[i+1])/2)
+
+        # Sacamos los valores de los puntos medios evaluadosen la funcion
+        for i in range(0, len(lista_Puntos_Medios), 1):
+
+            lista_Puntos_Medios_Funciones.append(evaluarFuncion(
+                funcion, lista_Puntos_Medios[i], 0, 0))
+
+            sumatoria_Fx_Medios += evaluarFuncion(
+                funcion, lista_Puntos_Medios[i], 0, 0)
+
+        respuesta = (b-a)*((valoresX[0]+(4*sumatoria_Fx_Medios) +
+                           (2*sumatoria_Fx)+valoresX[len(valoresX)-1])/(6*n_Intervalos))
+
+        print(respuesta)
+
+def integracion_simpson_tresOctavos_simple(funcion, a, b):
+    # Variables a utilizar
+    respuesta = 0
+    h = (b - a)/3
+    listaX = []
+
+    if funcion != "":
+        listaX.append(a)  # Agregamos el valor inicial de las x que es a
+
+        # Llenamos los valores de x con sus valores + h
+        for i in range(0, 3, 1):
+            listaX.append(listaX[i]+h)
+
+        respuesta = (b-a)*((evaluarFuncion(funcion, listaX[0], 0, 0) +
+                            (3*evaluarFuncion(funcion, listaX[1], 0, 0)) +
+                            (3*evaluarFuncion(funcion, listaX[2], 0, 0)) +
+                            (evaluarFuncion(funcion, listaX[3], 0, 0)))/8)
+
+        print(respuesta)
+    else:
+        print("Escriba la funcion")
+
+def integracion_simpson_tresOctavos_compuesta(funcion, a, b, n_Intervalos):
+    # Variables a utilizar
+    h = (b - a)/n_Intervalos  # Distanca de separacion entre punto y punto
+    listaX = []  # Aqui guardaremos todos los x
+
+    lista_subIntervalos = []  # Tendra la sima de 1/3 a los valores de x
+
+    sumatoria_Fx = 0  # aqui sumaremos todos los f(x)
+
+    # aqui sumaremos todos los f(x) de los subindices
+    sumatoria_Fx_Subindices = 0
+    respuesta = 0
+
+    if funcion != "":
+
+        listaX.append(a)  # Agregamos el primer x
+
+        # Agregamos los demas valores de x
+        for i in range(0, n_Intervalos, 1):
+            listaX.append(listaX[i]+h)
+
+        # Agregamos los sub intervalos
+        contador_Dos = 0  # Esta variable ira saltando de dos en dos
+        for i in range(0, len(listaX)-1, 1):
+            lista_subIntervalos.append(listaX[i]+(1/3))
+
+            lista_subIntervalos.append(lista_subIntervalos[contador_Dos]+1/3)
+            contador_Dos += 2
+
+        # for para sumar los x evaluados en la funcion
+        for i in range(1, len(listaX)-1, 1):
+            sumatoria_Fx += evaluarFuncion(funcion, listaX[i], 0, 0)
+
+        # for para sumar los subintervalos en la funcion
+        for i in range(0, len(lista_subIntervalos), 1):
+            sumatoria_Fx_Subindices += evaluarFuncion(
+                funcion, lista_subIntervalos[i], 0, 0)
+
+        respuesta = ((b-a)/(8*n_Intervalos))*(evaluarFuncion(funcion, listaX[0], 0, 0) +
+                                              3*sumatoria_Fx_Subindices +
+                                              2*sumatoria_Fx +
+                                              evaluarFuncion(funcion, listaX[len(listaX)-1], 0, 0))
+
+        print(respuesta)
+
+    else:
+        print("Difite una funcion")
+
+def integracion_rosemberg(funcion,a,b,nivel):
 
     #lista con respuestas
     listaResultados = []
@@ -984,7 +1153,7 @@ def integracion_rosemberg(funcion,a,b,nivel): #Diego
 
     return listaResultados
 
-def integracion_cuadratura_Gaussiana(funcion,a,b,n): #Diego
+def integracion_cuadratura_Gaussiana(funcion,a,b,n):
     #cada sub-lista va a representar un punto
 
     lista_Wk = [[2], [1,1], [0.555556,0.888889,0.555556], [0.347855,0.652145,-0.652145,-0.347855], [0.236927,0.478629,0.568889,0.478629,0.236927], [], [], [], [], [], [], []]
@@ -1106,8 +1275,6 @@ def integracion_simpson_unTercio_adaptativo(tolerancia,a,b,funcion):
 
     return ListaResultados    
 
-
-
 def integracion_Boole(a,b,funcion):  
 
     listaResultados=[]
@@ -1122,27 +1289,3 @@ def integracion_Boole(a,b,funcion):
     
     return listaResultados
     
-
-#--------------Area de pruebas ------------------#
-
-funcion= '(x**2)*ln(x)'   
-a=1
-b=1.5
-print(f"Integracion boole {funcion} = {integracion_Boole(a, b, funcion)}")
-
-'''
-    Si funciona todo bien (Boole) pero la ing la rego, ella se equivoco en el ejemplo de la clase, simplifico (2*h)/45) a 1/90 
-    cuando en realidad vale 1/180
-
-'''
-
-funcion='e**-x**2'
-a=0
-b=4
-print(f"Integracion Simpson 1/3 Adaptativo = {integracion_simpson_unTercio_adaptativo(10**-3, a, b, funcion)}")
-
-'''
-    A este si le falta Definir mejor como manejar las ramas quese van generando, funciona pero no da los datos que deberia  
-    
-    :/ xd
-'''
