@@ -737,9 +737,91 @@ def integracion_rosemberg(): #Diego
 def integracion_gauss(): #Diego
     print("falta")
 
-def integracion_simpson_unTercio_adaptativo(): #kelvin
-    print("falta")
+#---------------------Kelvin-----------------------------------------
 
-def ultimo():  #kelvin
-    print("me toco a mi")
-    print("algo")
+def evaluar_formula_Simpson_adapatativo(a,b,funcion):
+    puntoS = ((b-a)/6)*(evaluarFuncion(funcion,a,0,0)+evaluarFuncion(funcion,b,0,0)+ (4 * evaluarFuncion(funcion, ((a+b)/2),0,0)))
+    return puntoS
+
+
+def integracion_simpson_unTercio_adaptativo(tolerancia,a,b,funcion):
+
+    puntomedio=(a+b)/2
+    listaintervalos=[]
+    listaS_eval=[]
+    contador=0
+    bandera=0
+    #agregarintervalos
+    listaintervalos.append([a,b],[a,puntomedio],[puntomedio,b])
+    for intervalo in listaintervalos:
+        listaS_eval.append(evaluar_formula_Simpson_adapatativo(listaintervalos[intervalo][0], listaintervalos[intervalo][1], funcion))
+
+    #calcular ajuste
+    ajuste=(listaS_eval[contador+1]+listaS_eval[contador+2]-listaS_eval[contador])/15
+
+    if ajuste<tolerancia:
+        ListaResultados.append((16*(listaS_eval[contador+1]+listaS_eval[contador+2])-listaS_eval[contador])/15)
+    else:
+        a1=listaintervalos[contador+1][0]
+        b1=listaintervalos[contador+1][1]
+        puntomedio1=(a1+b1)/2
+        a2=listaintervalos[contador+2][0]
+        b2=listaintervalos[contador+2][1]
+        puntomedio2=(a2+b2)/2
+
+        while bandera==0:
+            listaS_eval=[]
+            control=0
+            
+            #agregarintervalos
+            listaintervalos.append([a1,b1],[a1,puntomedio1],[puntomedio1,b1],[a2,b2],[a2,puntomedio2],[puntomedio2,b2])
+
+            for intervalo in listaintervalos:
+                listaS_eval.append(evaluar_formula_Simpson_adapatativo(listaintervalos[intervalo][0], listaintervalos[intervalo][1], funcion))
+                control=intervalo
+            #calcular ajustes
+            ajuste=(listaS_eval[control-4]+listaS_eval[control-3]-listaS_eval[control-5])/15
+
+            if ajuste<tolerancia:
+                ListaResultados.append((16*(listaS_eval[control-4]+listaS_eval[control-3])-listaS_eval[control-5])/15)
+                bandera=1
+            else:
+                bandera=0
+                a1=listaintervalos[control-4][0]
+                b1=listaintervalos[control-4][1]
+                puntomedio1=(a1+b1)/2
+                a2=listaintervalos[control-3][0]
+                b2=listaintervalos[control-3][1]
+                puntomedio2=(a2+b2)/2
+            
+            ajuste=(listaS_eval[control-1]+listaS_eval[control]-listaS_eval[control-2])/15
+
+            if ajuste<tolerancia:
+                ListaResultados.append((16*(listaS_eval[control-1]+listaS_eval[control])-listaS_eval[control-2])/15)
+                bandera=1
+            else:
+                bandera=0
+                a1=listaintervalos[control-1][0]
+                b1=listaintervalos[control-1][1]
+                puntomedio1=(a1+b1)/2
+                a2=listaintervalos[control][0]
+                b2=listaintervalos[control][1]
+                puntomedio2=(a2+b2)/2
+            
+
+
+
+def integracion_Boole(a,b,funcion):  
+    
+    listaResultados=[]
+    h=(b-a)/4
+    puntos=[]
+    p=a
+    for punto in range(5):
+        p+=h
+        puntos.append(p)
+
+    listaResultados = (2*h)/45*((7*evaluarFuncion(funcion, puntos[0],0,0))+(32*evaluarFuncion(funcion, puntos[1],0,0))+(12*evaluarFuncion(funcion, puntos[2],0,0))+(32*evaluarFuncion(funcion, puntos[3],0,0))+(7*evaluarFuncion(funcion, puntos[4],0,0)))
+
+    return listaResultados
+    
