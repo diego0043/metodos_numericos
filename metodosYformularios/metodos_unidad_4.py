@@ -13,6 +13,8 @@ from fractions import Fraction
 
 x = sp.Symbol('x')
 e = sp.Symbol('e')
+y = sp.Symbol('y')
+z = sp.Symbol('z')
 
 def evaluarFuncion(funcion, valor, seDeriva, ordenDerivada):
     try:
@@ -773,8 +775,147 @@ def regla_del_trapecio_compuesta(funcion,a,b,n,tablaValores): #Diego
         print(listaResultados)
         return listaResultados
 
+def trapecio_para_dobles_y_triples(funcion,lista_a,lista_b,n,orden_integral):
+
+    #lista con respuestas
+    listaResultados = []
+
+    if orden_integral == 2: #integral doble
+        a = lista_a[0]
+        b = lista_b[0] 
+        h = (b-a)/n
+        hh = a
+
+        lista_operaciones_de_evaluarX = []
+        valores_sumados = 0
+        lista_h = []
+
+        for i in range(0,n+1,1):
+            lista_h.append(hh)
+            hh += h
+
+        for i in range(0,n+1,1):
+            resultado = sp.sympify(funcion).subs(x, lista_h[i])
+            lista_operaciones_de_evaluarX.append(resultado)
+            if i >= 1 and i<= n-1:
+                valores_sumados += lista_operaciones_de_evaluarX[i]
+
+        valores_sumados_simplificados = sp.expand(valores_sumados)
+
+        funcion_encontrada = ((b-a)/(2*n))*(lista_operaciones_de_evaluarX[0] + 2*valores_sumados_simplificados + lista_operaciones_de_evaluarX[n])
+        print('primera funcion encontrada:  ------------> ',funcion_encontrada)
+        funcion_encontrada = sp.expand(funcion_encontrada)
+
+        # Se resuelve la siguiente integral con el polinomio que encontramos 
+
+        a = lista_a[1]
+        b = lista_b[1] 
+        h = (b-a)/n
+        hh = a
+
+        lista_operaciones_de_evaluarX = []
+        valores_sumados = 0
+        lista_h = []
+
+        for i in range(0,n+1,1):
+            lista_h.append(hh)
+            hh += h
+
+        for i in range(0,n+1,1):
+            resultado = sp.sympify(funcion_encontrada).subs(y, lista_h[i])
+            lista_operaciones_de_evaluarX.append(resultado)
+            if i >= 1 and i<= n-1:
+                valores_sumados += lista_operaciones_de_evaluarX[i]
+
+
+        resultado = ((b-a)/(2*n))*(lista_operaciones_de_evaluarX[0] + 2*valores_sumados + lista_operaciones_de_evaluarX[n])
+        print('valor encontrado:  ------------>', resultado)
+        listaResultados.append(resultado)
+    
+    elif orden_integral == 3: #Integral Triple
+        a = lista_a[0]
+        b = lista_b[0] 
+        h = (b-a)/n
+        hh = a
+
+        lista_operaciones_de_evaluarX = []
+        valores_sumados = 0
+        lista_h = []
+
+        for i in range(0,n+1,1):
+            lista_h.append(hh)
+            hh += h
+
+        for i in range(0,n+1,1):
+            resultado = sp.sympify(funcion).subs(x, lista_h[i])
+            lista_operaciones_de_evaluarX.append(resultado)
+            if i >= 1 and i<= n-1:
+                valores_sumados += lista_operaciones_de_evaluarX[i]
+
+        valores_sumados_simplificados = sp.expand(valores_sumados)
+
+        funcion_encontrada = ((b-a)/(2*n))*(lista_operaciones_de_evaluarX[0] + 2*valores_sumados_simplificados + lista_operaciones_de_evaluarX[n])
+        funcion_encontrada = sp.expand(funcion_encontrada)
+        
+        print('primera funcion encontrada: ------------> ',funcion_encontrada)
+        # Se resuelve la siguiente integral con el polinomio que encontramos 
+
+        a = lista_a[1]
+        b = lista_b[1] 
+        h = (b-a)/n
+        hh = a
+
+        lista_operaciones_de_evaluarX = []
+        valores_sumados = 0
+        lista_h = []
+
+        for i in range(0,n+1,1):
+            lista_h.append(hh)
+            hh += h
+
+        for i in range(0,n+1,1):
+            resultado = sp.sympify(funcion_encontrada).subs(y, lista_h[i])
+            lista_operaciones_de_evaluarX.append(resultado)
+            if i >= 1 and i<= n-1:
+                valores_sumados += lista_operaciones_de_evaluarX[i]
+                
+        valores_sumados_simplificados = sp.expand(valores_sumados)
+
+        funcion_encontrada_2 = ((b-a)/(2*n))*(lista_operaciones_de_evaluarX[0] + 2*valores_sumados_simplificados + lista_operaciones_de_evaluarX[n])
+        funcion_encontrada_2 = sp.expand(funcion_encontrada_2)
+        print('segunda funcion encontrada: ------------> ',funcion_encontrada_2)
+
+        # Se resuelve la siguiente integral con el polinomio que encontramos 
+
+        a = lista_a[2]
+        b = lista_b[2] 
+        h = (b-a)/n
+        hh = a
+
+        lista_operaciones_de_evaluarX = []
+        valores_sumados = 0
+        lista_h = []
+
+        for i in range(0,n+1,1):
+            lista_h.append(hh)
+            hh += h
+
+
+        for i in range(0,n+1,1):
+            resultado = sp.sympify(funcion_encontrada_2).subs(z, lista_h[i])
+            lista_operaciones_de_evaluarX.append(resultado)
+            if i >= 1 and i<= n-1:
+                valores_sumados += lista_operaciones_de_evaluarX[i]
+
+        resultado = ((b-a)/(2*n))*(lista_operaciones_de_evaluarX[0] + 2*valores_sumados + lista_operaciones_de_evaluarX[n])
+        listaResultados.append(resultado)
+        print('valor encontrado: ------------> ',resultado)
+        return listaResultados
+
 def integracion_simpson_unTercio_simple(): #Milton
     print("falta")
+    for i in range(0,10):
+        print(i)
 
 def integracion_simpson_unTercio_compuesta(): #Milton
     print("falta")
