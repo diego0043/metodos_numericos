@@ -745,7 +745,7 @@ def evaluar_formula_Simpson_adapatativo(a,b,funcion):
 
 
 def integracion_simpson_unTercio_adaptativo(tolerancia,a,b,funcion):
-
+    ListaResultados=[]
     puntomedio=(a+b)/2
     listaintervalos=[]
     listaS_eval=[]
@@ -807,21 +807,35 @@ def integracion_simpson_unTercio_adaptativo(tolerancia,a,b,funcion):
                 a2=listaintervalos[control][0]
                 b2=listaintervalos[control][1]
                 puntomedio2=(a2+b2)/2
-            
+    
+    return ListaResultados        
 
 
 
 def integracion_Boole(a,b,funcion):  
-    
+
     listaResultados=[]
     h=(b-a)/4
     puntos=[]
     p=a
     for punto in range(5):
-        p+=h
         puntos.append(p)
-
-    listaResultados = (2*h)/45*((7*evaluarFuncion(funcion, puntos[0],0,0))+(32*evaluarFuncion(funcion, puntos[1],0,0))+(12*evaluarFuncion(funcion, puntos[2],0,0))+(32*evaluarFuncion(funcion, puntos[3],0,0))+(7*evaluarFuncion(funcion, puntos[4],0,0)))
-
+        p+=h
+        
+    listaResultados = ((2*h)/45)*((7*evaluarFuncion(funcion, puntos[0],0,0))+(32*evaluarFuncion(funcion, puntos[1],0,0))+(12*evaluarFuncion(funcion, puntos[2],0,0))+(32*evaluarFuncion(funcion, puntos[3],0,0))+(7*evaluarFuncion(funcion, puntos[4],0,0)))
+    
     return listaResultados
     
+
+#--------------Area de pruebas ------------------#
+
+funcion= '(x**2)*ln(x)'   
+a=1
+b=1.5
+print(f"Integracion boole {funcion} = {integracion_Boole(a, b, funcion)}")
+
+'''
+    Si funciona todo bien (Boole) pero la ing la rego, ella se equivoco en el ejemplo de la clase, simplifico (2*h)/45) a 1/90 
+    cuando en realidad vale 1/180
+
+'''
