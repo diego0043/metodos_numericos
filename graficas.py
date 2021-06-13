@@ -33,4 +33,9 @@ import decimal
     #
     # print(i)
 
-salida = metodos_unidad_4.regla_del_trapecio_simple('e^(x^2)',0,1)
+#salida = metodos_unidad_4.regla_del_trapecio_compuesta('',0,0.5,6,[[0,0.1,0.2,0.3,0.4,0.5],[1,7,4,3,5,2]])
+#(0.3989)*e^-((x^2)/x)
+
+#salida2 = metodos_unidad_4.integracion_rosemberg('e^(x)*ln(x)',1,2,4)
+
+salida = metodos_unidad_4.integracion_cuadratura_Gaussiana('(e^x*sin(x))/(1+x^2)',0,3,3)
