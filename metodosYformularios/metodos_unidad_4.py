@@ -1009,4 +1009,9 @@ def integracion_simpson_unTercio_adaptativo(): #kelvin
     print("falta")
 
 def ultimo():  #kelvin
+<<<<<<< HEAD
     print("falta")
+=======
+    print("me toco a mi")
+    print("algo")
+>>>>>>> dacc3b3bcf09285796012c61f15fa6068786e0b8
