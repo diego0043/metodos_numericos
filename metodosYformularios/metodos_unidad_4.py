@@ -1005,6 +1005,12 @@ def integracion_cuadratura_Gaussiana(funcion,a,b,n): #Diego
 
     print(resultado)
     
+#---------------------Kelvin-----------------------------------------
+
+def evaluar_formula_Simpson_adapatativo(a,b,funcion): #Creo que como funcion aparte es inecesaria pero xd luego se puede integrar al metodo
+    puntoS=[]
+    puntoS = ((b-a)/6)*(evaluarFuncion(funcion,a,0,0)+evaluarFuncion(funcion,b,0,0)+ (4 * evaluarFuncion(funcion, ((a+b)/2),0,0)))
+    return puntoS
 
 def integracion_simpson_unTercio_adaptativo(tolerancia,a,b,funcion):
     ListaResultados=[] #Aca irá respuesta final
