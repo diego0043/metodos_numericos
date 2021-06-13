@@ -739,29 +739,34 @@ def integracion_gauss(): #Diego
 
 #---------------------Kelvin-----------------------------------------
 
-def evaluar_formula_Simpson_adapatativo(a,b,funcion):
+def evaluar_formula_Simpson_adapatativo(a,b,funcion): #Creo que como funcion aparte es inecesaria pero xd luego se puede integrar al metodo
+    puntoS=[]
     puntoS = ((b-a)/6)*(evaluarFuncion(funcion,a,0,0)+evaluarFuncion(funcion,b,0,0)+ (4 * evaluarFuncion(funcion, ((a+b)/2),0,0)))
     return puntoS
 
 
 def integracion_simpson_unTercio_adaptativo(tolerancia,a,b,funcion):
-    ListaResultados=[]
+    ListaResultados=[] #Aca irá respuesta final
     puntomedio=(a+b)/2
-    listaintervalos=[]
-    listaS_eval=[]
-    contador=0
-    bandera=0
-    #agregarintervalos
-    listaintervalos.append([a,b],[a,puntomedio],[puntomedio,b])
-    for intervalo in listaintervalos:
-        listaS_eval.append(evaluar_formula_Simpson_adapatativo(listaintervalos[intervalo][0], listaintervalos[intervalo][1], funcion))
+    listaintervalos=[ # en el bucle de abajo intervalo cambia entre [a,b] [a,puntomedio] [puntomedio,b] y permite elegir una coordenada del intervalo
+        
+        #Esta es una lista multidimensional (listas dentro de listas)
+        [a,b],[a,puntomedio],[puntomedio,b]
+        
+    ]
+    listaS_eval=[]#aca iran los S(a,b) evaluados
+    contador=0 #Se utiliza mas abajo para darle nuevos valores a (a.b)
+    bandera=0 #se utiliza como validacion de salida 
 
+    #agregarintervalos
+    for intervalo in listaintervalos: #intervalo se convierte en una lista capaz de cambiar entre las otras listas
+        listaS_eval.append(evaluar_formula_Simpson_adapatativo(intervalo[0],intervalo[1], funcion))   
     #calcular ajuste
     ajuste=(listaS_eval[contador+1]+listaS_eval[contador+2]-listaS_eval[contador])/15
 
-    if ajuste<tolerancia:
+    if ajuste<tolerancia: #Si se cumple la condicion del ajuste entonces se guarda en la lista de resultados para al final sumar los que cumplan
         ListaResultados.append((16*(listaS_eval[contador+1]+listaS_eval[contador+2])-listaS_eval[contador])/15)
-    else:
+    else: #Cada vez que no se cumpla un ajuste deben crearse 2 intervalos mas, partiendo de uno existente.
         a1=listaintervalos[contador+1][0]
         b1=listaintervalos[contador+1][1]
         puntomedio1=(a1+b1)/2
@@ -772,43 +777,67 @@ def integracion_simpson_unTercio_adaptativo(tolerancia,a,b,funcion):
         while bandera==0:
             listaS_eval=[]
             control=0
-            
             #agregarintervalos
-            listaintervalos.append([a1,b1],[a1,puntomedio1],[puntomedio1,b1],[a2,b2],[a2,puntomedio2],[puntomedio2,b2])
-
+            #Para mantener el orden ys eguir la logica insertaremos los 3 intervalos (los dos nuevos y el que venia)
+            listaintervalos.append([a1,b1])
+            listaintervalos.append([a1,puntomedio1])
+            listaintervalos.append([puntomedio1,b1])
+            listaintervalos.append([a2,b2])
+            listaintervalos.append([a2,puntomedio2])
+            listaintervalos.append([puntomedio2,b2])
+            
             for intervalo in listaintervalos:
-                listaS_eval.append(evaluar_formula_Simpson_adapatativo(listaintervalos[intervalo][0], listaintervalos[intervalo][1], funcion))
-                control=intervalo
-            #calcular ajustes
-            ajuste=(listaS_eval[control-4]+listaS_eval[control-3]-listaS_eval[control-5])/15
+                listaS_eval.append(evaluar_formula_Simpson_adapatativo(intervalo[0], intervalo[1], funcion))
+                control+=1 #control define cual es la ultima insercion 
 
-            if ajuste<tolerancia:
-                ListaResultados.append((16*(listaS_eval[control-4]+listaS_eval[control-3])-listaS_eval[control-5])/15)
+                '''
+                EJEMPLO:
+
+                inicialmente se tienen 3 intervalos, como no se logra solucionar con esos, se crean 6 mas 
+
+                al momento de evaluar y obtener los S(a,b), control cuenta y guarda el numero de la ultima insercion (partiendo que inicialmente habran 3),
+                con ello, definimos qué valores tomará a y b 
+
+                SEPARAMOS a1 & a2
+
+                la razon es que por cada ajuste fallido, se crean dos subdivisiones, entonces se destino una a,b,puntomedio  para cada rama
+
+                '''
+            #calcular ajustes
+            ajuste=(listaS_eval[control-5]+listaS_eval[control-4]-listaS_eval[control-6])/15
+
+            if ajuste<tolerancia:#Si se cumple la condicion del ajuste entonces se guarda en la lista de resultados para al final sumar los que cumplan
+                ListaResultados.append((16*(listaS_eval[control-5]+listaS_eval[control-4])-listaS_eval[control-6])/15)
                 bandera=1
             else:
                 bandera=0
-                a1=listaintervalos[control-4][0]
-                b1=listaintervalos[control-4][1]
+                a1=listaintervalos[control-5][0]
+                b1=listaintervalos[control-5][1]
                 puntomedio1=(a1+b1)/2
-                a2=listaintervalos[control-3][0]
-                b2=listaintervalos[control-3][1]
+                a2=listaintervalos[control-4][0]
+                b2=listaintervalos[control-4][1]
                 puntomedio2=(a2+b2)/2
             
-            ajuste=(listaS_eval[control-1]+listaS_eval[control]-listaS_eval[control-2])/15
+            ajuste=(listaS_eval[control-2]+listaS_eval[control-1]-listaS_eval[control-3])/15
 
             if ajuste<tolerancia:
-                ListaResultados.append((16*(listaS_eval[control-1]+listaS_eval[control])-listaS_eval[control-2])/15)
+                ListaResultados.append((16*(listaS_eval[control-2]+listaS_eval[control-1])-listaS_eval[control-3])/15)
                 bandera=1
             else:
                 bandera=0
-                a1=listaintervalos[control-1][0]
-                b1=listaintervalos[control-1][1]
+                a1=listaintervalos[control-2][0]
+                b1=listaintervalos[control-2][1]
                 puntomedio1=(a1+b1)/2
-                a2=listaintervalos[control][0]
-                b2=listaintervalos[control][1]
+                a2=listaintervalos[control-1][0]
+                b2=listaintervalos[control-1][1]
                 puntomedio2=(a2+b2)/2
     
-    return ListaResultados        
+    
+
+    #el resultado de la integral es la suma de  los calculos de ajuste que cumplan con la condicion
+    ListaResultados= sum(ListaResultados)
+
+    return ListaResultados    
 
 
 
@@ -838,4 +867,15 @@ print(f"Integracion boole {funcion} = {integracion_Boole(a, b, funcion)}")
     Si funciona todo bien (Boole) pero la ing la rego, ella se equivoco en el ejemplo de la clase, simplifico (2*h)/45) a 1/90 
     cuando en realidad vale 1/180
 
+'''
+
+funcion='e**-x**2'
+a=0
+b=4
+print(f"Integracion Simpson 1/3 Adaptativo = {integracion_simpson_unTercio_adaptativo(10**-3, a, b, funcion)}")
+
+'''
+    A este si le falta Definir mejor como manejar las ramas quese van generando, funciona pero no da los datos que deberia  
+    
+    :/ xd
 '''
