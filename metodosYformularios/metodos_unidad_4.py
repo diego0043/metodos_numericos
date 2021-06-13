@@ -8,11 +8,13 @@ import re
 from sympy import cos, sin, tan, cot, sec, csc, sinh, cosh, tanh, csch, sech, coth, ln
 from numpy.polynomial import Polynomial as P
 from sympy.core.function import expand
-from sympy.simplify.radsimp import numer
+from sympy.simplify.radsimp import fraction, numer
 from fractions import Fraction
 
 x = sp.Symbol('x')
 e = sp.Symbol('e')
+y = sp.Symbol('y')
+z = sp.Symbol('z')
 
 def evaluarFuncion(funcion, valor, seDeriva, ordenDerivada):
     try:
@@ -699,21 +701,216 @@ def metodo_richardson(funcion,puntoInicial,h,nivel):
 
 # <------------- Integración numérica --------------------->
 
-def regla_del_trapecio_simple(funcion,a,b):
-
-    #lista con respuesta
+def regla_del_trapecio_simple(funcion,a,b,tablaValores): #Diego
     listaResultados = []
 
-    numerador = evaluarFuncion(funcion,a,0,0) + evaluarFuncion(funcion,b,0,0)
-    evaluacion = (b-a)*(numerador/2)
+    if funcion != '':
 
-    listaResultados.append(evaluacion)
+        numerador = evaluarFuncion(funcion,a,0,0) + evaluarFuncion(funcion,b,0,0)
+        evaluacion = (b-a)*(numerador/2)
 
-    return listaResultados
+        listaResultados.append(evaluacion)
 
-def regla_del_trapecio_compuesta(funcion,a,b,intervalos): #Diego
-    print("luego")
-    print("w")
+        return listaResultados
+
+    else: #Para cuando trabajamos con puntos y no con funciones 
+
+        tamanio = len(tablaValores[0])
+        listaX = tablaValores[0]
+        listaY = tablaValores[1]
+
+        if tamanio == 2:
+            resultado = (listaX[1]-listaX[0])*((listaY[0]+listaY[1])/2)
+            listaResultados.append(resultado)
+            print(listaResultados)
+            return listaResultados
+
+        else:
+            print("Para resolver mediante el trapecio simple solo se utilizan 2 puntos")
+
+def regla_del_trapecio_compuesta(funcion,a,b,n,tablaValores): #Diego
+    
+    #respuesta
+    listaResultados = []
+
+    if funcion != '':
+
+        h = Fraction((b-a),n)
+        aa = a
+
+        lista_con_valor_h = []
+        lista_evaluaciones = []
+        sumatoria_puntos_medios = 0
+
+        for i in range(0,n+1,1):
+            lista_con_valor_h.append(aa)
+            lista_evaluaciones.append(evaluarFuncion(funcion,lista_con_valor_h[i],0,0))
+            if i >= 1 and i <= n-1:
+                sumatoria_puntos_medios += lista_evaluaciones[i]
+
+            #Aumentamos el valor de a en h    
+            aa += h
+
+        resultado = (b-a)*((lista_evaluaciones[0] + 2*sumatoria_puntos_medios + lista_evaluaciones[n]))/(2*n)
+
+        listaResultados.append(resultado)
+        return listaResultados
+
+    else:
+
+        sumatoria_puntos_medios = 0
+        listaX = tablaValores[0]
+        listaY = tablaValores[1]
+        tamanio = len(listaX)-1
+
+
+        for i in range(0,tamanio+1,1):
+            if i >= 1 and i <= tamanio-1:
+
+                sumatoria_puntos_medios += listaY[i]
+
+        resultado = (b-a)*(listaY[0] + 2*sumatoria_puntos_medios + listaY[tamanio])/(2*tamanio)
+
+        listaResultados.append(resultado)
+        print(listaResultados)
+        return listaResultados
+
+def trapecio_para_dobles_y_triples(funcion,lista_a,lista_b,n,orden_integral):
+
+    #lista con respuestas
+    listaResultados = []
+
+    if orden_integral == 2: #integral doble
+        a = lista_a[0]
+        b = lista_b[0] 
+        h = (b-a)/n
+        hh = a
+
+        lista_operaciones_de_evaluarX = []
+        valores_sumados = 0
+        lista_h = []
+
+        for i in range(0,n+1,1):
+            lista_h.append(hh)
+            hh += h
+
+        for i in range(0,n+1,1):
+            resultado = sp.sympify(funcion).subs(x, lista_h[i])
+            lista_operaciones_de_evaluarX.append(resultado)
+            if i >= 1 and i<= n-1:
+                valores_sumados += lista_operaciones_de_evaluarX[i]
+
+        valores_sumados_simplificados = sp.expand(valores_sumados)
+
+        funcion_encontrada = ((b-a)/(2*n))*(lista_operaciones_de_evaluarX[0] + 2*valores_sumados_simplificados + lista_operaciones_de_evaluarX[n])
+        print('primera funcion encontrada:  ------------> ',funcion_encontrada)
+        funcion_encontrada = sp.expand(funcion_encontrada)
+
+        # Se resuelve la siguiente integral con el polinomio que encontramos 
+
+        a = lista_a[1]
+        b = lista_b[1] 
+        h = (b-a)/n
+        hh = a
+
+        lista_operaciones_de_evaluarX = []
+        valores_sumados = 0
+        lista_h = []
+
+        for i in range(0,n+1,1):
+            lista_h.append(hh)
+            hh += h
+
+        for i in range(0,n+1,1):
+            resultado = sp.sympify(funcion_encontrada).subs(y, lista_h[i])
+            lista_operaciones_de_evaluarX.append(resultado)
+            if i >= 1 and i<= n-1:
+                valores_sumados += lista_operaciones_de_evaluarX[i]
+
+
+        resultado = ((b-a)/(2*n))*(lista_operaciones_de_evaluarX[0] + 2*valores_sumados + lista_operaciones_de_evaluarX[n])
+        print('valor encontrado:  ------------>', resultado)
+        listaResultados.append(resultado)
+    
+    elif orden_integral == 3: #Integral Triple
+        a = lista_a[0]
+        b = lista_b[0] 
+        h = (b-a)/n
+        hh = a
+
+        lista_operaciones_de_evaluarX = []
+        valores_sumados = 0
+        lista_h = []
+
+        for i in range(0,n+1,1):
+            lista_h.append(hh)
+            hh += h
+
+        for i in range(0,n+1,1):
+            resultado = sp.sympify(funcion).subs(x, lista_h[i])
+            lista_operaciones_de_evaluarX.append(resultado)
+            if i >= 1 and i<= n-1:
+                valores_sumados += lista_operaciones_de_evaluarX[i]
+
+        valores_sumados_simplificados = sp.expand(valores_sumados)
+
+        funcion_encontrada = ((b-a)/(2*n))*(lista_operaciones_de_evaluarX[0] + 2*valores_sumados_simplificados + lista_operaciones_de_evaluarX[n])
+        funcion_encontrada = sp.expand(funcion_encontrada)
+        
+        print('primera funcion encontrada: ------------> ',funcion_encontrada)
+        # Se resuelve la siguiente integral con el polinomio que encontramos 
+
+        a = lista_a[1]
+        b = lista_b[1] 
+        h = (b-a)/n
+        hh = a
+
+        lista_operaciones_de_evaluarX = []
+        valores_sumados = 0
+        lista_h = []
+
+        for i in range(0,n+1,1):
+            lista_h.append(hh)
+            hh += h
+
+        for i in range(0,n+1,1):
+            resultado = sp.sympify(funcion_encontrada).subs(y, lista_h[i])
+            lista_operaciones_de_evaluarX.append(resultado)
+            if i >= 1 and i<= n-1:
+                valores_sumados += lista_operaciones_de_evaluarX[i]
+                
+        valores_sumados_simplificados = sp.expand(valores_sumados)
+
+        funcion_encontrada_2 = ((b-a)/(2*n))*(lista_operaciones_de_evaluarX[0] + 2*valores_sumados_simplificados + lista_operaciones_de_evaluarX[n])
+        funcion_encontrada_2 = sp.expand(funcion_encontrada_2)
+        print('segunda funcion encontrada: ------------> ',funcion_encontrada_2)
+
+        # Se resuelve la siguiente integral con el polinomio que encontramos 
+
+        a = lista_a[2]
+        b = lista_b[2] 
+        h = (b-a)/n
+        hh = a
+
+        lista_operaciones_de_evaluarX = []
+        valores_sumados = 0
+        lista_h = []
+
+        for i in range(0,n+1,1):
+            lista_h.append(hh)
+            hh += h
+
+
+        for i in range(0,n+1,1):
+            resultado = sp.sympify(funcion_encontrada_2).subs(z, lista_h[i])
+            lista_operaciones_de_evaluarX.append(resultado)
+            if i >= 1 and i<= n-1:
+                valores_sumados += lista_operaciones_de_evaluarX[i]
+
+        resultado = ((b-a)/(2*n))*(lista_operaciones_de_evaluarX[0] + 2*valores_sumados + lista_operaciones_de_evaluarX[n])
+        listaResultados.append(resultado)
+        print('valor encontrado: ------------> ',resultado)
+        return listaResultados
 
 def integracion_simpson_unTercio_simple(): #Milton
     print("falta")
@@ -729,21 +926,85 @@ def integracion_simpson_tresOctavos_simple(): #Milton
 def integracion_simpson_tresOctavos_compuesta(): #Milton
     print("falta")
 
-def integracion_rosemberg(): #Diego
-    print("falta")
-    for i in range(0,100000000):
-        print("jj")
+def integracion_rosemberg(funcion,a,b,nivel): #Diego
 
-def integracion_gauss(): #Diego
-    print("falta")
+    #lista con respuestas
+    listaResultados = []
 
-#---------------------Kelvin-----------------------------------------
+    #lista donde se encontrara el primer nivel 
+    primer_nivel = []
+    n = 2
 
-def evaluar_formula_Simpson_adapatativo(a,b,funcion): #Creo que como funcion aparte es inecesaria pero xd luego se puede integrar al metodo
-    puntoS=[]
-    puntoS = ((b-a)/6)*(evaluarFuncion(funcion,a,0,0)+evaluarFuncion(funcion,b,0,0)+ (4 * evaluarFuncion(funcion, ((a+b)/2),0,0)))
-    return puntoS
+    for i in range(0,nivel,1):
+        if i == 0:
+            valor = regla_del_trapecio_simple(funcion,a,b,[])
+            primer_nivel.append((valor[0]).evalf())
+        else:
+            valor = regla_del_trapecio_compuesta(funcion,a,b,n,[])
+            primer_nivel.append(valor[0].evalf())
+            n += 2
 
+    #lista que ira cambiando de tamaño con respecto al nivel en el que se encuente 
+    lista_cambiante = primer_nivel
+
+    #matriz donde estaran los demas niveles
+    matriz_con_niveles = [] 
+    matriz_con_niveles.append(primer_nivel)
+    lista_nivel = []
+    contador_nivel = 3
+
+    for i in range(1,nivel,1):
+        for j in range(1,len(lista_cambiante)):
+            if i == 1:
+                primer_termino = (4/3)*lista_cambiante[j]
+                segundo_termino = (-1/3)*lista_cambiante[j-1]
+                salida = primer_termino + segundo_termino
+                lista_nivel.append(salida)
+            elif i == 2:
+                primer_termino = (16/15)*lista_cambiante[j]
+                segundo_termino = (-1/15)*lista_cambiante[j-1]
+                salida = primer_termino + segundo_termino
+                lista_nivel.append(salida)
+            else:
+                primer_termino = ((4**contador_nivel)/((4**contador_nivel)-1))*lista_cambiante[j]
+                segundo_termino = ((1)/((4**contador_nivel)-1))*lista_cambiante[j-1]
+                salida = primer_termino + segundo_termino
+                lista_nivel.append(salida)
+            
+
+        matriz_con_niveles.append(lista_nivel)
+        lista_cambiante = lista_nivel
+        lista_nivel = []
+        if i >= 3:
+            contador_nivel += 1
+
+    listaResultados = matriz_con_niveles
+    for i in listaResultados:
+        print(i)
+
+    return listaResultados
+
+def integracion_cuadratura_Gaussiana(funcion,a,b,n): #Diego
+    #cada sub-lista va a representar un punto
+
+    lista_Wk = [[2], [1,1], [0.555556,0.888889,0.555556], [0.347855,0.652145,-0.652145,-0.347855], [0.236927,0.478629,0.568889,0.478629,0.236927], [], [], [], [], [], [], []]
+
+    lista_Tk = [[0], [0.57735,-0.57735], [-0.774597,0,0.774597], [-0.861136,-0.339981,0.339981,0.861136], [-0.90618,-0.538469,0,0.538469,0.90618], [], [], [], [], [], [], []]
+
+
+    lista_variable_Wk = lista_Wk[n-1]
+    lista_variable_Tk = lista_Tk[n-1]
+    resultado = 0
+    punto = 0
+
+    for i in range(0,n,1):
+        punto = ((b-a)*lista_variable_Tk[i] + (b+a))/2
+        resultado += lista_variable_Wk[i]*evaluarFuncion(funcion,punto,0,0)
+
+    resultado = resultado*(b-a)/2
+
+    print(resultado)
+    
 
 def integracion_simpson_unTercio_adaptativo(tolerancia,a,b,funcion):
     ListaResultados=[] #Aca irá respuesta final
