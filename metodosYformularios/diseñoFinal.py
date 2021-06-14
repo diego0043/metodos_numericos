@@ -8,8 +8,13 @@ from PySide2.QtCore import (QCoreApplication, QPropertyAnimation, QDate, QDateTi
 from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont, QFontDatabase, QIcon, QKeySequence, QLinearGradient, QPalette, QPainter, QPixmap, QRadialGradient)
 from PySide2.QtWidgets import *
 from sympy.core.symbol import symbols
+
+#importamos nuestros metodos 
 from metodosYformularios import *
 import metodosYformularios.metodos_Unidad_2y3 as metodos
+import metodosYformularios.metodos_unidad_4 as metodos_uni4
+
+
 import matplotlib.pyplot as plt
 import numpy as np
 import math as mt
@@ -184,6 +189,18 @@ class Ui_MainWindow(object):
         self.comboBox.addItem("")
         self.comboBox.addItem("")
         self.comboBox.activated[str].connect(self.cambiar_metodos_cmb2)
+
+        self.comboBox_3 = QtWidgets.QComboBox(self.centralwidget)
+        self.comboBox_3.setGeometry(QtCore.QRect(440, 80, 70, 26))
+        self.comboBox_3.setObjectName("comboBox_3")
+        self.comboBox_3.setStyleSheet("QComboBox{\n""background-color: rgb(242, 242, 242);\n""border-radius: 5px;\n""border: 2px solid rgb(232, 137, 137);\n""padding: 5px;\n""padding-left: 10px;\n""color: rgb(216, 55, 55)\n""}\n""QComboBox:hover{\n""border: 2px solid rgb(216, 55, 55);\n""border_left-color: rgb(215,55,55);\n""}\n""QComboBox::drop-down {\n""subcontrol-origin: padding;\n""subcontrol-position: top right;\n""width: 25px; \n""border-left-width: 3px;\n""border-left-color: rgb(232, 137, 137);\n""border-left-style: solid;\n""border-top-right-radius: 3px;\n""border-bottom-right-radius: 3px;    \n""background-image: url(recursos/row_baja.png);\n""background-position: center;\n""background-repeat: no-reperat;\n"" }\n""QComboBox QAbstractItemView {\n""color: rgb(216, 55, 55);    \n""background-color: rgb(242, 242, 242);\n""padding: 5px;\n""selection-background-color: rgb(232, 137 , 137);\n""}\n""")
+        self.comboBox_3.addItem("")
+        self.comboBox_3.addItem("")
+        self.comboBox_3.activated[str].connect(self.usar_tabla_unidad4_o_no)
+
+        # self.comboBox_2.setGeometry(QtCore.QRect(200, 80, 200, 26))
+
+
 
         font = QtGui.QFont()
         font.setFamily("Segoe UI")
@@ -368,14 +385,25 @@ class Ui_MainWindow(object):
         font.setPointSize(10)
         font.setBold(True)
         font.setWeight(75)
-        self.label_14 = QtWidgets.QLabel(self.frame)
+        self.label_14 = QtWidgets.QLabel(self.centralwidget)
         self.label_14.setGeometry(QtCore.QRect(900 ,130, 200, 16))
         self.label_14.setObjectName("label_14")
         self.label_14.setFont(font)
         self.label_14.setStyleSheet("color: rgb(134, 155, 208);")
 
-       
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
 
+        self.label_ver_tabla = QtWidgets.QLabel(self.centralwidget)
+        self.label_ver_tabla.setGeometry(QtCore.QRect(440 ,45, 150, 16))
+        self.label_ver_tabla.setObjectName("label_ver_tabla")
+        self.label_ver_tabla.setFont(font)
+        self.label_ver_tabla.setStyleSheet("color: rgb(134, 155, 208);")
+
+       
         self.radioButton = QtWidgets.QRadioButton(self.centralwidget)
         self.radioButton.setGeometry(QtCore.QRect(620, 78, 82, 23))# posicion x , posicion y , largo, ancho
         self.radioButton.setObjectName("radioButton")
@@ -400,6 +428,55 @@ class Ui_MainWindow(object):
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
+
+
+        # Componentes unidad 4
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(12)
+        font.setBold(True)
+
+        self.funcion_uni4 = QtWidgets.QLineEdit(self.centralwidget)
+        self.funcion_uni4.setGeometry(QtCore.QRect(200, 180, 131, 24))
+        self.funcion_uni4.setStyleSheet("background-color: rgb(242, 242, 242);\n""image: url(recursos/barra2.png);\n""border:0px;\n""color:  rgb(232, 137, 137)")
+        self.funcion_uni4.setObjectName("funcion_uni4")
+        self.funcion_uni4.setFont(font)
+
+        self.puntoInicial_uni4 = QtWidgets.QLineEdit(self.centralwidget)
+        self.puntoInicial_uni4.setGeometry(QtCore.QRect(440, 180, 51, 24))
+        self.puntoInicial_uni4.setStyleSheet("background-color: rgb(242, 242, 242);\n""image: url(recursos/barra.png);\n""border:0px;\n""color:  rgb(232, 137, 137)")
+        self.puntoInicial_uni4.setObjectName("puntoInicial_uni4")
+        self.puntoInicial_uni4.setFont(font)
+
+        self.h_uni4 = QtWidgets.QLineEdit(self.centralwidget)
+        self.h_uni4.setGeometry(QtCore.QRect(600, 180, 51, 24))
+        self.h_uni4.setStyleSheet("background-color: rgb(242, 242, 242);\n""image: url(recursos/barra.png);\n""border:0px;\n""color:  rgb(232, 137, 137)")
+        self.h_uni4.setObjectName("h_uni4")
+        self.h_uni4.setFont(font)
+
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+
+        self.label_funcion_uni4 = QtWidgets.QLabel(self.centralwidget)
+        self.label_funcion_uni4.setGeometry(QtCore.QRect(200 ,140, 150, 16))
+        self.label_funcion_uni4.setObjectName("label_funcion_uni4")
+        self.label_funcion_uni4.setFont(font)
+        self.label_funcion_uni4.setStyleSheet("color: rgb(134, 155, 208);")
+
+        self.label_puntoInicial_uni4 = QtWidgets.QLabel(self.centralwidget)
+        self.label_puntoInicial_uni4.setGeometry(QtCore.QRect(440 ,140, 150, 16))
+        self.label_puntoInicial_uni4.setObjectName("label_puntoInicial_uni4")
+        self.label_puntoInicial_uni4.setFont(font)
+        self.label_puntoInicial_uni4.setStyleSheet("color: rgb(134, 155, 208);")
+
+        self.label_h_uni4 = QtWidgets.QLabel(self.centralwidget)
+        self.label_h_uni4.setGeometry(QtCore.QRect(600 ,140, 150, 16))
+        self.label_h_uni4.setObjectName("label_h_uni4")
+        self.label_h_uni4.setFont(font)
+        self.label_h_uni4.setStyleSheet("color: rgb(134, 155, 208);")
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -427,6 +504,9 @@ class Ui_MainWindow(object):
         self.label_14.setText(_translate("MainWindow", "Evaluar en: "))
         self.label_9.setText(_translate("MainWindow", "Seleccione el grado de la función spline"))
         self.label_10.setText("Analisis Numèrico")
+        self.label_funcion_uni4.setText("Ingresa la función")
+        self.label_puntoInicial_uni4.setText("Punto Inicial")
+        self.label_h_uni4.setText("Valor de h")
         self.label_12.setText(_translate("MainWindow","COLUMNAS:"))
         self.pushButton.setText(_translate("MainWindow", "CALCULAR"))
         self.pushButton_2.setText(_translate("MainWindow", "LIMPIAR"))
@@ -441,8 +521,16 @@ class Ui_MainWindow(object):
         self.comboBox.setItemText(2, _translate("MainWindow", "3"))
         self.comboBox.setItemText(3, _translate("MainWindow", "4"))
         self.comboBox.setItemText(4, _translate("MainWindow", "5"))
-        self.label_2.setText(_translate("MainWindow", "Ingresa la funcion"))
+
+        self.comboBox_3.setItemText(0, _translate("MainWindow", "Si"))
+        self.comboBox_3.setItemText(1, _translate("MainWindow", "No"))
+
+
+        self.label_2.setText(_translate("MainWindow", "Ingresa la función"))
         self.label.setText(_translate("MainWindow", "Seleccione el metodo"))
+
+        self.label_ver_tabla.setText(_translate("MainWindow", "¿Trabajar con función?"))
+
         self.pushButton.clicked.connect(self.calcular)
         self.pushButton_2.clicked.connect(self.limpiar_Campos)
         self.pushButton_3.clicked.connect(self.graficar)
@@ -501,12 +589,20 @@ class Ui_MainWindow(object):
         self.pushButton_6.setVisible(False)
         self.pushButton_10.setVisible(False)
         self.pushButton_11.setVisible(False)
+        self.label_ver_tabla.setVisible(False)
         self.label_14.setVisible(False)
         self.radioButton.setVisible(False)
         self.radioButton_2.setVisible(False)
         self.radioButton_3.setVisible(False)
         self.radioButton_4.setVisible(False)
         self.label_9.setVisible(False)
+        self.comboBox_3.setVisible(False)
+        self.funcion_uni4.setVisible(False)
+        self.puntoInicial_uni4.setVisible(False)
+        self.h_uni4.setVisible(False)
+        self.label_funcion_uni4.setVisible(False)
+        self.label_puntoInicial_uni4.setVisible(False)
+        self.label_h_uni4.setVisible(False)
 
     # En este metodo vamos a capturar la posicion del primer combobox y luego dependiendo
     # de cual este seleccionado asi se llenara el otro combobox
@@ -521,6 +617,21 @@ class Ui_MainWindow(object):
         self.radioButton_3.setVisible(False)
         self.radioButton_4.setVisible(False)
         self.label_9.setVisible(False)
+        self.label_14.setVisible(False)
+        self.lineEdit_6.setVisible(False)
+        self.label_ver_tabla.setVisible(False)
+        self.comboBox_3.setVisible(False)
+        self.label_12.setVisible(False)
+        self.pushButton_10.setVisible(False)
+        self.pushButton_11.setVisible(False)
+        self.label_13.setVisible(False)
+        self.funcion_uni4.setVisible(False)
+        self.puntoInicial_uni4.setVisible(False)
+        self.h_uni4.setVisible(False)
+        self.label_funcion_uni4.setVisible(False)
+        self.label_puntoInicial_uni4.setVisible(False)
+        self.label_h_uni4.setVisible(False)
+
         
         if cual == 0: #Metodos de la primera unidad 
             self.comboBox_2.setGeometry(QtCore.QRect(200, 80, 172, 24))
@@ -665,6 +776,126 @@ class Ui_MainWindow(object):
             self.lineEdit_3.setVisible(False)
             self.lineEdit_4.setVisible(False)
             self.lineEdit_5.setVisible(False)
+        
+        elif cual == 3: #metodos de la unidad 4
+            self.comboBox_2.setGeometry(QtCore.QRect(200, 80, 200, 26))
+            
+            # Siempre limpiamos el combobox para evitar duplicados o cosas raras
+            self.comboBox_2.clear()
+
+            self.comboBox_2.addItem("")
+            self.comboBox_2.addItem("")
+            self.comboBox_2.addItem("")
+            self.comboBox_2.addItem("")
+            self.comboBox_2.addItem("")
+            self.comboBox_2.addItem("")
+            self.comboBox_2.addItem("")
+            self.comboBox_2.addItem("")
+            self.comboBox_2.addItem("")
+            self.comboBox_2.addItem("")
+            self.comboBox_2.addItem("")
+            self.comboBox_2.addItem("")
+            self.comboBox_2.addItem("")
+            self.comboBox_2.addItem("")
+            self.comboBox_2.addItem("")
+            self.comboBox_2.addItem("")
+            self.comboBox_2.addItem("")
+            self.comboBox_2.addItem("")
+            self.comboBox_2.addItem("")
+            self.comboBox_2.addItem("")
+            self.comboBox_2.addItem("")
+            self.comboBox_2.addItem("")
+            self.comboBox_2.addItem("")
+            self.comboBox_2.addItem("")
+
+            self.comboBox_2.setItemText(0, "Seleccione un metodo")
+            self.comboBox_2.setItemText(1,  "Diferenciacion Numerica:")
+            self.comboBox_2.setItemText(2,  "- Hacia adelante")
+            self.comboBox_2.setItemText(3,  "- Hacia atras")
+            self.comboBox_2.setItemText(4,  "- Centrada")
+            self.comboBox_2.setItemText(5,  "- Tres puntos")
+            self.comboBox_2.setItemText(6,  "- Cinco puntos")
+            self.comboBox_2.setItemText(7,  "Diferenciacion Numerica (orden superior)")
+            self.comboBox_2.setItemText(8,  "- Adelante")
+            self.comboBox_2.setItemText(9,  "- Atras")
+            self.comboBox_2.setItemText(10, "- Centrales")
+            self.comboBox_2.setItemText(11, "Metodo Richardson")
+            self.comboBox_2.setItemText(12, "Integracion Numerica")
+            self.comboBox_2.setItemText(13, "- Trapecio simple")
+            self.comboBox_2.setItemText(14, "- Trapecio compuesto")
+            self.comboBox_2.setItemText(15, "- Trapecio para integrales dobles y triples")
+            self.comboBox_2.setItemText(16, "- Simpson un tercio simple")
+            self.comboBox_2.setItemText(17, "- Simpson un tercio compuesta")
+            self.comboBox_2.setItemText(18, "- Simpson tres octavos simple")
+            self.comboBox_2.setItemText(19, "- Simpson tres octavos compuesta")
+            self.comboBox_2.setItemText(20, "- Metodo Rosemberg")
+            self.comboBox_2.setItemText(21, "- Metodo cuadratura Gaussiana")
+            self.comboBox_2.setItemText(22, "- Simpson un tercio adaptativo")
+            self.comboBox_2.setItemText(23, "- Metodo de boole")
+            self.comboBox_2.setCurrentIndex(0)
+
+            self.comboBox_2.setVisible(False)
+            self.lineEdit_4.setVisible(False)
+            self.lineEdit_3.setVisible(False)
+            self.label.setVisible(False)
+            self.label_2.setVisible(False)
+            self.label_5.setVisible(False)
+            self.label_6.setVisible(False)
+            self.label_3.setVisible(False)
+            self.label_4.setVisible(False)
+            self.label_5.setVisible(False)
+            self.label_6.setVisible(False)
+            self.label_7.setVisible(False)
+            self.lineEdit.setVisible(False)
+            self.lineEdit_2.setVisible(False)
+            self.lineEdit_3.setVisible(False)
+            self.lineEdit_4.setVisible(False)
+            self.lineEdit_5.setVisible(False)
+            
+          # <----------- Mostramos el combobox donde estan los metodos ---------->
+            self.comboBox_2.setVisible(True)
+            self.label.setVisible(True)
+
+    def usar_tabla_unidad4_o_no(self):
+
+        si_o_no = self.comboBox_3.currentIndex()
+        metodo = self.comboBox_2.currentIndex()
+
+        if si_o_no == 0:
+
+            self.tableWidget_2.setVisible(False)
+            self.pushButton_5.setVisible(False)
+            self.pushButton_6.setVisible(False)
+
+            if metodo >= 2 and metodo <= 10:
+                self.funcion_uni4.setVisible(True)
+                self.puntoInicial_uni4.setVisible(True)
+                self.h_uni4.setVisible(True)
+                self.label_funcion_uni4.setVisible(True)
+                self.label_puntoInicial_uni4.setVisible(True)
+                self.label_h_uni4.setVisible(True)
+
+            elif metodo == 13:
+                self.funcion_uni4.setVisible(True)
+            
+            elif metodo == 14:
+                self.label_puntoInicial_uni4.setVisible(True)
+                self.puntoInicial_uni4.setVisible(True)
+                self.funcion_uni4.setVisible(True)
+            
+            elif metodo == 17:
+                self.label_puntoInicial_uni4.setVisible(True)
+                self.puntoInicial_uni4.setVisible(True)
+                self.funcion_uni4.setVisible(True)
+
+        elif si_o_no == 1:
+            self.creacion_tabla_por_defecto_unidad3(3,0)
+            self.funcion_uni4.setVisible(False)
+            self.puntoInicial_uni4.setVisible(False)
+            self.h_uni4.setVisible(False)
+            self.label_funcion_uni4.setVisible(False)
+            self.label_puntoInicial_uni4.setVisible(False)
+            self.label_h_uni4.setVisible(False)
 
     def metodos_de_cada_unidad(self):
         queMetodo = self.comboBox_2.currentIndex()
@@ -678,8 +909,23 @@ class Ui_MainWindow(object):
         self.radioButton_3.setVisible(False)
         self.radioButton_4.setVisible(False)
         self.label_9.setVisible(False)
+        self.comboBox_3.setVisible(False)
+        self.label_14.setVisible(False)
+        self.lineEdit_6.setVisible(False)
+        self.label_12.setVisible(False)
+        self.pushButton_10.setVisible(False)
+        self.pushButton_11.setVisible(False)
+        self.label_13.setVisible(False)
+        self.funcion_uni4.setVisible(False)
+        self.puntoInicial_uni4.setVisible(False)
+        self.h_uni4.setVisible(False)
+        self.label_funcion_uni4.setVisible(False)
+        self.label_puntoInicial_uni4.setVisible(False)
+        self.label_h_uni4.setVisible(False)
+        self.pushButton_6.setGeometry(QtCore.QRect(85, 127, 65, 40))
+        self.pushButton_5.setGeometry(QtCore.QRect(10, 127, 65, 40))
 
-        if queUnidad == 0:
+        if queUnidad == 0: # unidad 1
             
             # <---- dejamos solo los componentes que usa metodo punto fijo y los de newton -->
             self.label_4.setText("#1")
@@ -699,7 +945,7 @@ class Ui_MainWindow(object):
             self.label_5.setVisible(False)
             self.label_6.setVisible(False)
             
-        elif queUnidad == 1:
+        elif queUnidad == 1: # unidad 2
 
             self.pushButton_5.setVisible(False)
             self.pushButton_6.setVisible(False)
@@ -801,7 +1047,7 @@ class Ui_MainWindow(object):
                 self.lineEdit_4.setVisible(False)
                 self.label_7.setVisible(False)
 
-        elif queUnidad == 2: #Configuramos la tabla
+        elif queUnidad == 2: #unidad 3
 
             global cuantasFilasYColumnas
             if queMetodo >= 1 and queMetodo <= 6:
@@ -882,10 +1128,61 @@ class Ui_MainWindow(object):
                 cuantasFilasYColumnas = 3
                 self.creacion_tabla_por_defecto_unidad3(4,0)
 
+        elif queUnidad == 3: #unidad 4
+            self.tableWidget_2.setGeometry(QtCore.QRect(170, 140, 704, 81))
+            self.pushButton_6.setGeometry(QtCore.QRect(85, 150, 65, 40))
+            self.pushButton_5.setGeometry(QtCore.QRect(10, 150, 65, 40))
+            
+            if queMetodo >= 2 and queMetodo <= 10:
+                self.label_ver_tabla.setVisible(True)
+                self.comboBox_3.setVisible(True)
+                self.comboBox_3.setCurrentIndex(-1)
+
+            elif queMetodo == 13:
+                self.label_ver_tabla.setVisible(True)
+                self.comboBox_3.setVisible(True)
+                self.comboBox_3.setCurrentIndex(-1)
+
+            elif queMetodo == 14:
+                self.label_ver_tabla.setVisible(True)
+                self.comboBox_3.setVisible(True)
+                self.comboBox_3.setCurrentIndex(-1)
+
+            elif queMetodo == 15:
+                self.funcion_uni4.setVisible(True)
+
+            elif queMetodo == 16:
+                self.funcion_uni4.setVisible(True)
+
+            elif queMetodo == 17:
+                self.label_ver_tabla.setVisible(True)
+                self.comboBox_3.setVisible(True)
+                self.comboBox_3.setCurrentIndex(-1)
+
+            elif queMetodo == 18:
+                self.funcion_uni4.setVisible(True)
+
+            elif queMetodo == 19:
+                self.funcion_uni4.setVisible(True)
+
+            elif queMetodo == 20:
+                self.funcion_uni4.setVisible(True)
+            
+            elif queMetodo == 21:
+                self.funcion_uni4.setVisible(True)
+
+            elif queMetodo == 22:
+                self.funcion_uni4.setVisible(True)
+
+            elif queMetodo == 23:
+                self.funcion_uni4.setVisible(True)
+
     #Metodos que controlan las tablas ó que trabajan con las tablas 
     def creacion_tabla_por_defecto_unidad3(self,columnas,si_es_hermite):
         #Limpiamos la tabla
 
+        unidad = self.comboBox.currentIndex()
+        
         self.tableWidget_2.setRowCount(0)
         self.tableWidget_2.setColumnCount(0)
 
@@ -900,13 +1197,22 @@ class Ui_MainWindow(object):
 
         if si_es_hermite == 0:
             #Definimos las dimensiones 
+
+            if unidad == 2:
+                #Mostramos los radio button
+                self.radioButton.setVisible(True)
+                self.radioButton_2.setVisible(True)
+                self.label_9.setVisible(True)
+            else:
+                #Mostramos los radio button
+                self.radioButton.setVisible(False)
+                self.radioButton_2.setVisible(False)
+                self.label_9.setVisible(False)
+            
             self.tableWidget_2.setColumnCount(columnas)
             self.tableWidget_2.setRowCount(2)
 
-            #Mostramos los radio button
-            self.radioButton.setVisible(True)
-            self.radioButton_2.setVisible(True)
-            self.label_9.setVisible(True)
+           
 
             for x in range(0,2):
                 for y in range(0,3):
@@ -925,16 +1231,25 @@ class Ui_MainWindow(object):
             self.tableWidget_2.setVisible(True)
 
         else:
+
+            if unidad == 2:
+                #Mostramos los radio button
+                self.radioButton.setVisible(True)
+                self.radioButton_2.setVisible(True)
+                self.label_9.setVisible(True)
+            else:
+                #Mostramos los radio button
+                self.radioButton.setVisible(False)
+                self.radioButton_2.setVisible(False)
+                self.label_9.setVisible(False)
+
             #Definimos las dimensiones 
             self.tableWidget_2.setColumnCount(columnas)
             self.tableWidget_2.setRowCount(3)
             self.tableWidget_2.verticalHeader().setDefaultSectionSize(38)
             self.tableWidget_2.horizontalHeader().setDefaultSectionSize(100)
 
-             #Mostramos los radio button
-            self.radioButton.setVisible(True)
-            self.radioButton_2.setVisible(True)
-            self.label_9.setVisible(True)
+           
 
             for x in range(0,2):
                 for y in range(0,3):
