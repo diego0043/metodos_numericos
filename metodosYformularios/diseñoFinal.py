@@ -7,6 +7,7 @@ from PySide2 import QtCore, QtGui, QtWidgets
 from PySide2.QtCore import (QCoreApplication, QPropertyAnimation, QDate, QDateTime, QMetaObject, QObject, QPoint, QRect, QSize, QTime, QUrl, Qt, QEvent)
 from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont, QFontDatabase, QIcon, QKeySequence, QLinearGradient, QPalette, QPainter, QPixmap, QRadialGradient)
 from PySide2.QtWidgets import *
+from sympy.core.evalf import pure_complex
 from sympy.core.symbol import symbols
 
 #importamos nuestros metodos 
@@ -28,6 +29,8 @@ GLOBAL_STATE = 0
 counter = 0
 etiquetaHermite = "y'"
 filasHermite = 2
+
+tabla_unidad4_si_no = 0
 
 tamanioInicialTabla = 183
 posicionX = 1
@@ -442,6 +445,12 @@ class Ui_MainWindow(object):
         self.funcion_uni4.setObjectName("funcion_uni4")
         self.funcion_uni4.setFont(font)
 
+        self.nivel_uni4 = QtWidgets.QLineEdit(self.centralwidget)
+        self.nivel_uni4.setGeometry(QtCore.QRect(800, 180, 131, 24))
+        self.nivel_uni4.setStyleSheet("background-color: rgb(242, 242, 242);\n""image: url(recursos/barra2.png);\n""border:0px;\n""color:  rgb(232, 137, 137)")
+        self.nivel_uni4.setObjectName("nivel_uni4")
+        self.nivel_uni4.setFont(font)
+
         self.puntoInicial_uni4 = QtWidgets.QLineEdit(self.centralwidget)
         self.puntoInicial_uni4.setGeometry(QtCore.QRect(440, 180, 51, 24))
         self.puntoInicial_uni4.setStyleSheet("background-color: rgb(242, 242, 242);\n""image: url(recursos/barra.png);\n""border:0px;\n""color:  rgb(232, 137, 137)")
@@ -478,6 +487,12 @@ class Ui_MainWindow(object):
         self.label_h_uni4.setFont(font)
         self.label_h_uni4.setStyleSheet("color: rgb(134, 155, 208);")
 
+        self.label_nivel_uni4 = QtWidgets.QLabel(self.centralwidget)
+        self.label_nivel_uni4.setGeometry(QtCore.QRect(800 ,140, 150, 16))
+        self.label_nivel_uni4.setObjectName("label_nivel_uni4")
+        self.label_nivel_uni4.setFont(font)
+        self.label_nivel_uni4.setStyleSheet("color: rgb(134, 155, 208);")
+
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
@@ -507,6 +522,7 @@ class Ui_MainWindow(object):
         self.label_funcion_uni4.setText("Ingresa la función")
         self.label_puntoInicial_uni4.setText("Punto Inicial")
         self.label_h_uni4.setText("Valor de h")
+        self.label_nivel_uni4.setText("Nivel")
         self.label_12.setText(_translate("MainWindow","COLUMNAS:"))
         self.pushButton.setText(_translate("MainWindow", "CALCULAR"))
         self.pushButton_2.setText(_translate("MainWindow", "LIMPIAR"))
@@ -603,6 +619,8 @@ class Ui_MainWindow(object):
         self.label_funcion_uni4.setVisible(False)
         self.label_puntoInicial_uni4.setVisible(False)
         self.label_h_uni4.setVisible(False)
+        self.nivel_uni4.setVisible(False)
+        self.label_nivel_uni4.setVisible(False)
 
     # En este metodo vamos a capturar la posicion del primer combobox y luego dependiendo
     # de cual este seleccionado asi se llenara el otro combobox
@@ -823,7 +841,7 @@ class Ui_MainWindow(object):
             self.comboBox_2.setItemText(12, "Integracion Numerica")
             self.comboBox_2.setItemText(13, "- Trapecio simple")
             self.comboBox_2.setItemText(14, "- Trapecio compuesto")
-            self.comboBox_2.setItemText(15, "- Trapecio para integrales dobles y triples")
+            self.comboBox_2.setItemText(15, "- Integrales dobles y triples")
             self.comboBox_2.setItemText(16, "- Simpson un tercio simple")
             self.comboBox_2.setItemText(17, "- Simpson un tercio compuesta")
             self.comboBox_2.setItemText(18, "- Simpson tres octavos simple")
@@ -858,16 +876,76 @@ class Ui_MainWindow(object):
 
     def usar_tabla_unidad4_o_no(self):
 
+        global tabla_unidad4_si_no
         si_o_no = self.comboBox_3.currentIndex()
         metodo = self.comboBox_2.currentIndex()
 
         if si_o_no == 0:
 
+            tabla_unidad4_si_no = 0
+
             self.tableWidget_2.setVisible(False)
             self.pushButton_5.setVisible(False)
             self.pushButton_6.setVisible(False)
 
-            if metodo >= 2 and metodo <= 10:
+            if metodo >= 2:
+                self.funcion_uni4.setVisible(True)
+                self.puntoInicial_uni4.setVisible(True)
+                self.h_uni4.setVisible(True)
+                self.label_funcion_uni4.setVisible(True)
+                self.label_puntoInicial_uni4.setVisible(True)
+                self.label_h_uni4.setVisible(True)
+            
+            elif metodo >= 3:
+                self.funcion_uni4.setVisible(True)
+                self.puntoInicial_uni4.setVisible(True)
+                self.h_uni4.setVisible(True)
+                self.label_funcion_uni4.setVisible(True)
+                self.label_puntoInicial_uni4.setVisible(True)
+                self.label_h_uni4.setVisible(True)
+            
+            elif metodo >= 4:
+                self.funcion_uni4.setVisible(True)
+                self.puntoInicial_uni4.setVisible(True)
+                self.h_uni4.setVisible(True)
+                self.label_funcion_uni4.setVisible(True)
+                self.label_puntoInicial_uni4.setVisible(True)
+                self.label_h_uni4.setVisible(True)
+            
+            elif metodo >= 5:
+                self.funcion_uni4.setVisible(True)
+                self.puntoInicial_uni4.setVisible(True)
+                self.h_uni4.setVisible(True)
+                self.label_funcion_uni4.setVisible(True)
+                self.label_puntoInicial_uni4.setVisible(True)
+                self.label_h_uni4.setVisible(True)
+
+            elif metodo >= 6:
+                self.funcion_uni4.setVisible(True)
+                self.puntoInicial_uni4.setVisible(True)
+                self.h_uni4.setVisible(True)
+                self.label_funcion_uni4.setVisible(True)
+                self.label_puntoInicial_uni4.setVisible(True)
+                self.label_h_uni4.setVisible(True)
+
+
+            if metodo >= 8:
+                self.funcion_uni4.setVisible(True)
+                self.puntoInicial_uni4.setVisible(True)
+                self.h_uni4.setVisible(True)
+                self.label_funcion_uni4.setVisible(True)
+                self.label_puntoInicial_uni4.setVisible(True)
+                self.label_h_uni4.setVisible(True)
+            
+            elif metodo >= 9:
+                self.funcion_uni4.setVisible(True)
+                self.puntoInicial_uni4.setVisible(True)
+                self.h_uni4.setVisible(True)
+                self.label_funcion_uni4.setVisible(True)
+                self.label_puntoInicial_uni4.setVisible(True)
+                self.label_h_uni4.setVisible(True)
+            
+            elif metodo >= 10:
                 self.funcion_uni4.setVisible(True)
                 self.puntoInicial_uni4.setVisible(True)
                 self.h_uni4.setVisible(True)
@@ -881,6 +959,9 @@ class Ui_MainWindow(object):
             elif metodo == 14:
                 self.label_puntoInicial_uni4.setVisible(True)
                 self.puntoInicial_uni4.setVisible(True)
+                self.funcion_uni4.setVisible(True)
+
+            elif metodo == 16:
                 self.funcion_uni4.setVisible(True)
             
             elif metodo == 17:
@@ -896,6 +977,7 @@ class Ui_MainWindow(object):
             self.label_funcion_uni4.setVisible(False)
             self.label_puntoInicial_uni4.setVisible(False)
             self.label_h_uni4.setVisible(False)
+            tabla_unidad4_si_no = 1
 
     def metodos_de_cada_unidad(self):
         queMetodo = self.comboBox_2.currentIndex()
@@ -924,6 +1006,10 @@ class Ui_MainWindow(object):
         self.label_h_uni4.setVisible(False)
         self.pushButton_6.setGeometry(QtCore.QRect(85, 127, 65, 40))
         self.pushButton_5.setGeometry(QtCore.QRect(10, 127, 65, 40))
+        self.label_nivel_uni4.setVisible(False)
+        self.nivel_uni4.setVisible(False)
+
+
 
         if queUnidad == 0: # unidad 1
             
@@ -1132,12 +1218,64 @@ class Ui_MainWindow(object):
             self.tableWidget_2.setGeometry(QtCore.QRect(170, 140, 704, 81))
             self.pushButton_6.setGeometry(QtCore.QRect(85, 150, 65, 40))
             self.pushButton_5.setGeometry(QtCore.QRect(10, 150, 65, 40))
+
             
-            if queMetodo >= 2 and queMetodo <= 10:
+            print(queMetodo)
+            if queMetodo == 2:
                 self.label_ver_tabla.setVisible(True)
                 self.comboBox_3.setVisible(True)
                 self.comboBox_3.setCurrentIndex(-1)
 
+            elif queMetodo == 3:
+                self.label_ver_tabla.setVisible(True)
+                self.comboBox_3.setVisible(True)
+                self.comboBox_3.setCurrentIndex(-1)
+
+            elif queMetodo == 4:
+                self.label_ver_tabla.setVisible(True)
+                self.comboBox_3.setVisible(True)
+                self.comboBox_3.setCurrentIndex(-1)
+
+            elif queMetodo == 5:
+                self.label_ver_tabla.setVisible(True)
+                self.comboBox_3.setVisible(True)
+                self.comboBox_3.setCurrentIndex(-1)
+
+            elif queMetodo == 6:
+                self.label_ver_tabla.setVisible(True)
+                self.comboBox_3.setVisible(True)
+                self.comboBox_3.setCurrentIndex(-1)
+            
+            elif queMetodo == 7:
+                self.comboBox_2.setCurrentIndex(0)
+                self.label_ver_tabla.setVisible(False)
+                self.comboBox_3.setVisible(False)
+
+            elif queMetodo == 8:
+                self.label_ver_tabla.setVisible(True)
+                self.comboBox_3.setVisible(True)
+                self.comboBox_3.setCurrentIndex(-1)
+            
+            elif queMetodo == 9:
+                self.label_ver_tabla.setVisible(True)
+                self.comboBox_3.setVisible(True)
+                self.comboBox_3.setCurrentIndex(-1)
+            
+            elif queMetodo == 10:
+                self.label_ver_tabla.setVisible(True)
+                self.comboBox_3.setVisible(True)
+                self.comboBox_3.setCurrentIndex(-1)
+
+            elif queMetodo == 11:
+
+                self.funcion_uni4.setVisible(True)
+                self.label_puntoInicial_uni4.setVisible(True)
+                self.puntoInicial_uni4.setVisible(True)
+                self.label_h_uni4.setVisible(True)
+                self.h_uni4.setVisible(True)
+                self.label_nivel_uni4.setVisible(True)
+                self.nivel_uni4.setVisible(True)
+            
             elif queMetodo == 13:
                 self.label_ver_tabla.setVisible(True)
                 self.comboBox_3.setVisible(True)
@@ -1150,9 +1288,13 @@ class Ui_MainWindow(object):
 
             elif queMetodo == 15:
                 self.funcion_uni4.setVisible(True)
+                self.label_puntoInicial_uni4.setVisible(False)
+                self.puntoInicial_uni4.setVisible(True)
 
             elif queMetodo == 16:
-                self.funcion_uni4.setVisible(True)
+                self.label_ver_tabla.setVisible(True)
+                self.comboBox_3.setVisible(True)
+                self.comboBox_3.setCurrentIndex(-1)
 
             elif queMetodo == 17:
                 self.label_ver_tabla.setVisible(True)
@@ -1164,18 +1306,30 @@ class Ui_MainWindow(object):
 
             elif queMetodo == 19:
                 self.funcion_uni4.setVisible(True)
+                self.label_puntoInicial_uni4.setVisible(True)
+                self.puntoInicial_uni4.setVisible(True)
 
             elif queMetodo == 20:
                 self.funcion_uni4.setVisible(True)
-            
+                self.label_puntoInicial_uni4.setVisible(True)
+                self.puntoInicial_uni4.setVisible(True)
+
             elif queMetodo == 21:
                 self.funcion_uni4.setVisible(True)
+                self.label_puntoInicial_uni4.setVisible(True)
+                self.puntoInicial_uni4.setVisible(True)
 
             elif queMetodo == 22:
                 self.funcion_uni4.setVisible(True)
+                self.label_puntoInicial_uni4.setVisible(True)
+                self.puntoInicial_uni4.setVisible(True)
 
             elif queMetodo == 23:
                 self.funcion_uni4.setVisible(True)
+            else:
+                self.comboBox_2.setCurrentIndex(0)
+                self.label_ver_tabla.setVisible(False)
+                self.comboBox_3.setVisible(False)
 
     #Metodos que controlan las tablas ó que trabajan con las tablas 
     def creacion_tabla_por_defecto_unidad3(self,columnas,si_es_hermite):
@@ -1738,6 +1892,148 @@ class Ui_MainWindow(object):
             else:
                 print("Seleccione una acción en los radio button")
 
+    def insertar_datos_a_tabla_unidad4(self,metodo):
+
+        funcion = self.funcion_uni4.text()
+        puntoInicial = float(self.puntoInicial_uni4.text())
+        h = float(self.h_uni4.text())
+
+        listaX = []
+        listaY = []
+        puntos = []
+        listaXapoyo = []
+        listaYapoyo = []
+        
+
+
+        global cuantasFilasYColumnas, tabla_unidad4_si_no
+
+        #Encontramos puntos de la tabla si los hay
+        if tabla_unidad4_si_no == 1:
+
+            for x in range(0,2):
+                for y in range(1,cuantasFilasYColumnas+1):
+                    if x == 0:
+                        listaX.append(self.tableWidget_2.item(x,y).text())
+                    elif x == 1:
+                        listaY.append(self.tableWidget_2.item(x,y).text())
+        
+            for i in listaX:
+                listaXapoyo.append(float(i))
+            
+            for i in listaY:
+                listaYapoyo.append(float(i))
+
+            puntos = [listaXapoyo,listaYapoyo]
+
+        if metodo == 2:
+
+            if tabla_unidad4_si_no == 0:
+                lst = metodos_uni4.diferenciacion_numerica_adelante(funcion,puntoInicial,h,[])
+            else:
+                lst = metodos_uni4.diferenciacion_numerica_adelante('',puntoInicial,h,puntos)
+        
+        elif metodo == 3:
+
+            if tabla_unidad4_si_no == 0:
+                lst = metodos_uni4.diferenciacion_numerica_atras(funcion,puntoInicial,h,[])
+            else:
+                lst = metodos_uni4.diferenciacion_numerica_atras('',puntoInicial,h,puntos)
+        
+        elif metodo == 4:
+
+            if tabla_unidad4_si_no == 0:
+                lst = metodos_uni4.diferenciacion_numerica_centrada(funcion,puntoInicial,h,[])
+            else:
+                lst = metodos_uni4.diferenciacion_numerica_centrada('',puntoInicial,h,puntos)
+        
+        elif metodo == 5:
+
+            if tabla_unidad4_si_no == 0:
+                lst = metodos_uni4.diferenciacion_numerica_tres_puntos(funcion,puntoInicial,h,[])
+            else:
+                lst = metodos_uni4.diferenciacion_numerica_tres_puntos('',puntoInicial,h,puntos)
+       
+        elif metodo == 6:
+
+            if tabla_unidad4_si_no == 0:
+                lst = metodos_uni4.diferenciacion_numerica_cinco_puntos(funcion,puntoInicial,h,[])
+            else:
+                lst = metodos_uni4.diferenciacion_numerica_cinco_puntos('',puntoInicial,h,puntos)
+        
+        elif metodo == 8:
+            
+            if tabla_unidad4_si_no == 0:
+                lst = metodos_uni4.diferenciacion_numerica_adelante_orden_superior(funcion,puntoInicial,h,[])
+            else:
+                lst = metodos_uni4.diferenciacion_numerica_adelante_orden_superior('',puntoInicial,h,puntos)
+        
+        elif metodo == 9:
+            
+            if tabla_unidad4_si_no == 0:
+                lst = metodos_uni4.diferenicacion_numerica_atras_orden_superior(funcion,puntoInicial,h,[])
+            else:
+                lst = metodos_uni4.diferenicacion_numerica_atras_orden_superior('',puntoInicial,h,puntos)
+        
+        elif metodo == 10:
+            
+            if tabla_unidad4_si_no == 0:
+                lst = metodos_uni4.diferenicacion_numerica_centrales_orden_superior(funcion,puntoInicial,h,[])
+            else:
+                lst = metodos_uni4.diferenicacion_numerica_centrales_orden_superior('',puntoInicial,h,puntos)
+       
+        elif metodo == 11:
+            lst = metodos_uni4.metodo_richardson(funcion,puntoInicial,h)
+
+        elif metodo == 13:
+            
+            if tabla_unidad4_si_no == 0:
+                lst = metodos_uni4.regla_del_trapecio_simple(funcion,puntoInicial,h,[])
+            else:
+                lst = metodos_uni4.regla_del_trapecio_simple('',puntoInicial,h,puntos)
+        
+        elif metodo == 14:
+
+            if tabla_unidad4_si_no == 0:
+                lst = metodos_uni4.regla_del_trapecio_compuesta(funcion,puntoInicial,h,[])
+            else:
+                lst = metodos_uni4.regla_del_trapecio_compuesta('',puntoInicial,h,puntos)
+        
+        elif metodo == 15: #pendiente 
+            self.insertar_datos_a_tabla_unidad4(15)
+       
+        elif metodo == 16:
+
+            if tabla_unidad4_si_no == 0:
+                lst = metodos_uni4.integracion_simpson_unTercio_simple(funcion,puntoInicial,h,[],[])
+            else:
+                lst = metodos_uni4.integracion_simpson_unTercio_simple('',puntoInicial,h,listaXapoyo, listaYapoyo)
+        
+        elif metodo == 17:
+
+            if tabla_unidad4_si_no == 0:
+                lst = metodos_uni4.integracion_simpson_unTercio_compuesta(funcion,puntoInicial,h,[])
+            else:
+                lst = metodos_uni4.integracion_simpson_unTercio_compuesta('',puntoInicial,h,listaXapoyo, listaYapoyo)
+        
+        elif metodo == 18:
+            lst = metodos_uni4.integracion_simpson_tresOctavos_simple(funcion,puntoInicial,h)
+        
+        elif metodo == 19:
+            lst = metodos_uni4.integracion_simpson_tresOctavos_compuesta(funcion,puntoInicial,h)
+       
+        elif metodo == 20:
+            lst = metodos_uni4.integracion_rosemberg(funcion,puntoInicial,h)
+       
+        elif metodo == 21:
+            lst = metodos_uni4.integracion_cuadratura_Gaussiana(funcion,puntoInicial,h)
+       
+        elif metodo == 22:
+            lst = metodos_uni4.integracion_simpson_unTercio_adaptativo(funcion,puntoInicial,h)
+       
+        elif metodo == 23:
+            lst = metodos_uni4.integracion_Boole(funcion,puntoInicial,h)
+
     def control_agregar_columna_tabla_Unidad3(self):
         global  cuantasFilasYColumnas 
         global etiquetaHermite
@@ -2057,6 +2353,48 @@ class Ui_MainWindow(object):
             elif metodo == 6:# funciones spline
                 self.encontrar_puntos_para_metodos_unidad3(6)
                 
+        elif unidad == 3: #Metodos de la unidad 4
+            if metodo == 2:
+                self.insertar_datos_a_tabla_unidad4(2)
+            elif metodo == 3:
+                self.insertar_datos_a_tabla_unidad4(3)
+            elif metodo == 4:
+                self.insertar_datos_a_tabla_unidad4(4)
+            elif metodo == 5:
+                self.insertar_datos_a_tabla_unidad4(5)
+            elif metodo == 6:
+                self.insertar_datos_a_tabla_unidad4(6)
+            elif metodo == 8:
+                self.insertar_datos_a_tabla_unidad4(8)
+            elif metodo == 9:
+                self.insertar_datos_a_tabla_unidad4(9)
+            elif metodo == 10:
+                self.insertar_datos_a_tabla_unidad4(10)
+            elif metodo == 11:
+                self.insertar_datos_a_tabla_unidad4(11)
+            elif metodo == 13:
+                self.insertar_datos_a_tabla_unidad4(13)
+            elif metodo == 14:
+                self.insertar_datos_a_tabla_unidad4(14)
+            elif metodo == 15:
+                self.insertar_datos_a_tabla_unidad4(15)
+            elif metodo == 16:
+                self.insertar_datos_a_tabla_unidad4(16)
+            elif metodo == 17:
+                self.insertar_datos_a_tabla_unidad4(17)
+            elif metodo == 18:
+                self.insertar_datos_a_tabla_unidad4(18)
+            elif metodo == 19:
+                self.insertar_datos_a_tabla_unidad4(19)
+            elif metodo == 20:
+                self.insertar_datos_a_tabla_unidad4(20)
+            elif metodo == 21:
+                self.insertar_datos_a_tabla_unidad4(21)
+            elif metodo == 22:
+                self.insertar_datos_a_tabla_unidad4(22)
+            elif metodo == 23:
+                self.insertar_datos_a_tabla_unidad4(23)
+
     def graficar(self):
         x = symbols('x')
         y = symbols('y')
@@ -2100,16 +2438,4 @@ class Ui_MainWindow(object):
                 p1.show()
             except:
                 print("Algo salio mal")
-
-
-
-
-
-
-
-
-
-
-
-
-    
+ 
