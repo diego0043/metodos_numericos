@@ -78,6 +78,8 @@ def diferenciacion_numerica_adelante(funcion,puntoInicial,h,tablaValores):
         print(listaResultados[0])
         print(listaResultados[1])
 
+        return listaResultados
+
     else:
         lista_valores = []
         lista_x = tablaValores[0]
@@ -112,6 +114,7 @@ def diferenciacion_numerica_adelante(funcion,puntoInicial,h,tablaValores):
         #guardamos la segunda diferencia
         listaResultados.append((numerador1)/(h*2))
         print(listaResultados)
+        return listaResultados
 
 def diferenciacion_numerica_atras(funcion,puntoInicial,h,tablaValores):
     listaResultados = [] #lista donde estaran las respuestas 
@@ -148,6 +151,7 @@ def diferenciacion_numerica_atras(funcion,puntoInicial,h,tablaValores):
 
         print(listaResultados[0])
         print(listaResultados[1])
+        return listaResultados
 
     else:
         lista_valores = []
@@ -183,6 +187,7 @@ def diferenciacion_numerica_atras(funcion,puntoInicial,h,tablaValores):
         #guardamos la segunda diferencia
         listaResultados.append((numerador1)/(h*2))
         print(listaResultados)
+        return listaResultados
 
 def diferenciacion_numerica_centrada(funcion,puntoInicial,h,tablaValores):
     listaResultados = [] #lista donde estaran las respuestas 
@@ -256,6 +261,7 @@ def diferenciacion_numerica_centrada(funcion,puntoInicial,h,tablaValores):
         #guardamos la segunda diferencia
         listaResultados.append((numerador1)/(h*12))
         print(listaResultados)
+        return listaResultados
 
 def diferenciacion_numerica_tres_puntos(funcion,puntoInicial,h,tablaValores):
     listaResultados = [] #lista donde estaran las respuestas 
@@ -294,6 +300,7 @@ def diferenciacion_numerica_tres_puntos(funcion,puntoInicial,h,tablaValores):
 
         print(listaResultados[0])
         print(listaResultados[1])
+        return listaResultados
 
     else:
         lista_valores = []
@@ -329,6 +336,7 @@ def diferenciacion_numerica_tres_puntos(funcion,puntoInicial,h,tablaValores):
         #guardamos la segunda diferencia
         listaResultados.append((numerador1)/(h*2))
         print(listaResultados)
+        return listaResultados
 
 def diferenciacion_numerica_cinco_puntos(funcion,puntoInicial,h,tablaValores):
     listaResultados = [] #lista donde estaran las respuestas 
@@ -395,6 +403,8 @@ def diferenciacion_numerica_cinco_puntos(funcion,puntoInicial,h,tablaValores):
         print(listaResultados[3])
         print(listaResultados[4])
 
+        return listaResultados
+
     else:
         lista_valores = []
         lista_valores_2 = []
@@ -442,6 +452,8 @@ def diferenciacion_numerica_cinco_puntos(funcion,puntoInicial,h,tablaValores):
                 lista_valores_5.append(lista_y[i-2])
                 lista_valores_5.append(lista_y[i-1])
                 lista_valores_5.append(lista_y[i])
+
+        return listaResultados
 
                 
         #variables donde guardaremos el numerador
@@ -553,6 +565,8 @@ def diferenciacion_numerica_adelante_orden_superior(funcion,puntoInicial,h,tabla
         print(listaResultados[3])
         print(listaResultados[4])
         print(listaResultados[5])
+
+        return listaResultados
         
     else:
         lista_valores = []
@@ -629,6 +643,8 @@ def diferenciacion_numerica_adelante_orden_superior(funcion,puntoInicial,h,tabla
         listaResultados.append((numerador1)/(h**4))
 
         print(listaResultados)
+
+        return listaResultados
 
 def diferenicacion_numerica_atras_orden_superior(funcion,puntoInicial,h,tablaValores):
     print("falta")
@@ -735,7 +751,7 @@ def regla_del_trapecio_compuesta(funcion,a,b,n,tablaValores):
 
     if funcion != '':
 
-        h = Fraction((b-a),n)
+        h = (b-a)/n
         aa = a
 
         lista_con_valor_h = []
@@ -795,7 +811,7 @@ def trapecio_para_dobles_y_triples(funcion,lista_a,lista_b,n,orden_integral):
             hh += h
 
         for i in range(0,n+1,1):
-            resultado = sp.sympify(funcion).subs(x, lista_h[i])
+            resultado = sp.sympify(funcion).subs([(x, lista_h[i]), (e, cmath.e)])
             lista_operaciones_de_evaluarX.append(resultado)
             if i >= 1 and i<= n-1:
                 valores_sumados += lista_operaciones_de_evaluarX[i]
@@ -822,7 +838,7 @@ def trapecio_para_dobles_y_triples(funcion,lista_a,lista_b,n,orden_integral):
             hh += h
 
         for i in range(0,n+1,1):
-            resultado = sp.sympify(funcion_encontrada).subs(y, lista_h[i])
+            resultado = sp.sympify(funcion_encontrada).subs([(y, lista_h[i]), (e, cmath.e)])
             lista_operaciones_de_evaluarX.append(resultado)
             if i >= 1 and i<= n-1:
                 valores_sumados += lista_operaciones_de_evaluarX[i]
@@ -847,7 +863,7 @@ def trapecio_para_dobles_y_triples(funcion,lista_a,lista_b,n,orden_integral):
             hh += h
 
         for i in range(0,n+1,1):
-            resultado = sp.sympify(funcion).subs(x, lista_h[i])
+            resultado = sp.sympify(funcion).subs([(x, lista_h[i]), (e, cmath.e)])
             lista_operaciones_de_evaluarX.append(resultado)
             if i >= 1 and i<= n-1:
                 valores_sumados += lista_operaciones_de_evaluarX[i]
@@ -874,7 +890,7 @@ def trapecio_para_dobles_y_triples(funcion,lista_a,lista_b,n,orden_integral):
             hh += h
 
         for i in range(0,n+1,1):
-            resultado = sp.sympify(funcion_encontrada).subs(y, lista_h[i])
+            resultado = sp.sympify(funcion_encontrada).subs([(y, lista_h[i]), (e, cmath.e)])
             lista_operaciones_de_evaluarX.append(resultado)
             if i >= 1 and i<= n-1:
                 valores_sumados += lista_operaciones_de_evaluarX[i]
@@ -902,7 +918,7 @@ def trapecio_para_dobles_y_triples(funcion,lista_a,lista_b,n,orden_integral):
 
 
         for i in range(0,n+1,1):
-            resultado = sp.sympify(funcion_encontrada_2).subs(z, lista_h[i])
+            resultado = sp.sympify(funcion_encontrada_2).subs([(z, lista_h[i]), (e, cmath.e)])
             lista_operaciones_de_evaluarX.append(resultado)
             if i >= 1 and i<= n-1:
                 valores_sumados += lista_operaciones_de_evaluarX[i]
@@ -999,6 +1015,7 @@ def integracion_simpson_unTercio_compuesta(funcion, a, b, n_Intervalos, valoresX
                            (2*sumatoria_Fx)+listaX[len(listaX)-1])/(6*n_Intervalos))
 
         print(respuesta)
+        return respuesta
 
     else:
         # Hacemos la suma de todos los f(x) de los x
@@ -1014,16 +1031,14 @@ def integracion_simpson_unTercio_compuesta(funcion, a, b, n_Intervalos, valoresX
         # Sacamos los valores de los puntos medios evaluadosen la funcion
         for i in range(0, len(lista_Puntos_Medios), 1):
 
-            lista_Puntos_Medios_Funciones.append(evaluarFuncion(
-                funcion, lista_Puntos_Medios[i], 0, 0))
+            lista_Puntos_Medios_Funciones.append(evaluarFuncion(funcion, lista_Puntos_Medios[i], 0, 0))
 
-            sumatoria_Fx_Medios += evaluarFuncion(
-                funcion, lista_Puntos_Medios[i], 0, 0)
+            sumatoria_Fx_Medios += evaluarFuncion(funcion, lista_Puntos_Medios[i], 0, 0)
 
-        respuesta = (b-a)*((valoresX[0]+(4*sumatoria_Fx_Medios) +
-                           (2*sumatoria_Fx)+valoresX[len(valoresX)-1])/(6*n_Intervalos))
+        respuesta = (b-a)*((valoresX[0]+(4*sumatoria_Fx_Medios) + (2*sumatoria_Fx)+valoresX[len(valoresX)-1])/(6*n_Intervalos))
 
         print(respuesta)
+        return respuesta
 
 def integracion_simpson_tresOctavos_simple(funcion, a, b):
     # Variables a utilizar
@@ -1044,8 +1059,7 @@ def integracion_simpson_tresOctavos_simple(funcion, a, b):
                             (evaluarFuncion(funcion, listaX[3], 0, 0)))/8)
 
         print(respuesta)
-    else:
-        print("Escriba la funcion")
+        return respuesta
 
 def integracion_simpson_tresOctavos_compuesta(funcion, a, b, n_Intervalos):
     # Variables a utilizar
@@ -1091,9 +1105,7 @@ def integracion_simpson_tresOctavos_compuesta(funcion, a, b, n_Intervalos):
                                               evaluarFuncion(funcion, listaX[len(listaX)-1], 0, 0))
 
         print(respuesta)
-
-    else:
-        print("Difite una funcion")
+        return respuesta
 
 def integracion_rosemberg(funcion,a,b,nivel):
 
@@ -1155,7 +1167,7 @@ def integracion_rosemberg(funcion,a,b,nivel):
 
 def integracion_cuadratura_Gaussiana(funcion,a,b,n):
     #cada sub-lista va a representar un punto
-
+    listaResultado = []
     lista_Wk = [[2], [1,1], [0.555556,0.888889,0.555556], [0.347855,0.652145,-0.652145,-0.347855], [0.236927,0.478629,0.568889,0.478629,0.236927], [], [], [], [], [], [], []]
 
     lista_Tk = [[0], [0.57735,-0.57735], [-0.774597,0,0.774597], [-0.861136,-0.339981,0.339981,0.861136], [-0.90618,-0.538469,0,0.538469,0.90618], [], [], [], [], [], [], []]
@@ -1173,6 +1185,8 @@ def integracion_cuadratura_Gaussiana(funcion,a,b,n):
     resultado = resultado*(b-a)/2
 
     print(resultado)
+    listaResultado.append(resultado)
+    return listaResultado
     
 def evaluar_formula_Simpson_adapatativo(a,b,funcion): #Creo que como funcion aparte es inecesaria pero xd luego se puede integrar al metodo
     puntoS=[]
