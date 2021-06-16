@@ -1,11 +1,13 @@
 import sys
 import platform
 from PySide2 import QtCore, QtGui, QtWidgets
-from PySide2.QtCore import (QCoreApplication, QPropertyAnimation, QDate, QDateTime, QMetaObject, QObject, QPoint, QRect, QSize, QTime, QUrl, Qt, QEvent)
-from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont, QFontDatabase, QIcon, QKeySequence, QLinearGradient, QPalette, QPainter, QPixmap, QRadialGradient)
+from PySide2.QtCore import (QCoreApplication, QPropertyAnimation, QDate, QDateTime,
+                            QMetaObject, QObject, QPoint, QRect, QSize, QTime, QUrl, Qt, QEvent)
+from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont, QFontDatabase,
+                           QIcon, QKeySequence, QLinearGradient, QPalette, QPainter, QPixmap, QRadialGradient)
 from PySide2.QtWidgets import *
 
-#Importamos la carpeta donde estan los metodos numéricos
+# Importamos la carpeta donde estan los metodos numéricos
 from metodosYformularios import *
 
 # GUI FILE
@@ -18,13 +20,15 @@ from metodosYformularios.ui_functions import *
 counter = 0
 jumper = 10
 
-## ==> YOUR APPLICATION WINDOW
+# ==> YOUR APPLICATION WINDOW
+
+
 class MainWindow(QMainWindow):
     def __init__(self):
         QMainWindow.__init__(self)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-       
+
         def moveWindow(event):
             # RESTORE BEFORE MOVE
             if UIFunctions.returnStatus() == 1:
@@ -35,28 +39,31 @@ class MainWindow(QMainWindow):
                 self.move(self.pos() + event.globalPos() - self.dragPos)
                 self.dragPos = event.globalPos()
                 event.accept()
-        
+
         self.ui.frame.mouseMoveEvent = moveWindow
-    
+
         UIFunctions.uiDefinitions(self)
-        
+
     def mousePressEvent(self, event):
         self.dragPos = event.globalPos()
-## ==> SPLASHSCREEN WINDOW
+# ==> SPLASHSCREEN WINDOW
+
+
 class SplashScreen(QMainWindow):
     def __init__(self):
         QMainWindow.__init__(self)
         self.ui = Ui_SplashScreen()
         self.ui.setupUi(self)
 
-        ## ==> SET INITIAL PROGRESS BAR TO (0) ZERO
+        # ==> SET INITIAL PROGRESS BAR TO (0) ZERO
         self.progressBarValue(0)
 
-        ## ==> REMOVE STANDARD TITLE BAR
-        self.setWindowFlags(QtCore.Qt.FramelessWindowHint) # Remove title bar
-        self.setAttribute(QtCore.Qt.WA_TranslucentBackground) # Set background to transparent
+        # ==> REMOVE STANDARD TITLE BAR
+        self.setWindowFlags(QtCore.Qt.FramelessWindowHint)  # Remove title bar
+        # Set background to transparent
+        self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
 
-        ## ==> APPLY DROP SHADOW EFFECT
+        # ==> APPLY DROP SHADOW EFFECT
         self.shadow = QGraphicsDropShadowEffect(self)
         self.shadow.setBlurRadius(20)
         self.shadow.setXOffset(0)
@@ -64,20 +71,20 @@ class SplashScreen(QMainWindow):
         self.shadow.setColor(QColor(0, 0, 0, 120))
         self.ui.circularBg.setGraphicsEffect(self.shadow)
 
-        ## QTIMER ==> START
+        # QTIMER ==> START
         self.timer = QtCore.QTimer()
         self.timer.timeout.connect(self.progress)
         # TIMER IN MILLISECONDS
         self.timer.start(15)
 
-        ## SHOW ==> MAIN WINDOW
+        # SHOW ==> MAIN WINDOW
         ########################################################################
         self.show()
         ## ==> END ##
 
-    ## DEF TO LOANDING
+    # DEF TO LOANDING
     ########################################################################
-    def progress (self):
+    def progress(self):
         global counter
         global jumper
         value = counter
@@ -95,7 +102,8 @@ class SplashScreen(QMainWindow):
 
         # SET VALUE TO PROGRESS BAR
         # fix max value error if > than 100
-        if value >= 100: value = 1.000
+        if value >= 100:
+            value = 1.000
         self.progressBarValue(value)
 
         # CLOSE SPLASH SCREE AND OPEN APP
@@ -113,7 +121,7 @@ class SplashScreen(QMainWindow):
         # INCREASE COUNTER
         counter += 0.5
 
-    ## DEF PROGRESS BAR VALUE
+    # DEF PROGRESS BAR VALUE
     ########################################################################
     def progressBarValue(self, value):
 
@@ -134,10 +142,12 @@ class SplashScreen(QMainWindow):
         stop_2 = str(progress)
 
         # SET VALUES TO NEW STYLESHEET
-        newStylesheet = styleSheet.replace("{STOP_1}", stop_1).replace("{STOP_2}", stop_2)
+        newStylesheet = styleSheet.replace(
+            "{STOP_1}", stop_1).replace("{STOP_2}", stop_2)
 
         # APPLY STYLESHEET WITH NEW VALUES
         self.ui.circularProgress.setStyleSheet(newStylesheet)
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
