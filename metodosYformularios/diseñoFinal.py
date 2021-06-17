@@ -381,7 +381,8 @@ class Ui_MainWindow(object):
 
         self.lineEdit = QtWidgets.QLineEdit(self.centralwidget)
         self.lineEdit.setGeometry(QtCore.QRect(200, 145, 131, 24))
-        self.lineEdit.setStyleSheet("background-color: rgb(242, 242, 242);\n""image: url(recursos/barra2.png);\n""border:0px;\n""color:  rgb(232, 137, 137)")
+        self.lineEdit.setStyleSheet(
+            "background-color: rgb(242, 242, 242);\n""image: url(recursos/barra2.png);\n""border:0px;\n""color:  rgb(232, 137, 137)")
         self.lineEdit.setObjectName("lineEdit")
         self.lineEdit.setFont(font)
 
@@ -534,8 +535,7 @@ class Ui_MainWindow(object):
         self.label_nivel_uni4.setFont(font)
         self.label_nivel_uni4.setStyleSheet("color: rgb(134, 155, 208);")
 
-
-        #Componentes de integrales dobles y triples
+        # Componentes de integrales dobles y triples
         font = QtGui.QFont()
         font.setPointSize(10)
         font.setBold(True)
@@ -544,66 +544,76 @@ class Ui_MainWindow(object):
         self.funcion_txt = QtWidgets.QLineEdit(self.centralwidget)
         self.funcion_txt.setGeometry(QtCore.QRect(260, 155, 141, 31))
         self.funcion_txt.setFont(font)
-        self.funcion_txt.setStyleSheet("background-color: rgb(242, 242, 242);\n""image: url(recursos/barra2.png);\n""border:0px;\n""color:  rgb(232, 137, 137)")
+        self.funcion_txt.setStyleSheet(
+            "background-color: rgb(242, 242, 242);\n""image: url(recursos/barra2.png);\n""border:0px;\n""color:  rgb(232, 137, 137)")
         self.funcion_txt.setObjectName("funcion_txt")
 
         self.lbl_integral1 = QtWidgets.QLabel(self.centralwidget)
         self.lbl_integral1.setGeometry(QtCore.QRect(230, 140, 25, 50))
-        self.lbl_integral1.setStyleSheet("background-image: url(recursos/integral.png);")
+        self.lbl_integral1.setStyleSheet(
+            "background-image: url(recursos/integral.png);")
         self.lbl_integral1.setText("")
         self.lbl_integral1.setObjectName("lbl_integral1")
 
         self.b0 = QtWidgets.QLineEdit(self.centralwidget)
         self.b0.setGeometry(QtCore.QRect(260, 110, 21, 20))
         self.b0.setFont(font)
-        self.b0.setStyleSheet("border: 1px solid;\n""border-color: rgb(240, 240, 240);\n""border-bottom-color: rgb(232, 137, 137);\n""color: rgb(232, 137, 137);\n""\n""")
+        self.b0.setStyleSheet(
+            "border: 1px solid;\n""border-color: rgb(240, 240, 240);\n""border-bottom-color: rgb(232, 137, 137);\n""color: rgb(232, 137, 137);\n""\n""")
         self.b0.setText("")
         self.b0.setObjectName("b0")
 
         self.a0 = QtWidgets.QLineEdit(self.centralwidget)
         self.a0.setGeometry(QtCore.QRect(215, 200, 21, 20))
         self.a0.setFont(font)
-        self.a0.setStyleSheet("border: 1px solid;\n""border-color: rgb(240, 240, 240);\n""border-bottom-color: rgb(232, 137, 137);\n""color: rgb(232, 137, 137);\n""\n""")
+        self.a0.setStyleSheet(
+            "border: 1px solid;\n""border-color: rgb(240, 240, 240);\n""border-bottom-color: rgb(232, 137, 137);\n""color: rgb(232, 137, 137);\n""\n""")
         self.a0.setText("")
         self.a0.setObjectName("a0")
 
         self.lbl_integral2 = QtWidgets.QLabel(self.centralwidget)
         self.lbl_integral2.setGeometry(QtCore.QRect(190, 140, 25, 50))
-        self.lbl_integral2.setStyleSheet("background-image: url(recursos/integral.png);")
+        self.lbl_integral2.setStyleSheet(
+            "background-image: url(recursos/integral.png);")
         self.lbl_integral2.setText("")
         self.lbl_integral2.setObjectName("lbl_integral2")
 
         self.b1 = QtWidgets.QLineEdit(self.centralwidget)
         self.b1.setGeometry(QtCore.QRect(215, 110, 21, 20))
         self.b1.setFont(font)
-        self.b1.setStyleSheet("border: 1px solid;\n""border-color: rgb(240, 240, 240);\n""border-bottom-color: rgb(232, 137, 137);\n""color: rgb(232, 137, 137);\n""\n""")
+        self.b1.setStyleSheet(
+            "border: 1px solid;\n""border-color: rgb(240, 240, 240);\n""border-bottom-color: rgb(232, 137, 137);\n""color: rgb(232, 137, 137);\n""\n""")
         self.b1.setText("")
         self.b1.setObjectName("b1")
 
         self.a1 = QtWidgets.QLineEdit(self.centralwidget)
         self.a1.setGeometry(QtCore.QRect(175, 200, 21, 20))
         self.a1.setFont(font)
-        self.a1.setStyleSheet("border: 1px solid;\n""border-color: rgb(240, 240, 240);\n""border-bottom-color: rgb(232, 137, 137);\n""color: rgb(232, 137, 137);\n""\n""")
+        self.a1.setStyleSheet(
+            "border: 1px solid;\n""border-color: rgb(240, 240, 240);\n""border-bottom-color: rgb(232, 137, 137);\n""color: rgb(232, 137, 137);\n""\n""")
         self.a1.setText("")
         self.a1.setObjectName("a1")
 
         self.lbl_integral3 = QtWidgets.QLabel(self.centralwidget)
         self.lbl_integral3.setGeometry(QtCore.QRect(150, 140, 25, 50))
-        self.lbl_integral3.setStyleSheet("background-image: url(recursos/integral.png);")
+        self.lbl_integral3.setStyleSheet(
+            "background-image: url(recursos/integral.png);")
         self.lbl_integral3.setText("")
         self.lbl_integral3.setObjectName("lbl_integral3")
 
         self.b2 = QtWidgets.QLineEdit(self.centralwidget)
         self.b2.setGeometry(QtCore.QRect(170, 110, 21, 20))
         self.b2.setFont(font)
-        self.b2.setStyleSheet("border: 1px solid;\n""border-color: rgb(240, 240, 240);\n""border-bottom-color: rgb(232, 137, 137);\n""color: rgb(232, 137, 137);\n""\n""")
+        self.b2.setStyleSheet(
+            "border: 1px solid;\n""border-color: rgb(240, 240, 240);\n""border-bottom-color: rgb(232, 137, 137);\n""color: rgb(232, 137, 137);\n""\n""")
         self.b2.setText("")
         self.b2.setObjectName("b2")
 
         self.a2 = QtWidgets.QLineEdit(self.centralwidget)
         self.a2.setGeometry(QtCore.QRect(140, 200, 21, 20))
         self.a2.setFont(font)
-        self.a2.setStyleSheet("border: 1px solid;\n""border-color: rgb(240, 240, 240);\n""border-bottom-color: rgb(232, 137, 137);\n""color: rgb(232, 137, 137);\n""\n""")
+        self.a2.setStyleSheet(
+            "border: 1px solid;\n""border-color: rgb(240, 240, 240);\n""border-bottom-color: rgb(232, 137, 137);\n""color: rgb(232, 137, 137);\n""\n""")
         self.a2.setText("")
         self.a2.setObjectName("a2")
 
@@ -628,15 +638,14 @@ class Ui_MainWindow(object):
         self.diff3.setObjectName("diff3")
         self.diff3.addItem("")
 
-
         self.cmb_doble_triple = QtWidgets.QComboBox(self.centralwidget)
         self.cmb_doble_triple.setGeometry(QtCore.QRect(440, 80, 61, 25))
         self.cmb_doble_triple.setStyleSheet("QComboBox{\n"" background-color: rgb(242, 242, 242);\n"" border-radius: 5px;\n"" border: 2px solid rgb(232, 137, 137);\n"" padding: 5px;\n"" padding-left: 5px;\n"" color: rgb(216, 55, 55)\n""}\n""QComboBox:hover{\n"" border: 2px solid rgb(216, 55, 55);\n"" border_left-color: rgb(215,55,55);\n""}\n""QComboBox::drop-down {\n"" subcontrol-origin: padding;\n"" subcontrol-position: top right;\n"" width: 10px; \n"" border-top-right-radius: 1px;\n"" border-bottom-right-radius: 1px; \n"" background-image: url(:/imagenes/row_baja.png);\n"" background-position: center;\n"" background-repeat: no-reperat;\n"" }\n""QComboBox QAbstractItemView {\n"" color: rgb(216, 55, 55); \n"" background-color: rgb(242, 242, 242);\n"" padding: 5px;\n"" selection-background-color: rgb(232, 137 , 137);\n""}\n""")
         self.cmb_doble_triple.setObjectName("cmb_doble_triple")
         self.cmb_doble_triple.addItem("")
         self.cmb_doble_triple.addItem("")
-        self.cmb_doble_triple.activated[str].connect(self.control_integral_doble_triple)
-
+        self.cmb_doble_triple.activated[str].connect(
+            self.control_integral_doble_triple)
 
         self.lbl_cmb = QtWidgets.QLabel(self.centralwidget)
         self.lbl_cmb.setGeometry(QtCore.QRect(440, 45, 221, 16))
@@ -659,11 +668,10 @@ class Ui_MainWindow(object):
         self.n_dobles = QtWidgets.QLineEdit(self.centralwidget)
         self.n_dobles.setGeometry(QtCore.QRect(600, 166, 30, 20))
         self.n_dobles.setFont(font)
-        self.n_dobles.setStyleSheet("border: 1px solid;\n""border-color: rgb(240, 240, 240);\n""border-bottom-color: rgb(232, 137, 137);\n""color: rgb(232, 137, 137);\n""\n""")
+        self.n_dobles.setStyleSheet(
+            "border: 1px solid;\n""border-color: rgb(240, 240, 240);\n""border-bottom-color: rgb(232, 137, 137);\n""color: rgb(232, 137, 137);\n""\n""")
         self.n_dobles.setText("")
         self.n_dobles.setObjectName("n_dobles")
-
-
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -753,9 +761,12 @@ class Ui_MainWindow(object):
         self.radioButton_2.setText(_translate("MainWindow", "Grado #1"))
         self.radioButton_3.setText(_translate("MainWindow", "Grado #2"))
         self.radioButton_4.setText(_translate("MainWindow", "Grado #3"))
-        self.cmb_doble_triple.setItemText(0, _translate("MainWindow", "Dobles"))
-        self.cmb_doble_triple.setItemText(1, _translate("MainWindow", "Triples"))
-        self.lbl_cmb.setText(_translate("MainWindow", "Seleccione el orden de la integral"))
+        self.cmb_doble_triple.setItemText(
+            0, _translate("MainWindow", "Dobles"))
+        self.cmb_doble_triple.setItemText(
+            1, _translate("MainWindow", "Triples"))
+        self.lbl_cmb.setText(_translate(
+            "MainWindow", "Seleccione el orden de la integral"))
 
         self.comboBox.setCurrentIndex(-1)
 
@@ -830,7 +841,8 @@ class Ui_MainWindow(object):
         self.diff3.setVisible(False)
         self.lbl_cmb.setVisible(False)
         self.cmb_doble_triple.setVisible(False)
-
+        self.n_dobles.setVisible(False)
+        self.lbl_n.setVisible(False)
 
     # En este metodo vamos a capturar la posicion del primer combobox y luego dependiendo
     # de cual este seleccionado asi se llenara el otro combobox
@@ -1178,7 +1190,10 @@ class Ui_MainWindow(object):
                 self.funcion_uni4.setVisible(True)
 
         elif si_o_no == 1:
-            self.creacion_tabla_por_defecto_unidad3(3, 0)
+            global cuantasFilasYColumnas
+            cuantasFilasYColumnas = 4  # Columnas iniciales
+
+            self.creacion_tabla_por_defecto_unidad3(4, 0)
             self.funcion_uni4.setVisible(False)
             self.puntoInicial_uni4.setVisible(False)
             self.h_uni4.setVisible(False)
@@ -1186,6 +1201,8 @@ class Ui_MainWindow(object):
             self.label_puntoInicial_uni4.setVisible(False)
             self.label_h_uni4.setVisible(False)
             tabla_unidad4_si_no = 1
+            self.lineEdit_6.setVisible(True)
+            self.label_14.setVisible(True)
 
     def control_integral_doble_triple(self):
         doble_o_triple = self.cmb_doble_triple.currentIndex()
@@ -1214,8 +1231,8 @@ class Ui_MainWindow(object):
             self.diff2.setVisible(True)
             self.diff3.setVisible(True)
 
-    #Controlar los comboBox para las derivadas de orden 2 y 3
-    
+    # Controlar los comboBox para las derivadas de orden 2 y 3
+
     def metodos_de_cada_unidad(self):
         queMetodo = self.comboBox_2.currentIndex()
         queUnidad = self.comboBox.currentIndex()
@@ -2206,15 +2223,13 @@ class Ui_MainWindow(object):
 
     def insertar_datos_a_tabla_unidad4(self, metodo):
 
-        funcion = self.funcion_uni4.text()
-        puntoInicial = float(self.puntoInicial_uni4.text())
-        h = float(self.h_uni4.text())
-
         listaX = []
         listaY = []
         puntos = []
         listaXapoyo = []
         listaYapoyo = []
+        h = 0
+        puntoInicial = 0
 
         global cuantasFilasYColumnas, tabla_unidad4_si_no
 
@@ -2222,11 +2237,15 @@ class Ui_MainWindow(object):
         if tabla_unidad4_si_no == 1:
 
             for x in range(0, 2):
-                for y in range(1, cuantasFilasYColumnas+1):
+
+                for y in range(1, cuantasFilasYColumnas):
                     if x == 0:
                         listaX.append(self.tableWidget_2.item(x, y).text())
                     elif x == 1:
                         listaY.append(self.tableWidget_2.item(x, y).text())
+
+            h = float(listaX[1])-float(listaX[0])
+            puntoInicial = float(self.lineEdit_6.text())
 
             for i in listaX:
                 listaXapoyo.append(float(i))
@@ -2235,6 +2254,12 @@ class Ui_MainWindow(object):
                 listaYapoyo.append(float(i))
 
             puntos = [listaXapoyo, listaYapoyo]
+            print(puntos)
+
+        else:
+            funcion = self.funcion_uni4.text()
+            puntoInicial = float(self.puntoInicial_uni4.text())
+            h = float(self.h_uni4.text())
 
         if metodo == 2:  # Hacia delante
 
@@ -2242,6 +2267,7 @@ class Ui_MainWindow(object):
                 lst = metodos_uni4.diferenciacion_numerica_adelante(
                     funcion, puntoInicial, h, [])
             else:
+
                 lst = metodos_uni4.diferenciacion_numerica_adelante(
                     '', puntoInicial, h, puntos)
 
