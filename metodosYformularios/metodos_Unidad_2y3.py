@@ -4,8 +4,9 @@ import numpy as np
 import math
 import cmath
 import re
-from sympy import cos, sin, tan, cot, sec, csc, sinh, cosh, tanh, csch, sech, coth
+from sympy import cos, sin, tan, cot, sec, csc, sinh, cosh, tanh, csch, sech, coth, ln
 from numpy.polynomial import Polynomial as P
+from sympy.core.function import expand
 from sympy.simplify.radsimp import numer
 
 
@@ -84,24 +85,26 @@ def pedirCifrasSignificativas(cifras):
         if bandera == 1:
             return cifras
         else:
-            return "Falso"
+            return "falsisimo"
 
 #Esta funcion nos evalua una funcion en un valor ya sea que haya que derivar o no
 def evaluarFuncion(funcion, valor, seDeriva, ordenDerivada):
-    funcioon = 0
-    if seDeriva == 1:
-        if ordenDerivada == 1:
-            funcioon = sp.sympify(funcion)
-            gxValor = sp.diff(funcioon, x).subs([(x, valor), (e, cmath.e)])
-            return gxValor
+    try:
+        funcioon = 0
+        if seDeriva == 1:
+            if ordenDerivada == 1:
+                funcioon = sp.sympify(funcion)
+                gxValor = sp.diff(funcioon, x).subs([(x, valor), (e, cmath.e)])
+                return gxValor
+            else:
+                funcioon = sp.sympify(funcion)
+                gxValor = sp.Derivative(funcion, x, 2).subs([(x, valor), (e, cmath.e)])
+                return gxValor
         else:
-            funcioon = sp.sympify(funcion)
-            gxValor = sp.Derivative(funcion, x, 2).subs(
-                [(x, valor), (e, 2.7182)])
-            return gxValor
-    else:
-        resultado = sp.sympify(funcion).subs([(x, valor), (e, cmath.e)])
-        return resultado
+            resultado = sp.sympify(funcion).subs([(x, valor), (e, cmath.e)])
+            return resultado
+    except:
+        return "falsisimo"
 
 #Calculamos el error Ea
 def calcularEa(xr, xrAnterior):
@@ -1359,74 +1362,185 @@ def interpolacionNewton(puntosX,puntosY,valor):
 
     return listaResultados
 
-def interpolacionHermite(puntosX,listaY,listaDiff):
+def interpolacionHermite(lista_valores, punto_evaluar):
+    # lista_valores contendra los valores de x,y y las derivadas ya sea la primera o la quinta
 
-    xi = np.array(puntosX)
-    n = len(xi)
+    valores_x = lista_valores[0]  # Lista de valores de x
+    valores_y = lista_valores[1]  # lista de valores de y
+    valores_derivadas = []  # lista de valores de derivadas dentro de una matriz
+    listaResultados = [] #lista que guardara el polinomio y el valor evaluado 
 
-    listaDePolinomios = []
-    listaDePolinomiosDerivados = []
+    # agregando derivadas a matriz: valores_derivadas
+    for i in range(2, len(lista_valores), 1):
+        # Si tiene una lista sera la primer derivada, si tiene 2 listas sera 1ra y 2da derivada
+        valores_derivadas.append(lista_valores[i])
 
-    for i in range(0,n,1):
-        numerador = 1
-        denominador = 1
-        polinomio = 0
-        for j in range(0,n,1):
-            if i != j:
-                numerador = numerador * (x-xi[j])
-                denominador = denominador * (xi[i]-xi[j])
-            termino = (numerador/denominador)
-        polinomio = polinomio + termino 
-        polinomioSimple = sp.expand(polinomio)
-        listaDePolinomios.append(polinomioSimple)
+    # Creando tabla para sacar valores para los valores de b (b0,b1,b2)
+    valores_b = []  # Se guardaran todos los valores de b (b0,b1,b2)
 
+    columna_deX = []  # Aqui se guardaran los valores de x y sus repeticiones si tenen derivadas
+    cualXEs = []  # Aqui se guardaran las posiciones de las x repetidamente, dependiendo de que fila sea
 
-    for i in listaDePolinomios:
-        listaDePolinomiosDerivados.append(sp.diff(i,x))
+    # Se utilizara para repetir los valores de derivada que utilizaremos en la tabla mas adelante
+    derivadasRepetidas = []
+    columna_calculada = []  # Columna donde iran los valores calculados
+    columna_siguiente = []  # valores proximos a la columna calculada
 
-    #Evaluamos los polinomios derivados en el valor correspondiente
-    lista_valores_Derivadas =  []
-    
-    for i in range(0,len(xi)):
-        valor = evaluarFuncion(listaDePolinomiosDerivados[i],xi[i],0,0)
-        lista_valores_Derivadas.append(valor)
-           
-    #Encontramos los polinomios de H
-    lista_Valor_Polinomio_AlCuadrado = []
-    
+    # Agregando valores de la columna de X a columna_deX
+    contador = 0
+    contadorColumna = 0
 
-    for i in range(0,n,1):
-        valor = 0
-        valor = evaluarFuncion(listaDePolinomios[i],1.5,0,0)
-        valor = sp.expand(valor**2)
-        lista_Valor_Polinomio_AlCuadrado.append(valor)
+    # Hasta cuantas derivadas hay de cada derivada
+    for i in range(0, len(valores_derivadas[contador]), 1):
+        cualXEs.append(i)
+        # Agregando valores de la columna de X a columna_deX con todas sus repeticiones
+        columna_deX.append(valores_x[contadorColumna])
+        # Llenamos la columna_calculada con los valores de F(x) correspondientes
+        columna_calculada.append(valores_y[contadorColumna])
 
-        
-    #Primera multiplicacion 
-    valores_H = [] 
-    for j in range(0,n,1):
-        polinomioPrimeraMultiplicacion = (1-2*(x-xi[j])*lista_valores_Derivadas[j])
-        valor = evaluarFuncion(polinomioPrimeraMultiplicacion,1.5,0,0)
-        salida = valor * lista_Valor_Polinomio_AlCuadrado[j]
-        valores_H.append(salida)
+        for j in range(0, len(valores_derivadas), 1):  # Hasta cuantas derivadas hay
 
+            if valores_derivadas[j][i] == "":
+                # derivadasRepetidas.append("")
+                break
+            else:
+                cualXEs.append(i)
+                # Agregando valores de la columna de X a columna_deX con todas sus repeticiones
+                columna_deX.append(valores_x[contadorColumna])
+                # Llenamos la columna_calculada con los valores de F(x) correspondientes
+                columna_calculada.append(valores_y[contadorColumna])
 
-    #Segunda multiplicacion
-    valores_H2 = []
-    for j in range(0,n,1):
-        polinomio = (1.5-xi[j])*lista_Valor_Polinomio_AlCuadrado[j]
-        valores_H2.append(polinomio)
+                if j == 0:
+                    # Agregamos las derivadas con sus respectivas repeticiones
+                    derivadasRepetidas.append(valores_derivadas[j][i])
+                    derivadasRepetidas.append(valores_derivadas[j][i])
+                else:
+                    derivadasRepetidas.append(valores_derivadas[j][i])
 
-    
+        contadorColumna += 1
+        contador += 1
 
+    # print(derivadasRepetidas)  # Impreme el contenido de derivadasRepetidas
+
+    # Realizamos operacion de la tabla para sacar los valores de B (b0,b1,b2 etc).
+    '''
+    De inicio ya tenemos los valores de Y y X para la tabla con todas las repeticiones
+    los valores de X en columna_deX
+    los valores de Y (F(x)) en columna_calculada <- pero esta tendra que cambiar al calcular los siguientes valores
+    '''
+
+    # Variable que guardara el calculo de encontrar las operaciones de la tabla para luego asignarla a columna_siguiente
     valor = 0
+    valores_b.append(columna_calculada[0])  # Agregamos b0 que es F(x0)
 
-    for i in range(0,n,1):
-        valor += listaY[i]*valores_H[i] + listaDiff[i]*valores_H2[i]
+    contador = 1
+    cualColumnaEs = 1
+    cualFilaEs = 1
+
+    for i in range(0, len(columna_deX)-1, 1):  # For para manejar columnas
+        cualFilaEs = 1+i
+
+        for j in range(0, len(columna_calculada)-1, 1):  # For para manejar filas
+            # Calculamos operaciones de la tabla
+            valor = 0
+
+            try:
+
+                if j == 0:
+                    valor = (
+                        columna_calculada[j+1]-columna_calculada[j])/(columna_deX[contador]-columna_deX[j])
+                else:
+                    valor = (
+                        columna_calculada[j+1]-columna_calculada[j])/(columna_deX[contador]-columna_deX[j])
+
+            # Si da indeterminacion colocamos el valor de su derivada/factorial(contador)
+            except ZeroDivisionError:
+                # Calculamos en que columna vamos para saber que derivada necesitamos
+
+               # Operacion realizada si da 0/0
+                for k in range(0, len(valores_derivadas), 1):
+                    if k == (cualColumnaEs-1):
+                        print(k)
+                        valor = valores_derivadas[k][cualXEs[cualFilaEs]] \
+                            / math.factorial(cualColumnaEs)
+
+            if j == 0:  # Agregamos el valor inicial a los valores de b
+                valores_b.append(valor)
+
+            # Agregamos los valores de la columna siguiente
+            columna_siguiente.append(valor)
+            cualFilaEs += 1
+            contador += 1
+
+        contador = i+1
+
+        # print(cualColumnaEs)
+        # print(columna_deX)
+        # print(columna_calculada)
+        # print(columna_siguiente)
+        # print(valores_b)
+
+        # Limpiaremos la columna anterior y le asignaremos los valores de la columna siguiente
+        columna_calculada = []
+        for j in range(0, len(columna_siguiente), 1):
+            columna_calculada.append(columna_siguiente[j])
+
+        # Limpiamos la columna siguiente para calcularlos en la siguiente iteracion
+        columna_siguiente = []
+
+        contador += 1
+        cualColumnaEs += 1
+    # print(derivadasRepetidas)
+
+    # ------------Aca para abajo se arma el polinomio----------------- los valores de b estan en valores_b
+
+    # Lista que tendra todas las multiplicaciones para repertirlas y armar el polinomio Ej:(x-x0)^2*(x-x1)
+    multiplicaciones = []
+    listaCuantos = []
+
+    '''
+    for i in range(0, len(valores_x)-1, 1):  # Armando Polinomio
+        contador = 0
+        for j in range(0, len(columna_deX)-1, 1):
+            
+            if valores_x[i] == columna_deX[j+1]:
+                contador+=1
+            else:
+                continue
+
+        for j in range(0,contador,1):
+    '''
+    variableAyuda = 0
+    polinomios = []
+    contador = 0
+    for i in range(0, len(valores_b), 1):  # Armando Polinomio
+
+        if i == 0:
+            # Agregamos el valor de b0 en el polinomio
+            polinomio = valores_b[0]
+            polinomios.append(valores_b[0])
+
+        elif i == 1:
+            variableAyuda = x-columna_deX[contador]
+            #print("Variable ", i, ":", variableAyuda)
+            polinomio = polinomio+((valores_b[i])*(x-columna_deX[contador]))
+            polinomios.append((valores_b[i])*(x-columna_deX[contador]))
+            contador += 1
+
+        else:
+            variableAyuda = ((variableAyuda) * (x-columna_deX[contador]))
+            #print("Variable ", i, ":", variableAyuda)
+            polinomio = polinomio+((valores_b[i])*(variableAyuda))
+            polinomios.append((valores_b[i])*(variableAyuda))
+            contador += 1
+
+    polinomio2 = sp.expand(polinomio)
+    listaResultados.append(polinomio2)
+    valorEvaluacion = evaluarFuncion(polinomio2,punto_evaluar,0,0)
+    listaResultados.append(valorEvaluacion)
+
+    return listaResultados
     
-
-    print(valor)
-
 def resolverMatrices(lista,lista2): #metodo para resolver matrices
     #Los determinantes que usaremos
     #
@@ -1437,129 +1551,339 @@ def resolverMatrices(lista,lista2): #metodo para resolver matrices
 
     return listaResultados
 
-def trazadoresCubicos(listaX, listaY, tipo):
+def trazadoresCubicos(listaX, listaY, tipo,valor):
 
     listaResultados = []
     intervalos = []
     intervalorsY = []
 
     n = len(listaX)
-    a , b , c, d= sp.symbols('a b c d')
+    a, b, c, d = sp.symbols('a b c d')
 
-    #Creamos los intervalos con los que vamos a trabajar en sublistas 
-    #Esto se hace en todos los metodos entonces lo hacemos desde aqui
-    for i in range(0,n-1,1):
-        intervalos.append([listaX[i],listaX[i+1]])
-        intervalorsY.append([listaY[i],listaY[i+1]])
+    # Creamos los intervalos con los que vamos a trabajar en sublistas
+    # Esto se hace en todos los metodos entonces lo hacemos desde aqui
+    for i in range(0, n-1, 1):
+        intervalos.append([listaX[i], listaX[i+1]])
+        intervalorsY.append([listaY[i], listaY[i+1]])
 
-    if tipo == 0:
-        print("función spline de grado cero")
+    if tipo == 0: #funcion spline grado cero
+        solucionesEcuaciones = []
+        for i in range(0, len(intervalos), 1):
+            salida = "Intervalo " + \
+                str(intervalos[i])+" ----> "+str(listaY[i])
+            solucionesEcuaciones.append(salida)
 
-    elif tipo == 1: 
+        for i in solucionesEcuaciones:
+            listaResultados.append(i)
+        
+        return listaResultados
 
-        #Elnúmero de ecuaciones depende del numero de intervalos encontrados 
-        #De cada intervalo obtendremos 2 ecuaciones las cuales se resuelven entre ellas 2 de una vez
+    elif tipo == 1: #funcion spline grado 1
+
+        # Elnúmero de ecuaciones depende del numero de intervalos encontrados
+        # De cada intervalo obtendremos 2 ecuaciones las cuales se resuelven entre ellas 2 de una vez
 
         ecuacionesSimbolicas = []
         soluciones = []
 
-        #Encontramos los valores de a y b respectivamente 
+        # Encontramos los valores de a y b respectivamente
         contador = 0
         contador2 = 0
 
-        for i in range(0,len(intervalos),1):
-            D = (intervalos[contador2][contador]*1) - (intervalos[contador2][contador+1]*1)
-            Dx = (intervalorsY[contador2][contador]*1) - (intervalorsY[contador2][contador+1]*1)
-            Dy = (intervalos[contador2][contador]*intervalorsY[contador2][contador+1]) - (intervalos[contador2][contador+1]*intervalorsY[contador2][contador])
+        for i in range(0, len(intervalos), 1):
+            D = (intervalos[contador2][contador]*1) - \
+                (intervalos[contador2][contador+1]*1)
+            Dx = (intervalorsY[contador2][contador]*1) - \
+                (intervalorsY[contador2][contador+1]*1)
+            Dy = (intervalos[contador2][contador]*intervalorsY[contador2][contador+1]) - (
+                intervalos[contador2][contador+1]*intervalorsY[contador2][contador])
             soluciones.append(Dx/D)
             soluciones.append(Dy/D)
 
             contador2 += 1
 
-
         contador3 = 0
-        for i in range(0,len(intervalos),1):
-            ecuacionesSimbolicas.append(soluciones[contador3]*x+soluciones[contador3+1])
+        for i in range(0, len(intervalos), 1):
+            ecuacionesSimbolicas.append(
+                soluciones[contador3]*x+soluciones[contador3+1])
             contador3 += 2
 
         contador3 = 1
         solucionesEcuaciones = []
-        for i in range(0,len(ecuacionesSimbolicas),1):
-            salida = "Intervalo "+str(intervalos[i])+" ----> "+str(ecuacionesSimbolicas[i])
+        for i in range(0, len(ecuacionesSimbolicas), 1):
+            salida = "Intervalo " + \
+                str(intervalos[i])+" ----> "+str(ecuacionesSimbolicas[i]) + "; Valor: ----> " +\
+                    str(evaluarFuncion(ecuacionesSimbolicas[i],valor,0,0))
             solucionesEcuaciones.append(salida)
            # print(ecuacionesSimbolicas[i])
 
         for i in solucionesEcuaciones:
-            print(i)
+            listaResultados.append(i)
+        return listaResultados
 
-    elif tipo == 2:
-        soluciones = []
+    elif tipo == 2:  # Funciones spline grado 2
+
+        # Lista que tendra ceros
+        listaConCeros = []
+        listaCon3Ceros = []
+
+        # Estaran las ecuaciones finales ya con las variables (a,b,c,d) resueltas
         ecuacionesSimbolicas = []
 
-        #Llenamos la lista con ceros 
-       
-
-        #Hacemos la lista con los datos para hacer la matriz 
-       # for i in range(0,len(),1):
-            #for in range()
-        
-    elif tipo == 3:  # Funciones spline grado 3
-
-        listaConCeros_1 = []
-        listaConCeros = []
         soluciones = []
-        ecuaciones_Para_Matriz = []
+        ecuaciones_Para_Matriz = []  # Lista con los valores de la matriz
 
-        
-        for j in range(0, 4, 1):
-            listaConCeros_1.append(0)
+        YParaMatriz = []  # Lista con los valores de Y para la matriz
 
+        # Agregamos los valores de y a una lista que sera usada en la matriz
+        for i in range(0, n-1, 1):
+            YParaMatriz.append([listaY[i]])
+            YParaMatriz.append([listaY[i+1]])
+        # quitamos a0 por que la igualamos a 0
+        for i in range(0, n-2, 1):
+            YParaMatriz.append([0])
 
-        for i in range(0,len(intervalos)-1,1):
-            for j in range(0, 4, 1):
+        # Agregamos 0 del total de variables a encontrar
+        for i in range(0, len(intervalos)-1, 1):
+            for j in range(0, 3, 1):
                 listaConCeros.append(0)
 
-        # Hacemos la lista con los datos para hacer la matriz
+        # Agregamos una lista que tenga solamente 4 ceros
+        for i in range(0, 3, 1):
+            listaCon3Ceros.append(0)
+
+        # Hacemos la lista con los datos para hacer la matriz (las variables: a b c)
         contador = 0
         columna = 0
-        contador2 = 0
+        multiplicadorDeCeros = 0
 
         for i in range(0, len(intervalos)*2, 1):
             if i % 2 == 0 and i != 0:
                 contador += 1
+                multiplicadorDeCeros += 1
+                for i in range(0, 3, 1):
+                    listaConCeros.pop()
 
-            if contador2 < 2:
-                ecuaciones_Para_Matriz.append([(intervalos[contador][columna]**3), (intervalos[contador][columna]**2), (intervalos[contador][columna]), 1]+listaConCeros_1)
-            else:
-                ecuaciones_Para_Matriz.append(listaConCeros_1+[(intervalos[contador][columna]**3), (intervalos[contador][columna]**2), (intervalos[contador][columna]), 1])
-
+            if i < 2:
+                ecuaciones_Para_Matriz.append(
+                    [(intervalos[contador][columna]**2), (intervalos[contador][columna]), 1]+listaConCeros)
+            elif i >= 2:
+                ecuaciones_Para_Matriz.append(
+                    (listaCon3Ceros*multiplicadorDeCeros)+[(intervalos[contador][columna]**2), (intervalos[contador][columna]), 1]+listaConCeros)
 
             if columna == 0:
                 columna = 1
             elif columna == 1:
                 columna = 0
 
-            contador2 += 1
+        # Numero de variables al derivar = len(intervalos) - 1
+        columna = 1
+        listaConCeros = []
+        multiplicadorDeCeros = 0
+        # Agregamos 0 del total de variables a encontrar
+        for i in range(0, len(intervalos)-2, 1):
+            for j in range(0, 3, 1):
+                listaConCeros.append(0)
+
+        for i in range(0, len(intervalos)-1, 1):  # Primer derivada
+            if i == 0:
+                ecuaciones_Para_Matriz.append(
+                    [2*(intervalos[i][columna]), 1, 0, -2*(intervalos[i+1][columna-1]), -1, 0]+listaConCeros)
+            else:  # Agregamos ceros a la izquierda y vamos eliminando ceros de la derecha
+                ecuaciones_Para_Matriz.append(
+                    (listaCon3Ceros*multiplicadorDeCeros)+[2*(intervalos[i][columna]), 1, 0, -2*(intervalos[i+1][columna-1]), -1, 0]+listaConCeros)
+            multiplicadorDeCeros += 1
+
+            if i < len(intervalos)-2:
+                # Eliminamos 4 ceros de la lista que contiene todos los ceros
+                for j in range(0, 3, 1):
+                    listaConCeros.pop()
+
+        # Libres para igualar una variable a cero
+        for i in range(0, len(intervalos)-1, 1):
+            for j in range(0, 3, 1):
+                listaConCeros.append(0)
+
+        # Eliminaremos a0 de ecuaciones_Para_Matriz, por que se iguala una variable a 0, entonces ya sabemos su valor
+        for i in range(0, len(ecuaciones_Para_Matriz), 1):
+            del ecuaciones_Para_Matriz[i][0]
+
+        listaDeSoluciones = []  # Lista con las soluciones
+
+        # Resolvemos la matriz llamando al metodo resolverMatrices, guardamos en soluciones
+        # pero soluciones es una matriz por eso la pasamos a unas lista llamada listaDeSoluciones
+        soluciones = resolverMatrices(
+            ecuaciones_Para_Matriz, YParaMatriz)
+
+        # Lista con las respuestas de las variables a b c d
+        listaDeSoluciones = np.array(soluciones).flatten().tolist()
+
+        # Le agregamos a0 que igualamos a cero antes de agregar los demas
+        listaDeSoluciones[:0] = [0]
+
+        # Aqui formamos las funciones spline ax+b
+        contador3 = 0  # El contador nos servira para elegir los valores de a0 b0 c0 etc
+
+        for i in range(0, len(intervalos), 1):
+            ecuacionesSimbolicas.append(
+                listaDeSoluciones[contador3]*x**2+listaDeSoluciones[contador3+1]*x+listaDeSoluciones[contador3+2])
+            contador3 += 3
+
+         # Aca unimos el intervalo con su funcion respectiva para mostrarlo.
+
+        solucionesEcuaciones = []
+        for i in range(0, len(ecuacionesSimbolicas), 1):
+            salida = "Intervalo " + \
+                str(intervalos[i])+" ----> "+str(ecuacionesSimbolicas[i]) + "; Valor: "+\
+                    str(evaluarFuncion(ecuacionesSimbolicas[i],valor,0,0))
+            solucionesEcuaciones.append(salida)
+           # print(ecuacionesSimbolicas[i])
+
+        for i in solucionesEcuaciones:
+            listaResultados.append(i)
+        return listaResultados
+
+    elif tipo == 3:  # Funciones spline grado 3
+
+        # Lista que tendra ceros
+        listaConCeros = []
+        listaCon4Ceros = []
+
+        # Estaran las ecuaciones finales ya con las variables (a,b,c,d) resueltas
+        ecuacionesSimbolicas = []
+
+        soluciones = []
+        ecuaciones_Para_Matriz = []  # Lista con los valores de la matriz
+
+        YParaMatriz = []  # Lista con los valores de Y para la matriz
+
+        for i in range(0, n-1, 1):
+            YParaMatriz.append([listaY[i]])
+            YParaMatriz.append([listaY[i+1]])
+
+        for i in range(0, n-1, 1):
+            YParaMatriz.append([0])
+            YParaMatriz.append([0])
+
+        # Agregamos 0 del total de variables a encontrar
+        for i in range(0, len(intervalos)-1, 1):
+            for j in range(0, 4, 1):
+                listaConCeros.append(0)
+
+        # Agregamos una lista que tenga solamente 4 ceros
+        for i in range(0, 4, 1):
+            listaCon4Ceros.append(0)
+
+        # Hacemos la lista con los datos para hacer la matriz
+        contador = 0
+        columna = 0
+        multiplicadorDeCeros = 0
+
+        for i in range(0, len(intervalos)*2, 1):
+            if i % 2 == 0 and i != 0:
+                contador += 1
+                multiplicadorDeCeros += 1
+                for i in range(0, 4, 1):
+                    listaConCeros.pop()
+
+            if i < 2:
+                ecuaciones_Para_Matriz.append(
+                    [(intervalos[contador][columna]**3), (intervalos[contador][columna]**2), (intervalos[contador][columna]), 1]+listaConCeros)
+            elif i >= 2:
+                ecuaciones_Para_Matriz.append(
+                    (listaCon4Ceros*multiplicadorDeCeros)+[(intervalos[contador][columna]**3), (intervalos[contador][columna]**2), (intervalos[contador][columna]), 1]+listaConCeros)
+
+            if columna == 0:
+                columna = 1
+            elif columna == 1:
+                columna = 0
 
         # Numero de variables al derivar = len(intervalos) - 1
         columna = 1
-         
+        listaConCeros = []
+        multiplicadorDeCeros = 0
+        # Agregamos 0 del total de variables a encontrar
+        for i in range(0, len(intervalos)-2, 1):
+            for j in range(0, 4, 1):
+                listaConCeros.append(0)
 
         for i in range(0, len(intervalos)-1, 1):  # Primer derivada
+            if i == 0:
+                ecuaciones_Para_Matriz.append(
+                    [3*(intervalos[i][columna]**2), 2*(intervalos[i][columna]), 1, 0, -3*(intervalos[i+1][columna-1]**2), -2*(intervalos[i+1][columna-1]), -1, 0]+listaConCeros)
+            else:  # Agregamos ceros a la izquierda y vamos eliminando ceros de la derecha
+                ecuaciones_Para_Matriz.append(
+                    (listaCon4Ceros*multiplicadorDeCeros)+[3*(intervalos[i][columna]**2), 2*(intervalos[i][columna]), 1, 0, -3*(intervalos[i+1][columna-1]**2), -2*(intervalos[i+1][columna-1]), -1, 0]+listaConCeros)
+            multiplicadorDeCeros += 1
 
-            ecuaciones_Para_Matriz.append([3*(intervalos[i][columna]**2), 2*(intervalos[i][columna]), 1, 0, -3*(intervalos[i+1][columna-1]**2), -2*(intervalos[i+1][columna-1]), -1, 0]+listaConCeros_1)
+            if i < len(intervalos)-2:
+                # Eliminamos 4 ceros de la lista que contiene todos los ceros
+                for j in range(0, 4, 1):
+                    listaConCeros.pop()
+
+        listaConCeros = []
+        multiplicadorDeCeros = 0
+        # Agregamos 0 del total de variables a encontrar
+        for i in range(0, len(intervalos)-2, 1):
+            for j in range(0, 4, 1):
+                listaConCeros.append(0)
 
         for i in range(0, len(intervalos)-1, 1):  # Segunda derivada
 
-            ecuaciones_Para_Matriz.append([6*(intervalos[i][columna]), 2, 0, 0, -6*(intervalos[i+1][columna-1]), -2, 0, 0]+listaConCeros_1)
+            if i == 0:
+                ecuaciones_Para_Matriz.append(
+                    [6*(intervalos[i][columna]), 2, 0, 0, -6*(intervalos[i+1][columna-1]), -2, 0, 0]+listaConCeros)
 
+            else:  # Agregamos ceros a la izquierda y vamos eliminando ceros de la derecha
+                ecuaciones_Para_Matriz.append(
+                    (listaCon4Ceros*multiplicadorDeCeros)+[6*(intervalos[i][columna]), 2, 0, 0, -6*(intervalos[i+1][columna-1]), -2, 0, 0]+listaConCeros)
+
+            multiplicadorDeCeros += 1
+
+            if i < len(intervalos)-2:
+                # Eliminamos 4 ceros de la lista que contiene todos los ceros
+                for j in range(0, 4, 1):
+                    listaConCeros.pop()
 
         # Libres que igualamos a cero
 
-        ecuaciones_Para_Matriz.append([6*(intervalos[0][0]), 2, 0, 0]+listaConCeros_1)
+        for i in range(0, len(intervalos)-1, 1):
+            for j in range(0, 4, 1):
+                listaConCeros.append(0)
 
-        ecuaciones_Para_Matriz.append([6*(intervalos[len(intervalos)-1][1]), 2, 0, 0]+listaConCeros_1)
+        ecuaciones_Para_Matriz.append(
+            [6*(intervalos[0][0]), 2, 0, 0]+listaConCeros)
+
+        ecuaciones_Para_Matriz.append(
+            listaConCeros+[6*(intervalos[len(intervalos)-1][1]), 2, 0, 0])
+
+        listaDeSoluciones = []
+        soluciones = resolverMatrices(
+            ecuaciones_Para_Matriz, YParaMatriz)  # Resolvemos la matriz
+        # Lista con las respuestas de las variables a b c d
+        listaDeSoluciones = np.array(soluciones).flatten().tolist()
+
+        # Aqui formamos las funciones spline ax+b
+        contador3 = 0
+
+        for i in range(0, len(intervalos), 1):
+            ecuacionesSimbolicas.append(
+                listaDeSoluciones[contador3]*x**3+listaDeSoluciones[contador3+1]*x**2+listaDeSoluciones[contador3+2]*x+listaDeSoluciones[contador3+3])
+            contador3 += 4
+
+         # Aca unimos el intervalo con su funcion respectiva para mostrarlo.
+        contador3 = 1
+        solucionesEcuaciones = []
+        for i in range(0, len(ecuacionesSimbolicas), 1):
+            salida = "Intervalo " + \
+                str(intervalos[i])+" ----> "+str(ecuacionesSimbolicas[i]) + "; Valor: "+\
+                    str(evaluarFuncion(ecuacionesSimbolicas[i],valor,0,0))
+            solucionesEcuaciones.append(salida)
+           # print(ecuacionesSimbolicas[i])
+
+        for i in solucionesEcuaciones:
+            listaResultados.append(i)
+        return listaResultados
 
 
-        print(ecuaciones_Para_Matriz)
-       
+
