@@ -133,7 +133,7 @@ def metodo7(punto,cifras):
 
     return listaResultados
 
-def metodo7(punto,cifras):
+def metodo8(punto,cifras):
     listaResultados = []
     salida = 0
     valorAnterior = 0
@@ -177,7 +177,126 @@ def metodo7(punto,cifras):
 salida = metodo7(4,3) 
 print(tabulate(salida,tablefmt="github",colalign=("center",)))
 
+def metodo9(punto,cifras):
+    listaResultados = []
+    salida = 0
+    valorAnterior = 0
+    iteracion = 1
+    valor = 0
+    es = (10**(2-cifras))/2
+    ea = 0
+    exponente = 2
 
+    #cabezera de tabla
+    header = ['Iteracion', 'Valor', 'Ea','Es']
+    listaResultados.append(header)
+
+    while salida == 0:
+        if iteracion == 1:
+            valor = 1
+
+            #Primera iteracion 
+            listaResultados.append([iteracion,valor,'N/A',es])
+
+            valorAnterior = punto
+            iteracion += 1
+
+        else:
+            valor += ((-1**(exponente-1))/exponente)*(punto**exponente)
+            ea = calcularEa(valor,valorAnterior)
+
+            #agremamos las iteraciones 
+            listaResultados.append([iteracion,valor,ea,es])
+
+            valorAnterior = valor
+            iteracion += 1
+            exponente += 1
+
+            if ea <= es:
+                salida = 1
+            
+    return listaResultados
+
+def metodo10(punto,cifras):
+    listaResultados = []
+    salida = 0
+    valorAnterior = 0
+    iteracion = 1
+    valor = 0
+    es = (10**(2-cifras))/2
+    ea = 0
+    exponente = 2
+
+    #cabezera de tabla
+    header = ['Iteracion', 'Valor', 'Ea','Es']
+    listaResultados.append(header)
+
+    while salida == 0:
+        if iteracion == 1:
+            valor = 1
+
+            #Primera iteracion 
+            listaResultados.append([iteracion,valor,'N/A',es])
+
+            valorAnterior = punto
+            iteracion += 1
+
+        else:
+            valor += ((-1**(exponente-1))/exponente)*(punto**exponente)
+            ea = calcularEa(valor,valorAnterior)
+
+            #agremamos las iteraciones 
+            listaResultados.append([iteracion,valor,ea,es])
+
+            valorAnterior = valor
+            iteracion += 1
+            exponente += 1
+
+            if ea <= es:
+                salida = 1
+            
+    return listaResultados
+
+
+def metodo11(punto,cifras):
+    listaResultados = []
+    salida = 0
+    valorAnterior = 0
+    iteracion = 1
+    valor = 0
+    es = (10**(2-cifras))/2
+    ea = 0
+    exponente = 2
+
+    #cabezera de tabla
+    header = ['Iteracion', 'Valor', 'Ea','Es']
+    listaResultados.append(header)
+
+    while salida == 0:
+        if iteracion == 1:
+            valor = 1
+
+            #Primera iteracion 
+            listaResultados.append([iteracion,valor,'N/A',es])
+
+            valorAnterior = punto
+            iteracion += 1
+
+        else:
+            valor += ((-1**(exponente-1))/exponente)*(punto**exponente)
+            ea = calcularEa(valor,valorAnterior)
+
+            #agremamos las iteraciones 
+            listaResultados.append([iteracion,valor,ea,es])
+
+            valorAnterior = valor
+            iteracion += 1
+            exponente += 1
+
+            if ea <= es:
+                salida = 1
+            
+    return listaResultados
 
 
    
