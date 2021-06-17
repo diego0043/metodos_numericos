@@ -381,8 +381,7 @@ class Ui_MainWindow(object):
 
         self.lineEdit = QtWidgets.QLineEdit(self.centralwidget)
         self.lineEdit.setGeometry(QtCore.QRect(200, 145, 131, 24))
-        self.lineEdit.setStyleSheet(
-            "background-color: rgb(242, 242, 242);\n""image: url(recursos/barra2.png);\n""border:0px;\n""color:  rgb(232, 137, 137)")
+        self.lineEdit.setStyleSheet("background-color: rgb(242, 242, 242);\n""image: url(recursos/barra2.png);\n""border:0px;\n""color:  rgb(232, 137, 137)")
         self.lineEdit.setObjectName("lineEdit")
         self.lineEdit.setFont(font)
 
@@ -535,6 +534,137 @@ class Ui_MainWindow(object):
         self.label_nivel_uni4.setFont(font)
         self.label_nivel_uni4.setStyleSheet("color: rgb(134, 155, 208);")
 
+
+        #Componentes de integrales dobles y triples
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+
+        self.funcion_txt = QtWidgets.QLineEdit(self.centralwidget)
+        self.funcion_txt.setGeometry(QtCore.QRect(260, 155, 141, 31))
+        self.funcion_txt.setFont(font)
+        self.funcion_txt.setStyleSheet("background-color: rgb(242, 242, 242);\n""image: url(recursos/barra2.png);\n""border:0px;\n""color:  rgb(232, 137, 137)")
+        self.funcion_txt.setObjectName("funcion_txt")
+
+        self.lbl_integral1 = QtWidgets.QLabel(self.centralwidget)
+        self.lbl_integral1.setGeometry(QtCore.QRect(230, 140, 25, 50))
+        self.lbl_integral1.setStyleSheet("background-image: url(recursos/integral.png);")
+        self.lbl_integral1.setText("")
+        self.lbl_integral1.setObjectName("lbl_integral1")
+
+        self.b0 = QtWidgets.QLineEdit(self.centralwidget)
+        self.b0.setGeometry(QtCore.QRect(260, 110, 21, 20))
+        self.b0.setFont(font)
+        self.b0.setStyleSheet("border: 1px solid;\n""border-color: rgb(240, 240, 240);\n""border-bottom-color: rgb(232, 137, 137);\n""color: rgb(232, 137, 137);\n""\n""")
+        self.b0.setText("")
+        self.b0.setObjectName("b0")
+
+        self.a0 = QtWidgets.QLineEdit(self.centralwidget)
+        self.a0.setGeometry(QtCore.QRect(215, 200, 21, 20))
+        self.a0.setFont(font)
+        self.a0.setStyleSheet("border: 1px solid;\n""border-color: rgb(240, 240, 240);\n""border-bottom-color: rgb(232, 137, 137);\n""color: rgb(232, 137, 137);\n""\n""")
+        self.a0.setText("")
+        self.a0.setObjectName("a0")
+
+        self.lbl_integral2 = QtWidgets.QLabel(self.centralwidget)
+        self.lbl_integral2.setGeometry(QtCore.QRect(190, 140, 25, 50))
+        self.lbl_integral2.setStyleSheet("background-image: url(recursos/integral.png);")
+        self.lbl_integral2.setText("")
+        self.lbl_integral2.setObjectName("lbl_integral2")
+
+        self.b1 = QtWidgets.QLineEdit(self.centralwidget)
+        self.b1.setGeometry(QtCore.QRect(215, 110, 21, 20))
+        self.b1.setFont(font)
+        self.b1.setStyleSheet("border: 1px solid;\n""border-color: rgb(240, 240, 240);\n""border-bottom-color: rgb(232, 137, 137);\n""color: rgb(232, 137, 137);\n""\n""")
+        self.b1.setText("")
+        self.b1.setObjectName("b1")
+
+        self.a1 = QtWidgets.QLineEdit(self.centralwidget)
+        self.a1.setGeometry(QtCore.QRect(175, 200, 21, 20))
+        self.a1.setFont(font)
+        self.a1.setStyleSheet("border: 1px solid;\n""border-color: rgb(240, 240, 240);\n""border-bottom-color: rgb(232, 137, 137);\n""color: rgb(232, 137, 137);\n""\n""")
+        self.a1.setText("")
+        self.a1.setObjectName("a1")
+
+        self.lbl_integral3 = QtWidgets.QLabel(self.centralwidget)
+        self.lbl_integral3.setGeometry(QtCore.QRect(150, 140, 25, 50))
+        self.lbl_integral3.setStyleSheet("background-image: url(recursos/integral.png);")
+        self.lbl_integral3.setText("")
+        self.lbl_integral3.setObjectName("lbl_integral3")
+
+        self.b2 = QtWidgets.QLineEdit(self.centralwidget)
+        self.b2.setGeometry(QtCore.QRect(170, 110, 21, 20))
+        self.b2.setFont(font)
+        self.b2.setStyleSheet("border: 1px solid;\n""border-color: rgb(240, 240, 240);\n""border-bottom-color: rgb(232, 137, 137);\n""color: rgb(232, 137, 137);\n""\n""")
+        self.b2.setText("")
+        self.b2.setObjectName("b2")
+
+        self.a2 = QtWidgets.QLineEdit(self.centralwidget)
+        self.a2.setGeometry(QtCore.QRect(140, 200, 21, 20))
+        self.a2.setFont(font)
+        self.a2.setStyleSheet("border: 1px solid;\n""border-color: rgb(240, 240, 240);\n""border-bottom-color: rgb(232, 137, 137);\n""color: rgb(232, 137, 137);\n""\n""")
+        self.a2.setText("")
+        self.a2.setObjectName("a2")
+
+        self.diff1 = QtWidgets.QComboBox(self.centralwidget)
+        self.diff1.setGeometry(QtCore.QRect(420, 165, 41, 25))
+        self.diff1.setStyleSheet("QComboBox{\n""    background-color: rgb(242, 242, 242);\n""    border-radius: 5px;\n""    border: 2px solid rgb(232, 137, 137);\n""    padding: 5px;\n""    padding-left: 5px;\n""    color: rgb(216, 55, 55)\n""}\n""QComboBox:hover{\n""    border: 2px solid rgb(216, 55, 55);\n""    border_left-color: rgb(215,55,55);\n""}\n""QComboBox::drop-down {\n""    subcontrol-origin: padding;\n""    subcontrol-position: top right;\n""    width: 10px; \n""    border-top-right-radius: 1px;\n""    border-bottom-right-radius: 1px;    \n""    background-image: url(:/imagenes/row_baja.png);\n""    background-position: center;\n""    background-repeat: no-reperat;\n"" }\n""QComboBox QAbstractItemView {\n""    color: rgb(216, 55, 55);    \n""    background-color: rgb(242, 242, 242);\n""    padding: 5px;\n""    selection-background-color: rgb(232, 137 , 137);\n""}\n""")
+        self.diff1.setObjectName("diff1")
+        self.diff1.addItem("")
+        self.diff1.addItem("")
+        self.diff1.addItem("")
+
+        self.diff2 = QtWidgets.QComboBox(self.centralwidget)
+        self.diff2.setGeometry(QtCore.QRect(470, 165, 41, 25))
+        self.diff2.setStyleSheet("QComboBox{\n""    background-color: rgb(242, 242, 242);\n""    border-radius: 5px;\n""    border: 2px solid rgb(232, 137, 137);\n""    padding: 5px;\n""    padding-left: 5px;\n""    color: rgb(216, 55, 55)\n""}\n""QComboBox:hover{\n""    border: 2px solid rgb(216, 55, 55);\n""    border_left-color: rgb(215,55,55);\n""}\n""QComboBox::drop-down {\n""    subcontrol-origin: padding;\n""    subcontrol-position: top right;\n""    width: 10px; \n""    border-top-right-radius: 1px;\n""    border-bottom-right-radius: 1px;    \n""    background-image: url(:/imagenes/row_baja.png);\n""    background-position: center;\n""    background-repeat: no-reperat;\n"" }\n""QComboBox QAbstractItemView {\n""    color: rgb(216, 55, 55);    \n""    background-color: rgb(242, 242, 242);\n""    padding: 5px;\n""    selection-background-color: rgb(232, 137 , 137);\n""}\n""")
+        self.diff2.setObjectName("diff2")
+        self.diff2.addItem("")
+        self.diff2.addItem("")
+
+        self.diff3 = QtWidgets.QComboBox(self.centralwidget)
+        self.diff3.setGeometry(QtCore.QRect(520, 165, 41, 25))
+        self.diff3.setStyleSheet("QComboBox{\n""    background-color: rgb(242, 242, 242);\n""    border-radius: 5px;\n""    border: 2px solid rgb(232, 137, 137);\n""    padding: 5px;\n""    padding-left: 5px;\n""    color: rgb(216, 55, 55)\n""}\n""QComboBox:hover{\n""    border: 2px solid rgb(216, 55, 55);\n""    border_left-color: rgb(215,55,55);\n""}\n""QComboBox::drop-down {\n""    subcontrol-origin: padding;\n""    subcontrol-position: top right;\n""    width: 10px; \n""    border-top-right-radius: 1px;\n""    border-bottom-right-radius: 1px;    \n""    background-image: url(:/imagenes/row_baja.png);\n""    background-position: center;\n""    background-repeat: no-reperat;\n"" }\n""QComboBox QAbstractItemView {\n""    color: rgb(216, 55, 55);    \n""    background-color: rgb(242, 242, 242);\n""    padding: 5px;\n""    selection-background-color: rgb(232, 137 , 137);\n""}\n""")
+        self.diff3.setObjectName("diff3")
+        self.diff3.addItem("")
+
+
+        self.cmb_doble_triple = QtWidgets.QComboBox(self.centralwidget)
+        self.cmb_doble_triple.setGeometry(QtCore.QRect(440, 80, 61, 25))
+        self.cmb_doble_triple.setStyleSheet("QComboBox{\n"" background-color: rgb(242, 242, 242);\n"" border-radius: 5px;\n"" border: 2px solid rgb(232, 137, 137);\n"" padding: 5px;\n"" padding-left: 5px;\n"" color: rgb(216, 55, 55)\n""}\n""QComboBox:hover{\n"" border: 2px solid rgb(216, 55, 55);\n"" border_left-color: rgb(215,55,55);\n""}\n""QComboBox::drop-down {\n"" subcontrol-origin: padding;\n"" subcontrol-position: top right;\n"" width: 10px; \n"" border-top-right-radius: 1px;\n"" border-bottom-right-radius: 1px; \n"" background-image: url(:/imagenes/row_baja.png);\n"" background-position: center;\n"" background-repeat: no-reperat;\n"" }\n""QComboBox QAbstractItemView {\n"" color: rgb(216, 55, 55); \n"" background-color: rgb(242, 242, 242);\n"" padding: 5px;\n"" selection-background-color: rgb(232, 137 , 137);\n""}\n""")
+        self.cmb_doble_triple.setObjectName("cmb_doble_triple")
+        self.cmb_doble_triple.addItem("")
+        self.cmb_doble_triple.addItem("")
+        self.cmb_doble_triple.activated[str].connect(self.control_integral_doble_triple)
+
+
+        self.lbl_cmb = QtWidgets.QLabel(self.centralwidget)
+        self.lbl_cmb.setGeometry(QtCore.QRect(440, 45, 221, 16))
+        self.lbl_cmb.setFont(font)
+        self.lbl_cmb.setStyleSheet("color: rgb(134, 155, 208);")
+        self.lbl_cmb.setObjectName("lbl_cmb")
+
+        self.lbl_n = QtWidgets.QLabel(self.centralwidget)
+        self.lbl_n.setGeometry(QtCore.QRect(600, 140, 30, 16))
+        self.lbl_n.setStyleSheet("color: rgb(134, 155, 208);")
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.lbl_n.setText("N")
+        self.lbl_n.setFont(font)
+        self.lbl_n.setObjectName("lbl_n")
+
+        self.n_dobles = QtWidgets.QLineEdit(self.centralwidget)
+        self.n_dobles.setGeometry(QtCore.QRect(600, 166, 30, 20))
+        self.n_dobles.setFont(font)
+        self.n_dobles.setStyleSheet("border: 1px solid;\n""border-color: rgb(240, 240, 240);\n""border-bottom-color: rgb(232, 137, 137);\n""color: rgb(232, 137, 137);\n""\n""")
+        self.n_dobles.setText("")
+        self.n_dobles.setObjectName("n_dobles")
+
+
+
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
@@ -582,6 +712,10 @@ class Ui_MainWindow(object):
             "MainWindow", "AGREGAR \n""FILA"))
         self.pushButton_11.setText(_translate(
             "MainWindow", "ELIMINAR \n""FILA"))
+
+        self.diff1.setItemText(0, _translate("MainWindow", "dx"))
+        self.diff1.setItemText(1, _translate("MainWindow", "dy"))
+        self.diff1.setItemText(2, _translate("MainWindow", "dz"))
         self.label_13.setText(_translate("MainWindows", "FILAS"))
         self.comboBox.setItemText(0, _translate("MainWindow", "1"))
         self.comboBox.setItemText(1, _translate("MainWindow", "2"))
@@ -619,6 +753,9 @@ class Ui_MainWindow(object):
         self.radioButton_2.setText(_translate("MainWindow", "Grado #1"))
         self.radioButton_3.setText(_translate("MainWindow", "Grado #2"))
         self.radioButton_4.setText(_translate("MainWindow", "Grado #3"))
+        self.cmb_doble_triple.setItemText(0, _translate("MainWindow", "Dobles"))
+        self.cmb_doble_triple.setItemText(1, _translate("MainWindow", "Triples"))
+        self.lbl_cmb.setText(_translate("MainWindow", "Seleccione el orden de la integral"))
 
         self.comboBox.setCurrentIndex(-1)
 
@@ -677,6 +814,23 @@ class Ui_MainWindow(object):
         self.nivel_uni4.setVisible(False)
         self.label_nivel_uni4.setVisible(False)
         self.cajaTexto.setVisible(False)
+
+        self.funcion_txt.setVisible(False)
+        self.lbl_integral1.setVisible(False)
+        self.lbl_integral2.setVisible(False)
+        self.lbl_integral3.setVisible(False)
+        self.a0.setVisible(False)
+        self.a1.setVisible(False)
+        self.a2.setVisible(False)
+        self.b0.setVisible(False)
+        self.b1.setVisible(False)
+        self.b2.setVisible(False)
+        self.diff1.setVisible(False)
+        self.diff2.setVisible(False)
+        self.diff3.setVisible(False)
+        self.lbl_cmb.setVisible(False)
+        self.cmb_doble_triple.setVisible(False)
+
 
     # En este metodo vamos a capturar la posicion del primer combobox y luego dependiendo
     # de cual este seleccionado asi se llenara el otro combobox
@@ -1033,6 +1187,35 @@ class Ui_MainWindow(object):
             self.label_h_uni4.setVisible(False)
             tabla_unidad4_si_no = 1
 
+    def control_integral_doble_triple(self):
+        doble_o_triple = self.cmb_doble_triple.currentIndex()
+        if doble_o_triple == 0:
+            self.funcion_txt.setVisible(True)
+            self.lbl_integral1.setVisible(True)
+            self.lbl_integral2.setVisible(True)
+            self.a0.setVisible(True)
+            self.a1.setVisible(True)
+            self.b0.setVisible(True)
+            self.b1.setVisible(True)
+            self.diff1.setVisible(True)
+            self.diff2.setVisible(True)
+        elif doble_o_triple == 1:
+            self.funcion_txt.setVisible(True)
+            self.lbl_integral1.setVisible(True)
+            self.lbl_integral2.setVisible(True)
+            self.lbl_integral3.setVisible(True)
+            self.a0.setVisible(True)
+            self.a1.setVisible(True)
+            self.a2.setVisible(True)
+            self.b0.setVisible(True)
+            self.b1.setVisible(True)
+            self.b2.setVisible(True)
+            self.diff1.setVisible(True)
+            self.diff2.setVisible(True)
+            self.diff3.setVisible(True)
+
+    #Controlar los comboBox para las derivadas de orden 2 y 3
+    
     def metodos_de_cada_unidad(self):
         queMetodo = self.comboBox_2.currentIndex()
         queUnidad = self.comboBox.currentIndex()
@@ -1062,6 +1245,19 @@ class Ui_MainWindow(object):
         self.pushButton_5.setGeometry(QtCore.QRect(10, 127, 65, 40))
         self.label_nivel_uni4.setVisible(False)
         self.nivel_uni4.setVisible(False)
+        self.funcion_txt.setVisible(False)
+        self.lbl_integral1.setVisible(False)
+        self.lbl_integral2.setVisible(False)
+        self.lbl_integral3.setVisible(False)
+        self.a0.setVisible(False)
+        self.a1.setVisible(False)
+        self.a2.setVisible(False)
+        self.b0.setVisible(False)
+        self.b1.setVisible(False)
+        self.b2.setVisible(False)
+        self.diff1.setVisible(False)
+        self.diff2.setVisible(False)
+        self.diff3.setVisible(False)
 
         if queUnidad == 0:  # unidad 1
 
@@ -1273,7 +1469,6 @@ class Ui_MainWindow(object):
             self.pushButton_6.setGeometry(QtCore.QRect(85, 150, 65, 40))
             self.pushButton_5.setGeometry(QtCore.QRect(10, 150, 65, 40))
 
-            print(queMetodo)
             if queMetodo == 2:
                 self.label_ver_tabla.setVisible(True)
                 self.comboBox_3.setVisible(True)
@@ -1340,9 +1535,8 @@ class Ui_MainWindow(object):
                 self.comboBox_3.setCurrentIndex(-1)
 
             elif queMetodo == 15:
-                self.funcion_uni4.setVisible(True)
-                self.label_puntoInicial_uni4.setVisible(False)
-                self.puntoInicial_uni4.setVisible(True)
+                self.lbl_cmb.setVisible(True)
+                self.cmb_doble_triple.setVisible(True)
 
             elif queMetodo == 16:
                 self.label_ver_tabla.setVisible(True)

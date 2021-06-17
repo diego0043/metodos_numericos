@@ -719,7 +719,6 @@ def diferenicacion_numerica_atras_orden_superior(funcion, puntoInicial, h, tabla
 def diferenicacion_numerica_centrales_orden_superior(funcion, puntoInicial, h, tablaValores):
     print("falta")
 
-
 # <------------- metodo de richardson --------------------->
 
 def metodo_richardson(funcion, puntoInicial, h, nivel):
@@ -784,7 +783,6 @@ def metodo_richardson(funcion, puntoInicial, h, nivel):
 
 # <------------- Integración numérica --------------------->
 
-
 def regla_del_trapecio_simple(funcion, a, b, tablaValores):
     listaResultados = []
 
@@ -812,7 +810,6 @@ def regla_del_trapecio_simple(funcion, a, b, tablaValores):
 
         else:
             print("Para resolver mediante el trapecio simple solo se utilizan 2 puntos")
-
 
 def regla_del_trapecio_compuesta(funcion, a, b, n, tablaValores):
 
@@ -862,7 +859,6 @@ def regla_del_trapecio_compuesta(funcion, a, b, n, tablaValores):
         listaResultados.append(resultado)
         print(listaResultados)
         return listaResultados
-
 
 def trapecio_para_dobles_y_triples(funcion, lista_a, lista_b, n, orden_integral):
 
@@ -1009,7 +1005,6 @@ def trapecio_para_dobles_y_triples(funcion, lista_a, lista_b, n, orden_integral)
         print('valor encontrado: ------------> ', resultado)
         return listaResultados
 
-
 def integracion_simpson_unTercio_simple(funcion, a, b, listaX, listaY):
 
     # Variables a utilizar
@@ -1037,7 +1032,6 @@ def integracion_simpson_unTercio_simple(funcion, a, b, listaX, listaY):
                      )((listaY[0]+(4*listaY[1])+listaY[2])/6)
 
         return respuesta
-
 
 def integracion_simpson_unTercio_compuesta(funcion, a, b, n_Intervalos, valoresX, valoresY):
 
@@ -1126,7 +1120,6 @@ def integracion_simpson_unTercio_compuesta(funcion, a, b, n_Intervalos, valoresX
         print(respuesta)
         return respuesta
 
-
 def integracion_simpson_tresOctavos_simple(funcion, a, b):
     # Variables a utilizar
     respuesta = 0
@@ -1147,7 +1140,6 @@ def integracion_simpson_tresOctavos_simple(funcion, a, b):
 
         print(respuesta)
         return respuesta
-
 
 def integracion_simpson_tresOctavos_compuesta(funcion, a, b, n_Intervalos):
     # Variables a utilizar
@@ -1194,7 +1186,6 @@ def integracion_simpson_tresOctavos_compuesta(funcion, a, b, n_Intervalos):
 
         print(respuesta)
         return respuesta
-
 
 def integracion_rosemberg(funcion, a, b, nivel):
 
@@ -1255,7 +1246,6 @@ def integracion_rosemberg(funcion, a, b, nivel):
 
     return listaResultados
 
-
 def integracion_cuadratura_Gaussiana(funcion, a, b, n):
     # cada sub-lista va a representar un punto
     listaResultado = []
@@ -1280,14 +1270,12 @@ def integracion_cuadratura_Gaussiana(funcion, a, b, n):
     listaResultado.append(resultado)
     return listaResultado
 
-
 # Creo que como funcion aparte es inecesaria pero xd luego se puede integrar al metodo
 def evaluar_formula_Simpson_adapatativo(a, b, funcion):
     puntoS = []
     puntoS = ((b-a)/6)*(evaluarFuncion(funcion, a, 0, 0)+evaluarFuncion(funcion,
                                                                         b, 0, 0) + (4 * evaluarFuncion(funcion, ((a+b)/2), 0, 0)))
     return puntoS
-
 
 def integracion_simpson_unTercio_adaptativo(tolerancia, a, b, funcion):
     ListaResultados = []  # Aca irá respuesta final
@@ -1388,7 +1376,6 @@ def integracion_simpson_unTercio_adaptativo(tolerancia, a, b, funcion):
     ListaResultados = sum(ListaResultados)
 
     return ListaResultados
-
 
 def integracion_Boole(a, b, funcion):
 
