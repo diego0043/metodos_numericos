@@ -307,8 +307,6 @@ def metodo7(punto,cifras):
     return listaResultados
 
 def metodo8(punto,cifras):
-<<<<<<< HEAD
-=======
     listaResultados = []
     salida = 0
     valorAnterior = 0
@@ -349,7 +347,6 @@ def metodo8(punto,cifras):
     return listaResultados
 
 def metodo9(punto,cifras):
->>>>>>> cf1c6535a474efa49c9429f60b24ebbeed531883
     listaResultados = []
     salida = 0
     valorAnterior = 0
@@ -468,6 +465,4 @@ def metodo11(punto,cifras):
             
     return listaResultados
 
-#salida = metodo1(2,3) 
-#print(tabulate(salida,tablefmt="github",colalign=("center",)))
   

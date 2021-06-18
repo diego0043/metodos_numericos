@@ -17,6 +17,7 @@ from sympy.core.symbol import symbols
 from metodosYformularios import *
 import metodosYformularios.metodos_Unidad_2y3 as metodos
 import metodosYformularios.metodos_unidad_4 as metodos_uni4
+import metodosYformularios.metodosUnidad1 as metodos_uni1
 
 
 import matplotlib.pyplot as plt
@@ -272,9 +273,9 @@ class Ui_MainWindow(object):
         self.lineEdit_6.setFont(font)
 
         self.tableWidget = QtWidgets.QTableWidget(self.centralwidget)
-        self.tableWidget.setGeometry(QtCore.QRect(30, 330, 931, 200))
+        self.tableWidget.setGeometry(QtCore.QRect(30, 330, 931, 220))
         self.tableWidget.setFrameShape(QtWidgets.QFrame.NoFrame)
-        self.tableWidget.setStyleSheet("background-color: rgb(242, 242, 242);")
+        self.tableWidget.setStyleSheet("QTableWidget{\n"" border: 1px solid;\n"" color: rgb(134, 155, 208);\n"" border-color: rgb(134, 155, 208);\n"" border-radius: 15px;\n"" \n""}\n""\n""QTableWidget:hover{\n"" border: 1px solid;\n"" border-radius: 15px;\n"" border-color: rgb(134, 155, 208);\n""}")
         self.tableWidget.setObjectName("tableWidget")
         self.tableWidget.setColumnCount(0)
         self.tableWidget.setRowCount(0)
@@ -294,8 +295,7 @@ class Ui_MainWindow(object):
 
         self.tableWidget_2 = QtWidgets.QTableWidget(self.centralwidget)
         self.tableWidget_2.setGeometry(QtCore.QRect(170, 120, 823, 81))
-        self.tableWidget_2.setStyleSheet(
-            "background-color: rgb(242, 242, 242);")
+        self.tableWidget_2.setStyleSheet("QTableWidget{\n"" border: 1px solid;\n"" color: rgb(134, 155, 208);\n"" border-color: rgb(134, 155, 208);\n"" border-radius: 10px;\n"" \n""}\n""\n""QTableWidget:hover{\n"" border: 1px solid;\n"" border-radius: 10px;\n"" border-color: rgb(134, 155, 208);\n""}")
         self.tableWidget_2.setObjectName("tableWidget_2")
         self.tableWidget_2.setColumnCount(0)
         self.tableWidget_2.setRowCount(0)
@@ -483,9 +483,9 @@ class Ui_MainWindow(object):
         self.funcion_uni4.setFont(font)
 
         self.nivel_uni4 = QtWidgets.QLineEdit(self.centralwidget)
-        self.nivel_uni4.setGeometry(QtCore.QRect(800, 180, 131, 24))
+        self.nivel_uni4.setGeometry(QtCore.QRect(760, 180, 51, 24))
         self.nivel_uni4.setStyleSheet(
-            "background-color: rgb(242, 242, 242);\n""image: url(recursos/barra2.png);\n""border:0px;\n""color:  rgb(232, 137, 137)")
+            "background-color: rgb(242, 242, 242);\n""image: url(recursos/barra.png);\n""border:0px;\n""color:  rgb(232, 137, 137)")
         self.nivel_uni4.setObjectName("nivel_uni4")
         self.nivel_uni4.setFont(font)
 
@@ -530,7 +530,7 @@ class Ui_MainWindow(object):
         self.label_h_uni4.setStyleSheet("color: rgb(134, 155, 208);")
 
         self.label_nivel_uni4 = QtWidgets.QLabel(self.centralwidget)
-        self.label_nivel_uni4.setGeometry(QtCore.QRect(800, 140, 150, 16))
+        self.label_nivel_uni4.setGeometry(QtCore.QRect(760, 140, 150, 16))
         self.label_nivel_uni4.setObjectName("label_nivel_uni4")
         self.label_nivel_uni4.setFont(font)
         self.label_nivel_uni4.setStyleSheet("color: rgb(134, 155, 208);")
@@ -618,37 +618,32 @@ class Ui_MainWindow(object):
         self.a2.setObjectName("a2")
 
         self.diff1 = QtWidgets.QComboBox(self.centralwidget)
-        self.diff1.setGeometry(QtCore.QRect(420, 165, 41, 25))
+        self.diff1.setGeometry(QtCore.QRect(420, 155, 41, 25))
         self.diff1.setStyleSheet("QComboBox{\n""    background-color: rgb(242, 242, 242);\n""    border-radius: 5px;\n""    border: 2px solid rgb(232, 137, 137);\n""    padding: 5px;\n""    padding-left: 5px;\n""    color: rgb(216, 55, 55)\n""}\n""QComboBox:hover{\n""    border: 2px solid rgb(216, 55, 55);\n""    border_left-color: rgb(215,55,55);\n""}\n""QComboBox::drop-down {\n""    subcontrol-origin: padding;\n""    subcontrol-position: top right;\n""    width: 10px; \n""    border-top-right-radius: 1px;\n""    border-bottom-right-radius: 1px;    \n""    background-image: url(:/imagenes/row_baja.png);\n""    background-position: center;\n""    background-repeat: no-reperat;\n"" }\n""QComboBox QAbstractItemView {\n""    color: rgb(216, 55, 55);    \n""    background-color: rgb(242, 242, 242);\n""    padding: 5px;\n""    selection-background-color: rgb(232, 137 , 137);\n""}\n""")
         self.diff1.setObjectName("diff1")
-        self.diff1.addItem("")
-        self.diff1.addItem("")
-        self.diff1.addItem("")
-
+        self.diff1.activated[str].connect(self.control_diferenciacion_segundo_cmb)
+        
         self.diff2 = QtWidgets.QComboBox(self.centralwidget)
-        self.diff2.setGeometry(QtCore.QRect(470, 165, 41, 25))
+        self.diff2.setGeometry(QtCore.QRect(470, 155, 41, 25))
         self.diff2.setStyleSheet("QComboBox{\n""    background-color: rgb(242, 242, 242);\n""    border-radius: 5px;\n""    border: 2px solid rgb(232, 137, 137);\n""    padding: 5px;\n""    padding-left: 5px;\n""    color: rgb(216, 55, 55)\n""}\n""QComboBox:hover{\n""    border: 2px solid rgb(216, 55, 55);\n""    border_left-color: rgb(215,55,55);\n""}\n""QComboBox::drop-down {\n""    subcontrol-origin: padding;\n""    subcontrol-position: top right;\n""    width: 10px; \n""    border-top-right-radius: 1px;\n""    border-bottom-right-radius: 1px;    \n""    background-image: url(:/imagenes/row_baja.png);\n""    background-position: center;\n""    background-repeat: no-reperat;\n"" }\n""QComboBox QAbstractItemView {\n""    color: rgb(216, 55, 55);    \n""    background-color: rgb(242, 242, 242);\n""    padding: 5px;\n""    selection-background-color: rgb(232, 137 , 137);\n""}\n""")
         self.diff2.setObjectName("diff2")
-        self.diff2.addItem("")
-        self.diff2.addItem("")
-
+        self.diff2.activated[str].connect(self.control_diferenciacion_tercer_cmb)
+        
         self.diff3 = QtWidgets.QComboBox(self.centralwidget)
-        self.diff3.setGeometry(QtCore.QRect(520, 165, 41, 25))
+        self.diff3.setGeometry(QtCore.QRect(520, 155, 41, 25))
         self.diff3.setStyleSheet("QComboBox{\n""    background-color: rgb(242, 242, 242);\n""    border-radius: 5px;\n""    border: 2px solid rgb(232, 137, 137);\n""    padding: 5px;\n""    padding-left: 5px;\n""    color: rgb(216, 55, 55)\n""}\n""QComboBox:hover{\n""    border: 2px solid rgb(216, 55, 55);\n""    border_left-color: rgb(215,55,55);\n""}\n""QComboBox::drop-down {\n""    subcontrol-origin: padding;\n""    subcontrol-position: top right;\n""    width: 10px; \n""    border-top-right-radius: 1px;\n""    border-bottom-right-radius: 1px;    \n""    background-image: url(:/imagenes/row_baja.png);\n""    background-position: center;\n""    background-repeat: no-reperat;\n"" }\n""QComboBox QAbstractItemView {\n""    color: rgb(216, 55, 55);    \n""    background-color: rgb(242, 242, 242);\n""    padding: 5px;\n""    selection-background-color: rgb(232, 137 , 137);\n""}\n""")
         self.diff3.setObjectName("diff3")
-        self.diff3.addItem("")
 
         self.cmb_doble_triple = QtWidgets.QComboBox(self.centralwidget)
-        self.cmb_doble_triple.setGeometry(QtCore.QRect(440, 80, 61, 25))
+        self.cmb_doble_triple.setGeometry(QtCore.QRect(460, 80, 61, 25))
         self.cmb_doble_triple.setStyleSheet("QComboBox{\n"" background-color: rgb(242, 242, 242);\n"" border-radius: 5px;\n"" border: 2px solid rgb(232, 137, 137);\n"" padding: 5px;\n"" padding-left: 5px;\n"" color: rgb(216, 55, 55)\n""}\n""QComboBox:hover{\n"" border: 2px solid rgb(216, 55, 55);\n"" border_left-color: rgb(215,55,55);\n""}\n""QComboBox::drop-down {\n"" subcontrol-origin: padding;\n"" subcontrol-position: top right;\n"" width: 10px; \n"" border-top-right-radius: 1px;\n"" border-bottom-right-radius: 1px; \n"" background-image: url(:/imagenes/row_baja.png);\n"" background-position: center;\n"" background-repeat: no-reperat;\n"" }\n""QComboBox QAbstractItemView {\n"" color: rgb(216, 55, 55); \n"" background-color: rgb(242, 242, 242);\n"" padding: 5px;\n"" selection-background-color: rgb(232, 137 , 137);\n""}\n""")
         self.cmb_doble_triple.setObjectName("cmb_doble_triple")
         self.cmb_doble_triple.addItem("")
         self.cmb_doble_triple.addItem("")
-        self.cmb_doble_triple.activated[str].connect(
-            self.control_integral_doble_triple)
+        self.cmb_doble_triple.activated[str].connect(self.control_integral_doble_triple)
 
         self.lbl_cmb = QtWidgets.QLabel(self.centralwidget)
-        self.lbl_cmb.setGeometry(QtCore.QRect(440, 45, 221, 16))
+        self.lbl_cmb.setGeometry(QtCore.QRect(460, 45, 221, 16))
         self.lbl_cmb.setFont(font)
         self.lbl_cmb.setStyleSheet("color: rgb(134, 155, 208);")
         self.lbl_cmb.setObjectName("lbl_cmb")
@@ -746,9 +741,7 @@ class Ui_MainWindow(object):
         self.pushButton_11.setText(_translate(
             "MainWindow", "ELIMINAR \n""FILA"))
 
-        self.diff1.setItemText(0, _translate("MainWindow", "dx"))
-        self.diff1.setItemText(1, _translate("MainWindow", "dy"))
-        self.diff1.setItemText(2, _translate("MainWindow", "dz"))
+
         self.label_13.setText(_translate("MainWindows", "FILAS"))
         self.comboBox.setItemText(0, _translate("MainWindow", "1"))
         self.comboBox.setItemText(1, _translate("MainWindow", "2"))
@@ -899,6 +892,8 @@ class Ui_MainWindow(object):
         self.label_funcion_uni4.setVisible(False)
         self.label_puntoInicial_uni4.setVisible(False)
         self.label_h_uni4.setVisible(False)
+        self.tableWidget.setVisible(True)
+        self.cajaTexto.setVisible(False)
 
         if cual == 0:  # Metodos de la primera unidad
             self.comboBox_2.setGeometry(QtCore.QRect(200, 80, 172, 24))
@@ -1236,9 +1231,9 @@ class Ui_MainWindow(object):
 
         elif si_o_no == 1:
             global cuantasFilasYColumnas
-            cuantasFilasYColumnas = 4  # Columnas iniciales
+            cuantasFilasYColumnas = 2  # Columnas iniciales
 
-            self.creacion_tabla_por_defecto_unidad3(4, 0)
+            self.creacion_tabla_por_defecto_unidad3(3, 0)
             self.funcion_uni4.setVisible(False)
             self.puntoInicial_uni4.setVisible(False)
             self.h_uni4.setVisible(False)
@@ -1253,8 +1248,12 @@ class Ui_MainWindow(object):
             self.a0_normal.setVisible(False)
             self.b0_normal.setVisible(False)
 
+    # Controlar los comboBox para las derivadas de orden 2 y 3
     def control_integral_doble_triple(self):
         doble_o_triple = self.cmb_doble_triple.currentIndex()
+        self.diff3.clear()
+        self.diff2.clear()
+
         if doble_o_triple == 0:
             self.funcion_txt.setVisible(True)
             self.lbl_integral1.setVisible(True)
@@ -1269,6 +1268,13 @@ class Ui_MainWindow(object):
             self.diff1.setVisible(True)
             self.diff2.setVisible(True)
             self.diff3.setVisible(False)
+
+            self.diff1.clear()
+            self.diff1.addItem("")
+            self.diff1.addItem("")
+
+            self.diff1.setItemText(0, "dx")
+            self.diff1.setItemText(1, "dy")
 
         elif doble_o_triple == 1:
             self.funcion_txt.setVisible(True)
@@ -1285,7 +1291,79 @@ class Ui_MainWindow(object):
             self.diff2.setVisible(True)
             self.diff3.setVisible(True)
 
-    # Controlar los comboBox para las derivadas de orden 2 y 3
+            self.diff1.clear()
+            self.diff1.addItem("")
+            self.diff1.addItem("")
+            self.diff1.addItem("")
+
+            self.diff1.setItemText(0, "dx")
+            self.diff1.setItemText(1, "dy")
+            self.diff1.setItemText(2, "dz")
+
+    def control_diferenciacion_segundo_cmb(self):
+        cmb1 = self.diff1.currentIndex()
+        cmb_doble_o_triple = self.cmb_doble_triple.currentIndex()
+        self.diff2.clear()
+        self.diff3.clear()
+
+        if cmb_doble_o_triple == 0:   #Integral doble
+
+            if cmb1 == 0:
+                self.diff2.addItem("")
+                self.diff2.setItemText(0, "dy")
+            elif cmb1 == 1:
+                self.diff2.addItem("")
+                self.diff2.setItemText(0, "dx")
+
+        elif cmb_doble_o_triple == 1: #Integral triple
+            if cmb1 == 0:
+                self.diff2.addItem("")
+                self.diff2.addItem("")
+                self.diff2.setItemText(0, "dy")
+                self.diff2.setItemText(1, "dz")
+            elif cmb1 == 1:
+                self.diff2.addItem("")
+                self.diff2.addItem("")
+                self.diff2.setItemText(0, "dx")
+                self.diff2.setItemText(1, "dz")
+            elif cmb1 == 2:
+                self.diff2.addItem("")
+                self.diff2.addItem("")
+                self.diff2.setItemText(0, "dx")
+                self.diff2.setItemText(1, "dy")
+
+    def control_diferenciacion_tercer_cmb(self):
+        cmb2 = self.diff2.currentText()
+        cmb1 = self.diff1.currentText()
+        self.diff3.clear()
+
+        cmb_doble_o_triple = self.cmb_doble_triple.currentIndex()
+
+        if cmb_doble_o_triple == 1:   #Integral triple
+
+            if cmb1 == 'dx' and cmb2 == 'dy': 
+                self.diff3.addItem("") 
+                self.diff3.setItemText(0, "dz")
+
+            elif cmb1 == 'dx' and cmb2 == 'dz': 
+                self.diff3.addItem("")
+                self.diff3.setItemText(0, "dy")
+
+            if cmb1 == 'dz' and cmb2 == 'dx': 
+                self.diff3.addItem("")
+                self.diff3.setItemText(0, "dy")
+
+            elif cmb1 == 'dz' and cmb2 == 'dy': 
+                self.diff3.addItem("")
+                self.diff3.setItemText(0, "dx")
+
+            elif cmb1 == 'dy' and cmb2 == 'dx':
+                self.diff3.addItem("")
+                self.diff3.setItemText(0, "dz")
+
+            elif cmb1 == 'dy' and cmb2 == 'dz':
+                self.diff3.addItem("")
+                self.diff3.setItemText(0, "dx")
 
     def metodos_de_cada_unidad(self):
         queMetodo = self.comboBox_2.currentIndex()
@@ -1337,6 +1415,7 @@ class Ui_MainWindow(object):
         self.label_puntoInicial_uni4.setText("Punto Inicial")
         self.lbl_cmb.setVisible(False)
         self.cmb_doble_triple.setVisible(False)
+        self.cajaTexto.setVisible(False)
 
         if queUnidad == 0:  # unidad 1
 
@@ -1357,6 +1436,7 @@ class Ui_MainWindow(object):
             self.label_2.setVisible(False)
             self.label_5.setVisible(False)
             self.label_6.setVisible(False)
+            self.cajaTexto.setVisible(False)
 
         elif queUnidad == 1:  # unidad 2
 
@@ -1368,6 +1448,8 @@ class Ui_MainWindow(object):
             self.radioButton_3.setVisible(False)
             self.radioButton_4.setVisible(False)
             self.label_9.setVisible(False)
+            self.cajaTexto.setVisible(False)
+
 
             if queMetodo >= 1 and queMetodo <= 2:
 
@@ -1488,19 +1570,25 @@ class Ui_MainWindow(object):
                 self.label_13.setVisible(False)
                 self.lineEdit_6.setVisible(False)
                 self.label_14.setVisible(False)
+                self.cajaTexto.setVisible(False)
+
 
             if queMetodo == 1:  # Lineal
                 cuantasFilasYColumnas = 3
                 self.creacion_tabla_por_defecto_unidad3(4, 0)
+
             elif queMetodo == 2:  # Cuadratica
                 cuantasFilasYColumnas = 4
                 self.creacion_tabla_por_defecto_unidad3(5, 0)
+
             elif queMetodo == 3:  # Lagrange
                 cuantasFilasYColumnas = 3
                 self.creacion_tabla_por_defecto_unidad3(4, 0)
+
             elif queMetodo == 4:  # Newton
                 cuantasFilasYColumnas = 3
                 self.creacion_tabla_por_defecto_unidad3(4, 0)
+
             elif queMetodo == 5:  # Hermite
                 self.tableWidget_2.setGeometry(
                     QtCore.QRect(170, 120, 704, 116))
@@ -1511,6 +1599,7 @@ class Ui_MainWindow(object):
                 self.label_13.setVisible(True)
                 cuantasFilasYColumnas = 2
                 self.creacion_tabla_por_defecto_unidad3(3, 1)
+
             elif queMetodo == 6:  # función spline
                 self.label_9.setText(
                     "Seleccione el grado de la función Spline")
@@ -1594,7 +1683,7 @@ class Ui_MainWindow(object):
                 self.comboBox_3.setCurrentIndex(-1)
 
             elif queMetodo == 11:
-
+                self.label_funcion_uni4.setVisible(True)
                 self.funcion_uni4.setVisible(True)
                 self.label_puntoInicial_uni4.setVisible(True)
                 self.puntoInicial_uni4.setVisible(True)
@@ -1714,22 +1803,40 @@ class Ui_MainWindow(object):
             self.tableWidget_2.setColumnCount(columnas)
             self.tableWidget_2.setRowCount(2)
 
+            font = QtGui.QFont()
+            font.setFamily("Segoe UI")
+            font.setPointSize(10)
+            font.setBold(True)
+            font.setWeight(75)
+
+            brush = QtGui.QBrush(QtGui.QColor(242, 242, 242))
+            brush.setStyle(QtCore.Qt.NoBrush)
+
+            brush_2 = QtGui.QBrush(QtGui.QColor(134, 135, 208))
+            brush_2.setStyle(QtCore.Qt.SolidPattern)
+
             for x in range(0, 2):
                 for y in range(0, 3):
+                    item = QtWidgets.QTableWidgetItem()
+                    item.setTextAlignment(QtCore.Qt.AlignCenter)
+                    item.setFont(font)
+                    item.setBackground(brush)
+                    item.setForeground(brush_2)
+                    #item.setFlags(QtCore.Qt.ItemIsEditable|QtCore.Qt.ItemIsDragEnabled|QtCore.Qt.ItemIsUserCheckable)
+                    
                     if y == 0 and x == 0:
-                        salida = "    X"
-                        self.tableWidget_2.setItem(
-                            x, y, QtWidgets.QTableWidgetItem(salida))
+                        salida = "X"
+                        item.setText(salida)
+                        self.tableWidget_2.setItem(x, y,item)
                         self.tableWidget_2.setColumnWidth(y, 8)
+
                     elif y == 0 and x == 1:
-                        salida = "    Y"
-                        self.tableWidget_2.setItem(
-                            x, y, QtWidgets.QTableWidgetItem(salida))
+                        salida = "Y"
+                        item.setText(salida)
+                        self.tableWidget_2.setItem(x, y, item)
                         self.tableWidget_2.setColumnWidth(y, 8)
                     else:
-                        salida = ""
-                        self.tableWidget_2.setItem(
-                            x, y, QtWidgets.QTableWidgetItem(salida))
+                        self.tableWidget_2.setItem(x, y, item)
 
             self.tableWidget_2.setVisible(True)
 
@@ -1752,26 +1859,151 @@ class Ui_MainWindow(object):
             self.tableWidget_2.verticalHeader().setDefaultSectionSize(38)
             self.tableWidget_2.horizontalHeader().setDefaultSectionSize(100)
 
+            font = QtGui.QFont()
+            font.setFamily("Segoe UI")
+            font.setPointSize(10)
+            font.setBold(True)
+            font.setWeight(75)
+
+            brush = QtGui.QBrush(QtGui.QColor(242, 242, 242))
+            brush.setStyle(QtCore.Qt.NoBrush)
+
+            brush_2 = QtGui.QBrush(QtGui.QColor(134, 135, 208))
+            brush_2.setStyle(QtCore.Qt.SolidPattern)
+
             for x in range(0, 2):
                 for y in range(0, 3):
+                    item = QtWidgets.QTableWidgetItem()
+                    item.setTextAlignment(QtCore.Qt.AlignCenter)
+                    item.setFont(font)
+                    item.setBackground(brush)
+                    item.setForeground(brush_2)
+
                     if y == 0 and x == 0:
-                        salida = "    X"
+                        salida = "X"
+                        item.setText(salida)
                         self.tableWidget_2.setItem(
-                            x, y, QtWidgets.QTableWidgetItem(salida))
+                            x, y, item)
                     elif y == 1 and x == 0:
-                        salida = "    Y"
+                        salida = "Y"
+                        item.setText(salida)
                         self.tableWidget_2.setItem(
-                            x, y, QtWidgets.QTableWidgetItem(salida))
+                            x, y, item)
                     elif y == 2 and x == 0:
-                        salida = "    Y'"
+                        salida = "Y'"
+                        item.setText(salida)
                         self.tableWidget_2.setItem(
-                            x, y, QtWidgets.QTableWidgetItem(salida))
+                            x, y, item)
                     else:
-                        salida = ""
-                        self.tableWidget_2.setItem(
-                            x, y, QtWidgets.QTableWidgetItem(salida))
+                        self.tableWidget_2.setItem(x, y, item)
 
             self.tableWidget_2.setVisible(True)
+
+    def insertar_datos_a_tabla_unidad1(self, metodo):
+        
+        punto = float(self.lineEdit_2.text())
+        cifras = float(self.lineEdit_5.text())
+
+        if metodo == 1:
+            lst = metodos_uni1.metodo1(punto,cifras)
+        
+        elif metodo == 2:
+            lst = metodos_uni1.metodo2(punto,cifras)
+
+        elif metodo == 3:
+            lst = metodos_uni1.metodo3(punto,cifras)
+
+        elif metodo == 4:
+            lst = metodos_uni1.metodo4(punto,cifras)
+
+        elif metodo == 5:
+            lst = metodos_uni1.metodo5(punto,cifras)
+
+        elif metodo == 6:
+            lst = metodos_uni1.metodo6(punto,cifras)
+
+        elif metodo == 7:
+            lst = metodos_uni1.metodo7(punto,cifras)
+        
+        elif metodo == 8:
+            lst = metodos_uni1.metodo8(punto,cifras)
+        
+        elif metodo == 9:
+            lst = metodos_uni1.metodo9(punto,cifras)
+        
+        elif metodo == 10:
+            lst = metodos_uni1.metodo10(punto,cifras)
+        
+        elif metodo == 11:
+            lst = metodos_uni1.metodo11(punto,cifras)
+
+        self.tableWidget.verticalHeader().setDefaultAlignment(QtCore.Qt.AlignHCenter)
+        rows = len(lst)  # Numero de filas
+        columns = len(lst[0])  # Numero de columnas
+        len_Col = int(930/columns)-5  # Tamaño que tendran las columnas
+
+        # Aplicamos unas configuraciones a la tabla
+        self.tableWidget.setColumnCount(columns)
+        self.tableWidget.setRowCount(rows)
+        self.tableWidget.verticalHeader().setVisible(False)
+        self.tableWidget.horizontalHeader().setVisible(False)
+
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+
+        brush = QtGui.QBrush(QtGui.QColor(242, 242, 242))
+        brush.setStyle(QtCore.Qt.NoBrush)
+
+        brush_2 = QtGui.QBrush(QtGui.QColor(134, 135, 208))
+        brush_2.setStyle(QtCore.Qt.SolidPattern)
+
+
+        for row in range(rows):  # Primer for recorre las filas en lst
+            # Segundo for recorre las columnas en lst
+            for column in range(columns):
+                if row == 0:  # Encabezado o header
+
+                    item = QtWidgets.QTableWidgetItem()
+                    item.setTextAlignment(QtCore.Qt.AlignCenter)
+                    item.setFont(font)
+                    item.setBackground(brush)
+                    item.setForeground(brush_2)
+                    item.setFlags(QtCore.Qt.ItemIsEditable|QtCore.Qt.ItemIsDragEnabled|QtCore.Qt.ItemIsUserCheckable)
+
+                    salida = lst[row][column]
+                    item.setText(str(salida))
+
+                    self.tableWidget.setItem(row, column, item)
+                    self.tableWidget.setColumnWidth(column, len_Col)
+                else:
+
+                    item = QtWidgets.QTableWidgetItem()
+                    item.setTextAlignment(QtCore.Qt.AlignCenter)
+                    item.setFont(font)
+                    item.setBackground(brush)
+                    item.setForeground(brush_2)
+                    item.setFlags(QtCore.Qt.ItemIsEditable|QtCore.Qt.ItemIsDragEnabled|QtCore.Qt.ItemIsUserCheckable)
+                   
+                    if column == 0:
+                        salida = (lst[row][column])
+                        item.setText(str(salida))
+                        self.tableWidget.setItem(row, column, item)
+                        self.tableWidget.setColumnWidth(column, len_Col)
+                    else:
+
+                        if row == 1 and column == 2:
+                            salida = lst[row][column]
+                            item.setText(str(salida))
+                            self.tableWidget.setItem(row, column,item)
+                            self.tableWidget.setColumnWidth(column, len_Col)
+                        else:
+                            salida = "%.5f" % float(lst[row][column])
+                            item.setText(str(salida))
+                            self.tableWidget.setItem(row, column, item)
+                            self.tableWidget.setColumnWidth(column, len_Col)
 
     def insertar_datos_a_tabla_unidad2(self, metodo):
 
@@ -2322,14 +2554,13 @@ class Ui_MainWindow(object):
 
             for x in range(0, 2):
 
-                for y in range(1, cuantasFilasYColumnas):
+                for y in range(1, cuantasFilasYColumnas+1):
                     if x == 0:
                         listaX.append(self.tableWidget_2.item(x, y).text())
                     elif x == 1:
                         listaY.append(self.tableWidget_2.item(x, y).text())
 
-            h = float(listaX[1])-float(listaX[0])
-            puntoInicial = float(self.lineEdit_6.text())
+           
 
             for i in listaX:
                 listaXapoyo.append(float(i))
@@ -2342,8 +2573,12 @@ class Ui_MainWindow(object):
 
         else:
             funcion = self.funcion_uni4.text()
-            puntoInicial = float(self.puntoInicial_uni4.text())
-            h = float(self.h_uni4.text())
+            try:
+                puntoInicial = float(self.puntoInicial_uni4.text())
+                h = float(self.h_uni4.text())
+            except:
+                print('')
+
 
         if metodo == 2:  # Hacia delante
 
@@ -2352,141 +2587,199 @@ class Ui_MainWindow(object):
                     funcion, puntoInicial, h, [])
             else:
 
+                h = float(listaX[1])-float(listaX[0])
+                puntoInicial = float(self.lineEdit_6.text())
+
                 lst = metodos_uni4.diferenciacion_numerica_adelante(
                     '', puntoInicial, h, puntos)
 
-        elif metodo == 3:
+        elif metodo == 3: # Hacia atras
 
             if tabla_unidad4_si_no == 0:
                 lst = metodos_uni4.diferenciacion_numerica_atras(
                     funcion, puntoInicial, h, [])
             else:
+                h = float(listaX[1])-float(listaX[0])
+                puntoInicial = float(self.lineEdit_6.text())
                 lst = metodos_uni4.diferenciacion_numerica_atras(
                     '', puntoInicial, h, puntos)
 
-        elif metodo == 4:
+        elif metodo == 4: # centrada
 
             if tabla_unidad4_si_no == 0:
                 lst = metodos_uni4.diferenciacion_numerica_centrada(
-                    funcion, puntoInicial, h, [])
+                    funcion, puntoInicial, h, [],0)
             else:
+                h = float(listaX[1])-float(listaX[0])
+                puntoInicial = float(self.lineEdit_6.text())
                 lst = metodos_uni4.diferenciacion_numerica_centrada(
-                    '', puntoInicial, h, puntos)
+                    '', puntoInicial, h, puntos,0)
 
-        elif metodo == 5:
+        elif metodo == 5: # Tres puntos
 
             if tabla_unidad4_si_no == 0:
                 lst = metodos_uni4.diferenciacion_numerica_tres_puntos(
                     funcion, puntoInicial, h, [])
             else:
+                h = float(listaX[1])-float(listaX[0])
+                puntoInicial = float(self.lineEdit_6.text())
                 lst = metodos_uni4.diferenciacion_numerica_tres_puntos(
                     '', puntoInicial, h, puntos)
 
-        elif metodo == 6:
+        elif metodo == 6: # Cinco Puntos
 
             if tabla_unidad4_si_no == 0:
                 lst = metodos_uni4.diferenciacion_numerica_cinco_puntos(
                     funcion, puntoInicial, h, [])
             else:
+                h = float(listaX[1])-float(listaX[0])
+                puntoInicial = float(self.lineEdit_6.text())
                 lst = metodos_uni4.diferenciacion_numerica_cinco_puntos(
                     '', puntoInicial, h, puntos)
 
-        elif metodo == 8:
+        elif metodo == 8: # Adelante orden superior 
+
 
             if tabla_unidad4_si_no == 0:
                 lst = metodos_uni4.diferenciacion_numerica_adelante_orden_superior(
                     funcion, puntoInicial, h, [])
             else:
+                h = float(listaX[1])-float(listaX[0])
+                puntoInicial = float(self.lineEdit_6.text())
                 lst = metodos_uni4.diferenciacion_numerica_adelante_orden_superior(
                     '', puntoInicial, h, puntos)
 
-        elif metodo == 9:
+        elif metodo == 9: # Atras orden superior
 
             if tabla_unidad4_si_no == 0:
                 lst = metodos_uni4.diferenicacion_numerica_atras_orden_superior(
                     funcion, puntoInicial, h, [])
             else:
+                h = float(listaX[1])-float(listaX[0])
+                puntoInicial = float(self.lineEdit_6.text())
                 lst = metodos_uni4.diferenicacion_numerica_atras_orden_superior(
                     '', puntoInicial, h, puntos)
 
-        elif metodo == 10:
+        elif metodo == 10: # Centrado orden superio
 
             if tabla_unidad4_si_no == 0:
                 lst = metodos_uni4.diferenicacion_numerica_centrales_orden_superior(
                     funcion, puntoInicial, h, [])
             else:
+                h = float(listaX[1])-float(listaX[0])
+                puntoInicial = float(self.lineEdit_6.text())
                 lst = metodos_uni4.diferenicacion_numerica_centrales_orden_superior(
                     '', puntoInicial, h, puntos)
 
-        elif metodo == 11:
-            lst = metodos_uni4.metodo_richardson(funcion, puntoInicial, h)
+        elif metodo == 11: # Richardson
+            nivel = int(self.nivel_uni4.text())
+            lst = metodos_uni4.metodo_richardson(funcion, puntoInicial, h, nivel)
 
-        elif metodo == 13:
-
+        elif metodo == 13: # Trapecio simple
+        
             if tabla_unidad4_si_no == 0:
+                a = float(self.a0_normal.text())
+                b = float(self.b0_normal.text())
                 lst = metodos_uni4.regla_del_trapecio_simple(
-                    funcion, puntoInicial, h, [])
+                    funcion,a,b,[], 0)
             else:
+                a = listaXapoyo[len(listaXapoyo)-1]
+                b = listaXapoyo[0]
+
                 lst = metodos_uni4.regla_del_trapecio_simple(
-                    '', puntoInicial, h, puntos)
+                    '', a, b, puntos, 0)
 
-        elif metodo == 14:
-
+        elif metodo == 14: # Trapecio Compuesto
+   
             if tabla_unidad4_si_no == 0:
+                n = int(self.puntoInicial_uni4.text())
+                a = float(self.a0_normal.text())
+                b = float(self.b0_normal.text())
                 lst = metodos_uni4.regla_del_trapecio_compuesta(
-                    funcion, puntoInicial, h, [])
+                    funcion, a,b,n, [],0)
             else:
+                a = listaXapoyo[len(listaXapoyo)-1]
+                b = listaXapoyo[0]
+                n = len(listaXapoyo)-1
                 lst = metodos_uni4.regla_del_trapecio_compuesta(
-                    '', puntoInicial, h, puntos)
+                    '', a,b,n, puntos,0)
 
-        elif metodo == 15:  # pendiente
+        elif metodo == 15:  # Integrales dobles y triples 
             self.insertar_datos_a_tabla_unidad4(15)
 
-        elif metodo == 16:
-
+        elif metodo == 16: # simpson 1/3 simple
+                
             if tabla_unidad4_si_no == 0:
+                a = float(self.a0_normal.text())
+                b = float(self.b0_normal.text())
                 lst = metodos_uni4.integracion_simpson_unTercio_simple(
-                    funcion, puntoInicial, h, [], [])
+                    funcion, a, b, [], [])
             else:
+                a = listaXapoyo[len(listaXapoyo)-1]
+                b = listaXapoyo[0]
                 lst = metodos_uni4.integracion_simpson_unTercio_simple(
-                    '', puntoInicial, h, listaXapoyo, listaYapoyo)
+                    '', a, b, listaXapoyo, listaYapoyo)
 
-        elif metodo == 17:
-
+        elif metodo == 17: # simpson 1/3 compuesto
+            
             if tabla_unidad4_si_no == 0:
+                a = float(self.a0_normal.text())
+                b = float(self.b0_normal.text())
+                n = int(self.puntoInicial_uni4.text())
                 lst = metodos_uni4.integracion_simpson_unTercio_compuesta(
-                    funcion, puntoInicial, h, [])
+                    funcion, a, b, n, [],[])
             else:
+                a = listaXapoyo[len(listaXapoyo)-1]
+                b = listaXapoyo[0]
+                n = len(listaXapoyo)-1
                 lst = metodos_uni4.integracion_simpson_unTercio_compuesta(
-                    '', puntoInicial, h, listaXapoyo, listaYapoyo)
+                    '', a, b, n, listaXapoyo, listaYapoyo)
 
-        elif metodo == 18:
+        elif metodo == 18: # simpson 3/8 simple
+            a = float(self.a0_normal.text())
+            b = float(self.b0_normal.text())
             lst = metodos_uni4.integracion_simpson_tresOctavos_simple(
-                funcion, puntoInicial, h)
+                funcion, a, b)
 
-        elif metodo == 19:
+        elif metodo == 19: # simpson 3/8 compuesto
+            a = float(self.a0_normal.text())
+            b = float(self.b0_normal.text())
+            n = int(self.puntoInicial_uni4.text())
+
             lst = metodos_uni4.integracion_simpson_tresOctavos_compuesta(
-                funcion, puntoInicial, h)
+                funcion, a, b, n)
 
-        elif metodo == 20:
-            lst = metodos_uni4.integracion_rosemberg(funcion, puntoInicial, h)
+        elif metodo == 20: # rosemberg
+            a = float(self.a0_normal.text())
+            b = float(self.b0_normal.text())
+            n = int(self.puntoInicial_uni4.text())
+            lst = metodos_uni4.integracion_rosemberg(funcion, a, b, n)
 
-        elif metodo == 21:
+        elif metodo == 21: # cuadratura gaussiana
+            a = float(self.a0_normal.text())
+            b = float(self.b0_normal.text())
+            n = int(self.puntoInicial_uni4.text())
             lst = metodos_uni4.integracion_cuadratura_Gaussiana(
-                funcion, puntoInicial, h)
+                funcion, a, b, n)
 
-        elif metodo == 22:
+        elif metodo == 22: # simpson adaptativo
+            a = float(self.a0_normal.text())
+            b = float(self.b0_normal.text())
+            tolerancia = float(self.puntoInicial_uni4.text())
             lst = metodos_uni4.integracion_simpson_unTercio_adaptativo(
-                funcion, puntoInicial, h)
+                tolerancia, a, b, funcion)
 
-        elif metodo == 23:
-            lst = metodos_uni4.integracion_Boole(funcion, puntoInicial, h)
+        elif metodo == 23: # boole
+            a = float(self.a0_normal.text())
+            b = float(self.b0_normal.text())
+            lst = metodos_uni4.integracion_Boole(a, b, funcion)
 
         self.tableWidget.setVisible(False)
         self.cajaTexto.setVisible(True)
 
         # Agregando respuesta a la caja de texto
         salida = ""
+
         for i in lst:
             salida += "\n"+str(i)+"\n"
 
@@ -2497,42 +2790,53 @@ class Ui_MainWindow(object):
         global etiquetaHermite
         metodo = self.comboBox_2.currentIndex()
 
-        if metodo == 0:
-            print("Seleccione un metodo primero ")
+        unidad = self.comboBox.currentIndex()
+        
+        if unidad == 2:
+            if metodo == 0:
+                print("Seleccione un metodo primero ")
 
-        elif metodo == 1:
-            print("Solamente se puede trabajar con 2 puntos")
+            elif metodo == 1:
+                print("Solamente se puede trabajar con 2 puntos")
 
-        else:
+            else:
 
-            if metodo >= 1 and metodo <= 4:
-                if cuantasFilasYColumnas == 11:
-                    print("Maximo numero de columnas alcanzado")
-                else:
-                    self.tableWidget_2.insertColumn(cuantasFilasYColumnas+1)
-                    cuantasFilasYColumnas += 1
-
-            if metodo == 5:
-                if cuantasFilasYColumnas == 6:
-                    print("Maximo de columnas alcanzado")
-                else:
-                    if etiquetaHermite == "y'":
-                        etiquetaHermite += "'"
-                        salida = etiquetaHermite
+                if metodo >= 1 and metodo <= 4:
+                    if cuantasFilasYColumnas == 11:
+                        print("Maximo numero de columnas alcanzado")
                     else:
-                        etiquetaHermite += "'"
-                        salida = etiquetaHermite
+                        self.tableWidget_2.insertColumn(cuantasFilasYColumnas+1)
+                        cuantasFilasYColumnas += 1
 
-                    self.tableWidget_2.insertColumn(cuantasFilasYColumnas+1)
-                    self.tableWidget_2.setItem(
-                        0, cuantasFilasYColumnas+1, QtWidgets.QTableWidgetItem(salida))
-                    cuantasFilasYColumnas += 1
-            if metodo == 6:
-                if cuantasFilasYColumnas == 10:
-                    print("Maximo de columnas alcanzado")
-                else:
-                    self.tableWidget_2.insertColumn(cuantasFilasYColumnas+1)
-                    cuantasFilasYColumnas += 1
+                if metodo == 5:
+                    if cuantasFilasYColumnas == 6:
+                        print("Maximo de columnas alcanzado")
+                    else:
+                        if etiquetaHermite == "y'":
+                            etiquetaHermite += "'"
+                            salida = etiquetaHermite
+                        else:
+                            etiquetaHermite += "'"
+                            salida = etiquetaHermite
+
+                        self.tableWidget_2.insertColumn(cuantasFilasYColumnas+1)
+                        self.tableWidget_2.setItem(
+                            0, cuantasFilasYColumnas+1, QtWidgets.QTableWidgetItem(salida))
+                        cuantasFilasYColumnas += 1
+                if metodo == 6:
+                    if cuantasFilasYColumnas == 10:
+                        print("Maximo de columnas alcanzado")
+                    else:
+                        self.tableWidget_2.insertColumn(cuantasFilasYColumnas+1)
+                        cuantasFilasYColumnas += 1
+         
+        elif unidad == 3:
+            
+            if cuantasFilasYColumnas == 11:
+                print("Maximo numero de columnas alcanzado")
+            else:
+                self.tableWidget_2.insertColumn(cuantasFilasYColumnas+1)
+                cuantasFilasYColumnas += 1
 
     def control_eliminar_columna_tabla_Unidad3(self):
         global cuantasFilasYColumnas
@@ -2779,85 +3083,20 @@ class Ui_MainWindow(object):
         metodo = self.comboBox_2.currentIndex()
 
         if unidad == 0:  # Metodos de la unidad 1
-            print("aun falta esta parte")
+            if metodo >= 1:
+                self.insertar_datos_a_tabla_unidad1(metodo)
 
         elif unidad == 1:  # Metodos de la unidad 2
-            if metodo == 1:  # Biseccion
-                self.insertar_datos_a_tabla_unidad2(1)
-            elif metodo == 2:  # Falsa posicion
-                self.insertar_datos_a_tabla_unidad2(2)
-            elif metodo == 3:  # Punto fijo
-                self.insertar_datos_a_tabla_unidad2(3)
-            elif metodo == 4:  # Newton
-                self.insertar_datos_a_tabla_unidad2(4)
-            elif metodo == 5:  # Newton mejorado
-                self.insertar_datos_a_tabla_unidad2(5)
-            elif metodo == 6:  # secante
-                self.insertar_datos_a_tabla_unidad2(6)
-            elif metodo == 7:  # cero polinomios
-                self.insertar_datos_a_tabla_unidad2(7)
-            elif metodo == 8:  # Horner
-                self.insertar_datos_a_tabla_unidad2(8)
-            elif metodo == 9:  # Muller
-                self.insertar_datos_a_tabla_unidad2(9)
-            elif metodo == 10:  # Bairstown
-                self.insertar_datos_a_tabla_unidad2(10)
-
+            if metodo >= 1:
+                self.insertar_datos_a_tabla_unidad2(metodo)
+            
         elif unidad == 2:  # Metodos de la unidad 3
-            if metodo == 1:  # lineal
-                self.encontrar_puntos_para_metodos_unidad3(1)
-            elif metodo == 2:  # cuadratica
-                self.encontrar_puntos_para_metodos_unidad3(2)
-            elif metodo == 3:  # lagrange
-                self.encontrar_puntos_para_metodos_unidad3(3)
-            elif metodo == 4:  # newton
-                self.encontrar_puntos_para_metodos_unidad3(4)
-            elif metodo == 5:  # hermite
-                self.encontrar_puntos_para_metodos_unidad3(5)
-            elif metodo == 6:  # funciones spline
-                self.encontrar_puntos_para_metodos_unidad3(6)
-
+            if metodo >= 1:  # lineal
+                self.encontrar_puntos_para_metodos_unidad3(metodo)
+            
         elif unidad == 3:  # Metodos de la unidad 4
-            if metodo == 2:
-                self.insertar_datos_a_tabla_unidad4(2)
-            elif metodo == 3:
-                self.insertar_datos_a_tabla_unidad4(3)
-            elif metodo == 4:
-                self.insertar_datos_a_tabla_unidad4(4)
-            elif metodo == 5:
-                self.insertar_datos_a_tabla_unidad4(5)
-            elif metodo == 6:
-                self.insertar_datos_a_tabla_unidad4(6)
-            elif metodo == 8:
-                self.insertar_datos_a_tabla_unidad4(8)
-            elif metodo == 9:
-                self.insertar_datos_a_tabla_unidad4(9)
-            elif metodo == 10:
-                self.insertar_datos_a_tabla_unidad4(10)
-            elif metodo == 11:
-                self.insertar_datos_a_tabla_unidad4(11)
-            elif metodo == 13:
-                self.insertar_datos_a_tabla_unidad4(13)
-            elif metodo == 14:
-                self.insertar_datos_a_tabla_unidad4(14)
-            elif metodo == 15:
-                self.insertar_datos_a_tabla_unidad4(15)
-            elif metodo == 16:
-                self.insertar_datos_a_tabla_unidad4(16)
-            elif metodo == 17:
-                self.insertar_datos_a_tabla_unidad4(17)
-            elif metodo == 18:
-                self.insertar_datos_a_tabla_unidad4(18)
-            elif metodo == 19:
-                self.insertar_datos_a_tabla_unidad4(19)
-            elif metodo == 20:
-                self.insertar_datos_a_tabla_unidad4(20)
-            elif metodo == 21:
-                self.insertar_datos_a_tabla_unidad4(21)
-            elif metodo == 22:
-                self.insertar_datos_a_tabla_unidad4(22)
-            elif metodo == 23:
-                self.insertar_datos_a_tabla_unidad4(23)
+            if metodo >= 2:
+                self.insertar_datos_a_tabla_unidad4(metodo)
 
     def graficar(self):
         x = symbols('x')
