@@ -109,6 +109,8 @@ def diferenciacion_numerica_adelante(funcion, puntoInicial, h, tablaValores):
 
         # guardamos la primera diferencia
         listaResultados.append((numerador1)/(h))
+        listaSalidaFinal.append(
+            "Primera diferencia hacia delante:\n"+str((numerador1)/(h))+"\n")
 
         lista_valores = []
 
@@ -122,16 +124,19 @@ def diferenciacion_numerica_adelante(funcion, puntoInicial, h, tablaValores):
         numerador1 = 0
 
         numerador1 = lista_valores[0] * \
-            (-1) + lista_valores[1]*(4) + lista_valores[-3]
+            (-1) + lista_valores[1]*(4) + lista_valores[2]*(-3)
 
         # guardamos la segunda diferencia
         listaResultados.append((numerador1)/(h*2))
-        print(listaResultados)
-        return listaResultados
+        listaSalidaFinal.append(
+            "Segunda diferencia hacia delante:\n"+str((numerador1)/(h*2))+"\n")
+
+        return listaSalidaFinal
 
 
 def diferenciacion_numerica_atras(funcion, puntoInicial, h, tablaValores):
     listaResultados = []  # lista donde estaran las respuestas
+    listaSalidaFinal = []  # Lista que se mostrar en el formulario
     salida = ''
 
     if funcion != '':
@@ -143,12 +148,16 @@ def diferenciacion_numerica_atras(funcion, puntoInicial, h, tablaValores):
 
         # guardamos la primera diferencia
         listaResultados.append((numerador1)/h)
+        listaSalidaFinal.append(
+            "Primera diferencia: "+str((numerador1)/h)+"\n")
 
         numerador1 = evaluarFuncion(funcion, puntoInicial, 0, 0)*(3) + evaluarFuncion(
             funcion, puntoInicial-h, 0, 0)*(-4) + evaluarFuncion(funcion, puntoInicial-2*h, 0, 0)
 
         # guardamos la segunda diferencia
         listaResultados.append(numerador1/(2*h))
+        listaSalidaFinal.append(
+            "Segunda diferencia: "+str(numerador1/(2*h))+"\n")
 
         # calculamos los errores para la primera y la segunda diferencia
         lista_errores = []
@@ -157,18 +166,27 @@ def diferenciacion_numerica_atras(funcion, puntoInicial, h, tablaValores):
         valor_apro2 = listaResultados[1]
 
         # primer error
+
         listaResultados.append(
-            abs((valor_verdadero-valor_apro1)/valor_verdadero))
-        listaResultados.append(listaResultados[2]*100)
+            abs((valor_verdadero-valor_apro1)/valor_verdadero))  # Relativo
+        listaSalidaFinal.append(
+            "Primer error relativo: "+str(abs((valor_verdadero-valor_apro1)/valor_verdadero))+"\n")
+
+        listaResultados.append(listaResultados[2]*100)  # Porcentual
+        listaSalidaFinal.append(
+            "Primer error porcentual: "+str(listaResultados[2]*100)+"\n")
 
         # segundo error
         listaResultados.append(
-            abs((valor_verdadero-valor_apro2)/valor_verdadero))
-        listaResultados.append(listaResultados[4]*100)
+            abs((valor_verdadero-valor_apro2)/valor_verdadero))  # Relativo
+        listaSalidaFinal.append(
+            "Segundo error relativo: "+str(abs((valor_verdadero-valor_apro2)/valor_verdadero))+"\n")
 
-        print(listaResultados[0])
-        print(listaResultados[1])
-        return listaResultados
+        listaResultados.append(listaResultados[4]*100)  # Porcentual
+        listaSalidaFinal.append(
+            "Segundo error porcentual: "+str(listaResultados[4]*100)+"\n")
+
+        return listaSalidaFinal
 
     else:
         lista_valores = []
@@ -187,6 +205,8 @@ def diferenciacion_numerica_atras(funcion, puntoInicial, h, tablaValores):
 
         # guardamos la primera diferencia
         listaResultados.append((numerador1)/(h))
+        listaSalidaFinal.append(
+            "Primera diferencia: "+str((numerador1)/h)+"\n")
 
         lista_valores = []
 
@@ -204,12 +224,17 @@ def diferenciacion_numerica_atras(funcion, puntoInicial, h, tablaValores):
 
         # guardamos la segunda diferencia
         listaResultados.append((numerador1)/(h*2))
-        print(listaResultados)
-        return listaResultados
+        listaSalidaFinal.append(
+            "Segunda diferencia: "+str((numerador1)/(2*h))+"\n")
+
+        return listaSalidaFinal
 
 
-def diferenciacion_numerica_centrada(funcion, puntoInicial, h, tablaValores):
+# Si en el parametro formaRespuesta enviamos 0 la respuesta sera con todo el texto
+# Si enviamos 1 como parametro la respuesta sera solamente el numero
+def diferenciacion_numerica_centrada(funcion, puntoInicial, h, tablaValores, formaRespuesta):
     listaResultados = []  # lista donde estaran las respuestas
+    listaSalidaFinal = []  # Lista que se mostrar en el formulario
     salida = ''
 
     if funcion != '':
@@ -223,12 +248,16 @@ def diferenciacion_numerica_centrada(funcion, puntoInicial, h, tablaValores):
 
         # guardamos la primera diferencia
         listaResultados.append((numerador1)/(2*h))
+        listaSalidaFinal.append(
+            "Primera diferencia: "+str((numerador1)/(2*h))+"\n")
 
         numerador1 = evaluarFuncion(funcion, puntoInicial+2*h, 0, 0)*(-1) + evaluarFuncion(funcion, puntoInicial+h, 0, 0)*(
             8) + evaluarFuncion(funcion, puntoInicial-h, 0, 0)*(-8) + evaluarFuncion(funcion, puntoInicial-2*h, 0, 0)
 
         # guardamos la segunda diferencia
         listaResultados.append(numerador1/(12*h))
+        listaSalidaFinal.append(
+            "Segunda diferencia: "+str((numerador1)/(12*h))+"\n")
 
         # calculamos los errores para la primera y la segunda diferencia
         lista_errores = []
@@ -238,15 +267,28 @@ def diferenciacion_numerica_centrada(funcion, puntoInicial, h, tablaValores):
 
         # primer error
         listaResultados.append(
-            abs((valor_verdadero-valor_apro1)/valor_verdadero))
-        listaResultados.append(listaResultados[2]*100)
+            abs((valor_verdadero-valor_apro1)/valor_verdadero))  # Relativo
+        listaSalidaFinal.append(
+            "Primer error relativo"+str((valor_verdadero-valor_apro1)/valor_verdadero)+"\n")
+
+        listaResultados.append(listaResultados[2]*100)  # Porcentual
+        listaSalidaFinal.append(
+            "Primer error porcentual"+str(listaResultados[2]*100)+"\n")
 
         # segundo error
         listaResultados.append(
-            abs((valor_verdadero-valor_apro2)/valor_verdadero))
-        listaResultados.append(listaResultados[4]*100)
+            abs((valor_verdadero-valor_apro2)/valor_verdadero))  # Relativo
+        listaSalidaFinal.append(
+            "Segundo error relativo"+str((valor_verdadero-valor_apro2)/valor_verdadero)+"\n")
 
-        return listaResultados
+        listaResultados.append(listaResultados[4]*100)  # Porcentual
+        listaSalidaFinal.append(
+            "Segundo error porcentual"+str(listaResultados[4]*100)+"\n")
+
+        if formaRespuesta == 0:
+            return listaSalidaFinal
+        else:
+            return listaResultados
 
     else:
         lista_valores = []
@@ -265,6 +307,8 @@ def diferenciacion_numerica_centrada(funcion, puntoInicial, h, tablaValores):
 
         # guardamos la primera diferencia
         listaResultados.append((numerador1)/(h*2))
+        listaSalidaFinal.append(
+            "Primera diferencia: "+str((numerador1)/(2*h))+"\n")
 
         lista_valores = []
 
@@ -283,12 +327,18 @@ def diferenciacion_numerica_centrada(funcion, puntoInicial, h, tablaValores):
 
         # guardamos la segunda diferencia
         listaResultados.append((numerador1)/(h*12))
-        print(listaResultados)
-        return listaResultados
+        listaSalidaFinal.append(
+            "Segunda diferencia: "+str((numerador1)/(h*12))+"\n")
+
+        if formaRespuesta == 0:
+            return listaSalidaFinal
+        else:
+            return listaResultados
 
 
 def diferenciacion_numerica_tres_puntos(funcion, puntoInicial, h, tablaValores):
     listaResultados = []  # lista donde estaran las respuestas
+    listaSalidaFinal = []  # Lista que se mostrar en el formulario
     salida = ''
 
     if funcion != '':
@@ -302,12 +352,16 @@ def diferenciacion_numerica_tres_puntos(funcion, puntoInicial, h, tablaValores):
 
         # guardamos la primera diferencia
         listaResultados.append((numerador1)/(2*h))
+        listaSalidaFinal.append("Primer diferencia: " +
+                                str((numerador1)/(2*h))+"\n")
 
         numerador1 = evaluarFuncion(funcion, puntoInicial, 0, 0)*(-3) + evaluarFuncion(
             funcion, puntoInicial+h, 0, 0)*(4) + evaluarFuncion(funcion, puntoInicial+2*h, 0, 0)*(-1)
 
         # guardamos la segunda diferencia
         listaResultados.append(numerador1/(2*h))
+        listaSalidaFinal.append(
+            "Segunda diferencia: "+str((numerador1)/(2*h))+"\n")
 
         # calculamos los errores para la primera y la segunda diferencia
         lista_errores = []
@@ -317,17 +371,25 @@ def diferenciacion_numerica_tres_puntos(funcion, puntoInicial, h, tablaValores):
 
         # primer error
         listaResultados.append(
-            abs((valor_verdadero-valor_apro1)/valor_verdadero))
-        listaResultados.append(listaResultados[2]*100)
+            abs((valor_verdadero-valor_apro1)/valor_verdadero))  # Relativo
+        listaSalidaFinal.append(
+            "Primer error relativo: "+str((valor_verdadero-valor_apro1)/valor_verdadero)+"\n")
+
+        listaResultados.append(listaResultados[2]*100)  # Porcentual
+        listaSalidaFinal.append(
+            "Primer error porcentual: "+str(listaResultados[2]*100)+"\n")
 
         # segundo error
         listaResultados.append(
-            abs((valor_verdadero-valor_apro2)/valor_verdadero))
-        listaResultados.append(listaResultados[4]*100)
+            abs((valor_verdadero-valor_apro2)/valor_verdadero))  # Relativo
+        listaSalidaFinal.append(
+            "Segundo error relativo: "+str((valor_verdadero-valor_apro2)/valor_verdadero)+"\n")
 
-        print(listaResultados[0])
-        print(listaResultados[1])
-        return listaResultados
+        listaResultados.append(listaResultados[4]*100)  # Porcentual
+        listaSalidaFinal.append(
+            "Segundo error porcentual: "+str(listaResultados[4]*100)+"\n")
+
+        return listaSalidaFinal
 
     else:
         lista_valores = []
@@ -346,6 +408,8 @@ def diferenciacion_numerica_tres_puntos(funcion, puntoInicial, h, tablaValores):
 
         # guardamos la primera diferencia
         listaResultados.append((numerador1)/(h*2))
+        listaSalidaFinal.append("Primer diferencia: " +
+                                str((numerador1)/(2*h))+"\n")
 
         lista_valores = []
 
@@ -363,12 +427,15 @@ def diferenciacion_numerica_tres_puntos(funcion, puntoInicial, h, tablaValores):
 
         # guardamos la segunda diferencia
         listaResultados.append((numerador1)/(h*2))
-        print(listaResultados)
-        return listaResultados
+        listaSalidaFinal.append(
+            "Segunda diferencia: "+str((numerador1)/(2*h))+"\n")
+
+        return listaSalidaFinal
 
 
 def diferenciacion_numerica_cinco_puntos(funcion, puntoInicial, h, tablaValores):
     listaResultados = []  # lista donde estaran las respuestas
+    listaSalidaFinal = []  # Lista que se mostrar en el formulario
     salida = ''
 
     if funcion != '':
@@ -381,28 +448,38 @@ def diferenciacion_numerica_cinco_puntos(funcion, puntoInicial, h, tablaValores)
             funcion, puntoInicial+2*h, 0, 0)*(-36) + evaluarFuncion(funcion, puntoInicial+3*h, 0, 0)*(16) + evaluarFuncion(funcion, puntoInicial+4*h, 0, 0)*(-3)
         # guardamos la primera diferencia
         listaResultados.append((numerador1)/(12*h))
+        listaSalidaFinal.append("Primer diferencia: " +
+                                str((numerador1)/(12*h))+"\n")
 
         numerador1 = evaluarFuncion(funcion, puntoInicial-h, 0, 0)*(-3) + evaluarFuncion(funcion, puntoInicial, 0, 0)*(-10) + evaluarFuncion(
             funcion, puntoInicial+h, 0, 0)*(18) + evaluarFuncion(funcion, puntoInicial+2*h, 0, 0)*(-6) + evaluarFuncion(funcion, puntoInicial+3*h, 0, 0)
         # guardamos la segunda diferencia
         listaResultados.append(numerador1/(12*h))
+        listaSalidaFinal.append(
+            "Segunda diferencia: "+str(numerador1/(12*h))+"\n")
 
         numerador1 = evaluarFuncion(funcion, puntoInicial-2*h, 0, 0) + evaluarFuncion(funcion, puntoInicial-h, 0, 0) * \
             (-8) + evaluarFuncion(funcion, puntoInicial+h, 0, 0) * \
             (8) + evaluarFuncion(funcion, puntoInicial+2*h, 0, 0)*(-1)
         # guardamos la Tercera diferencia
         listaResultados.append(numerador1/(12*h))
+        listaSalidaFinal.append("Tercer diferencia: " +
+                                str(numerador1/(12*h))+"\n")
 
         numerador1 = evaluarFuncion(funcion, puntoInicial-3*h, 0, 0)*(4) + evaluarFuncion(funcion, puntoInicial+2*h, 0, 0)*(6) + evaluarFuncion(funcion, puntoInicial-h, 0, 0) * \
             (-8) + evaluarFuncion(funcion, puntoInicial, 0, 0)*(34) + evaluarFuncion(funcion,
                                                                                      puntoInicial+h, 0, 0)*(3) + evaluarFuncion(funcion, puntoInicial+2*h, 0, 0)*(34)
         # guardamos la cuarta diferencia
         listaResultados.append(numerador1/(12*h))
+        listaSalidaFinal.append("Cuarta diferencia: " +
+                                str(numerador1/(12*h))+"\n")
 
         numerador1 = evaluarFuncion(funcion, puntoInicial-4*h, 0, 0) + evaluarFuncion(funcion, puntoInicial-3*h, 0, 0)*(-3) + evaluarFuncion(
             funcion, puntoInicial-2*h, 0, 0)*(4) + evaluarFuncion(funcion, puntoInicial-h, 0, 0)*(-36) + evaluarFuncion(funcion, puntoInicial, 0, 0)*(25)
         # guardamos la quinta diferencia
         listaResultados.append(numerador1/(12*h))
+        listaSalidaFinal.append("Quinta diferencia: " +
+                                str(numerador1/(12*h))+"\n")
 
         # calculamos los errores para la primera y la segunda diferencia
         lista_errores = []
@@ -418,33 +495,52 @@ def diferenciacion_numerica_cinco_puntos(funcion, puntoInicial, h, tablaValores)
             abs((valor_verdadero-valor_apro1)/valor_verdadero))
         listaResultados.append(listaResultados[2]*100)
 
+        listaSalidaFinal.append(
+            "Primer error relativo: "+str((valor_verdadero-valor_apro1)/valor_verdadero)+"\n")
+        listaSalidaFinal.append(
+            "Primer error porcentual: "+str(listaResultados[2]*100)+"\n")
+
         # segundo error
         listaResultados.append(
             abs((valor_verdadero-valor_apro2)/valor_verdadero))
         listaResultados.append(listaResultados[4]*100)
+
+        listaSalidaFinal.append(
+            "Segundo error relativo: "+str((valor_verdadero-valor_apro2)/valor_verdadero)+"\n")
+        listaSalidaFinal.append(
+            "Segundo error porcentual: "+str(listaResultados[4]*100)+"\n")
 
         # tercer error
         listaResultados.append(
             abs((valor_verdadero-valor_apro3)/valor_verdadero))
         listaResultados.append(listaResultados[4]*100)
 
+        listaSalidaFinal.append(
+            "Tercer error relativo: "+str((valor_verdadero-valor_apro3)/valor_verdadero)+"\n")
+        listaSalidaFinal.append(
+            "Tercer error porcentual: "+str(listaResultados[4]*100)+"\n")
+
         # cuarto error
         listaResultados.append(
             abs((valor_verdadero-valor_apro4)/valor_verdadero))
         listaResultados.append(listaResultados[4]*100)
+
+        listaSalidaFinal.append(
+            "Cuarto error relativo: "+str((valor_verdadero-valor_apro4)/valor_verdadero)+"\n")
+        listaSalidaFinal.append(
+            "Cuarto error porcentual: "+str(listaResultados[4]*100)+"\n")
 
         # quinto error
         listaResultados.append(
             abs((valor_verdadero-valor_apro5)/valor_verdadero))
         listaResultados.append(listaResultados[4]*100)
 
-        print(listaResultados[0])
-        print(listaResultados[1])
-        print(listaResultados[2])
-        print(listaResultados[3])
-        print(listaResultados[4])
+        listaSalidaFinal.append(
+            "Quinto error relativo: "+str((valor_verdadero-valor_apro5)/valor_verdadero)+"\n")
+        listaSalidaFinal.append(
+            "Quinto error porcentual: "+str(listaResultados[4]*100)+"\n")
 
-        return listaResultados
+        return listaSalidaFinal
 
     else:
         lista_valores = []
@@ -494,8 +590,6 @@ def diferenciacion_numerica_cinco_puntos(funcion, puntoInicial, h, tablaValores)
                 lista_valores_5.append(lista_y[i-1])
                 lista_valores_5.append(lista_y[i])
 
-        return listaResultados
-
         # variables donde guardaremos el numerador
         numerador1 = 0
 
@@ -503,36 +597,47 @@ def diferenciacion_numerica_cinco_puntos(funcion, puntoInicial, h, tablaValores)
             48) + lista_valores[2]*(-36) + lista_valores[3]*(16) + lista_valores[4]*(-3)
         # guardamos la primera diferencia
         listaResultados.append((numerador1)/(h*12))
+        listaSalidaFinal.append("Primer diferencia: " +
+                                str((numerador1)/(12*h))+"\n")
 
         numerador1 = lista_valores_2[0]*(-3) + lista_valores_2[1]*(-10) + lista_valores_2[2]*(
             18) + lista_valores_2[3]*(-6) + lista_valores_2[4]
         # guardamos la segunda diferencia
         listaResultados.append((numerador1)/(h*12))
+        listaSalidaFinal.append("Segunda diferencia: " +
+                                str((numerador1)/(12*h))+"\n")
 
         numerador1 = lista_valores_3[0] + lista_valores_3[1] * \
             (-8) + lista_valores_3[2]*(8) + lista_valores_3[3]*(-1)
         # guardamos la tercera diferencia
         listaResultados.append((numerador1)/(h*12))
+        listaSalidaFinal.append("Tercera diferencia: " +
+                                str((numerador1)/(12*h))+"\n")
 
         numerador1 = lista_valores_4[0]*(4) + lista_valores_4[1]*(6) + lista_valores_4[2] * \
             (-8) + lista_valores_4[3]*(34) + \
             lista_valores_4[4]*(3) + lista_valores_4[5]*(34)
         # guardamos la cuarta diferencia
         listaResultados.append((numerador1)/(h*12))
+        listaSalidaFinal.append("Cuarta diferencia: " +
+                                str((numerador1)/(12*h))+"\n")
 
         numerador1 = lista_valores_5[0] + lista_valores_5[1]*(-3) + lista_valores_5[2]*(
             4) + lista_valores_5[3]*(-36) + lista_valores_5[25]
         # guardamos la quinta diferencia
         listaResultados.append((numerador1)/(h*12))
+        listaSalidaFinal.append("Quinta diferencia: " +
+                                str((numerador1)/(12*h))+"\n")
 
-        print(listaResultados)
+        return listaSalidaFinal
 
 
 # <------------- Derivadas de orden superior --------------------->
 
- ## falta ##
+# Falta
 def diferenciacion_numerica_adelante_orden_superior(funcion, puntoInicial, h, tablaValores):
     listaResultados = []  # lista donde estaran las respuestas
+    listaSalidaFinal = []  # Lista que se mostrar en el formulario
     salida = ''
 
     if funcion != '':
@@ -541,33 +646,48 @@ def diferenciacion_numerica_adelante_orden_superior(funcion, puntoInicial, h, ta
         # variables donde guardaremos el numerador
         numerador1 = 0
 
-        # <------------------ Primera doferencia ----------------------------->
+        # <------------------ Primera diferencia ----------------------------->
         numerador1 = evaluarFuncion(funcion, puntoInicial+2*h, 0, 0) + evaluarFuncion(
             funcion, puntoInicial+h, 0, 0)*(-2) + evaluarFuncion(funcion, puntoInicial, 0, 0)
         listaResultados.append((numerador1)/(h**2))
+        listaSalidaFinal.append(
+            "Primera diferencia f''(x): "+str((numerador1)/(h**2))+"\n")
 
         numerador1 = evaluarFuncion(funcion, puntoInicial+3*h, 0, 0) + evaluarFuncion(funcion, puntoInicial+2*h, 0, 0) * \
             (-3) + evaluarFuncion(funcion, puntoInicial+h, 0, 0) * \
             (3) + evaluarFuncion(funcion, puntoInicial, 0, 0)*(-1)
+
         listaResultados.append(numerador1/(h**3))
+        listaSalidaFinal.append(
+            "Primera diferencia f'''(x): "+str(numerador1/(h**3))+"\n")
 
         numerador1 = evaluarFuncion(funcion, puntoInicial+4*h, 0, 0) + evaluarFuncion(funcion, puntoInicial+3*h, 0, 0)*(-4) + evaluarFuncion(
             funcion, puntoInicial+2*h, 0, 0)*(6) + evaluarFuncion(funcion, puntoInicial+h, 0, 0)*(-4) + evaluarFuncion(funcion, puntoInicial, 0, 0)
+
         listaResultados.append(numerador1/(h**4))
+        listaSalidaFinal.append(
+            "Primera diferencia f''''(x): "+str(numerador1/(h**4))+"\n")
 
         # <------------------ Segunda diferencia ----------------------------------->
         numerador1 = evaluarFuncion(funcion, puntoInicial+3*h, 0, 0)*(-1) + evaluarFuncion(funcion, puntoInicial+2*h, 0, 0)*(
             4) + evaluarFuncion(funcion, puntoInicial+h, 0, 0)*(-5) + evaluarFuncion(funcion, puntoInicial, 0, 0)*(2)
         listaResultados.append((numerador1)/(h**2))
+        listaSalidaFinal.append(
+            "Segunda diferencia f''(x): "+str((numerador1)/(h**2))+"\n")
 
         numerador1 = evaluarFuncion(funcion, puntoInicial+4*h, 0, 0)*(-3) + evaluarFuncion(funcion, puntoInicial+3*h, 0, 0)*(14) + evaluarFuncion(
             funcion, puntoInicial+2*h, 0, 0)*(24) + evaluarFuncion(funcion, puntoInicial+h, 0, 0)*(-18) + evaluarFuncion(funcion, puntoInicial, 0, 0)*(-5)
         listaResultados.append(numerador1/(h**3))
+        listaSalidaFinal.append(
+            "Segunda diferencia f'''(x): "+str(numerador1/(h**3))+"\n")
 
         numerador1 = evaluarFuncion(funcion, puntoInicial+5*h, 0, 0)*(-2) + evaluarFuncion(funcion, puntoInicial+4*h, 0, 0)*(11) + evaluarFuncion(funcion, puntoInicial+3*h, 0, 0) * \
             (-24) + evaluarFuncion(funcion, puntoInicial+2*h, 0, 0)*(26) + evaluarFuncion(funcion,
                                                                                           puntoInicial+h, 0, 0)*(-14) + evaluarFuncion(funcion, puntoInicial, 0, 0)*(3)
+
         listaResultados.append(numerador1/(h**4))
+        listaSalidaFinal.append(
+            "Segunda diferencia f''''(x): "+str(numerador1/(h**4))+"\n")
 
         # calculamos los errores para la primera y la segunda diferencia
 
@@ -588,16 +708,22 @@ def diferenciacion_numerica_adelante_orden_superior(funcion, puntoInicial, h, ta
         listaResultados.append(
             abs((valor_verdadero-valor_apro1)/valor_verdadero))
         listaResultados.append(listaResultados[6]*100)
+        listaSalidaFinal.append(
+            "Primer diferencia primer error: "+str(listaResultados[6]*100)+"\n")
 
         # segundo error
         listaResultados.append(
             abs((valor_verdadero-valor_apro2)/valor_verdadero))
         listaResultados.append(listaResultados[8]*100)
+        listaSalidaFinal.append(
+            "Primer diferencia segundo error: "+str(listaResultados[8]*100)+"\n")
 
         # tercer error
         listaResultados.append(
             abs((valor_verdadero-valor_apro3)/valor_verdadero))
         listaResultados.append(listaResultados[10]*100)
+        listaSalidaFinal.append(
+            "Primer diferencia tercer error: "+str(listaResultados[10]*100)+"\n")
 
         # <-------------------- segunda diferencia ----------------------------->
 
@@ -605,26 +731,24 @@ def diferenciacion_numerica_adelante_orden_superior(funcion, puntoInicial, h, ta
         listaResultados.append(
             abs((valor_verdadero-valor_apro1)/valor_verdadero))
         listaResultados.append(listaResultados[12]*100)
+        listaSalidaFinal.append(
+            "Segunda diferencia primer error: "+str(listaResultados[12]*100)+"\n")
 
         # segundo error
         listaResultados.append(
             abs((valor_verdadero-valor_apro2)/valor_verdadero))
         listaResultados.append(listaResultados[14]*100)
+        listaSalidaFinal.append(
+            "Segunda diferencia segundo error: "+str(listaResultados[14]*100)+"\n")
 
         # tercer error
         listaResultados.append(
             abs((valor_verdadero-valor_apro3)/valor_verdadero))
         listaResultados.append(listaResultados[16]*100)
+        listaSalidaFinal.append(
+            "Segunda diferencia tercer error: "+str(listaResultados[16]*100)+"\n")
 
-        print(listaResultados[0])
-        print(listaResultados[1])
-        print(listaResultados[2])
-        print("\n")
-        print(listaResultados[3])
-        print(listaResultados[4])
-        print(listaResultados[5])
-
-        return listaResultados
+        return listaSalidaFinal
 
     else:
         lista_valores = []
@@ -683,33 +807,44 @@ def diferenciacion_numerica_adelante_orden_superior(funcion, puntoInicial, h, ta
         numerador1 = lista_valores[0] + \
             lista_valores[1]*(-2) + lista_valores[2]
         listaResultados.append((numerador1)/(h**2))
+        listaSalidaFinal.append(
+            "Primera diferencia f''(x): "+str((numerador1)/(h**2))+"\n")
 
         numerador1 = lista_valores[0] + lista_valores[1] * \
             (-3) + lista_valores[2]*(3) + lista_valores[3]*(-1)
         listaResultados.append((numerador1)/(h**3))
+        listaSalidaFinal.append(
+            "Primera diferencia f'''(x): "+str((numerador1)/(h**3))+"\n")
 
         numerador1 = lista_valores[0] + lista_valores[1]*(-4) + lista_valores[2]*(
             6) + lista_valores[3]*(-4) + lista_valores[4]
         listaResultados.append((numerador1)/(h**4))
+        listaSalidaFinal.append(
+            "Primera diferencia f''''(x): "+str((numerador1)/(h**4))+"\n")
 
         # <---------------- segunda diferencia ---------------------->
 
         numerador1 = lista_valores[0]*(-1) + lista_valores[1] * \
             (4) + lista_valores[2]*(-5) + lista_valores[3]*(2)
         listaResultados.append((numerador1)/(h**2))
+        listaSalidaFinal.append(
+            "Segunda diferencia f''(x): "+str((numerador1)/(h**2))+"\n")
 
         numerador1 = lista_valores[0]*(-3) + lista_valores[1]*(
             14) + lista_valores[2]*(-24) + lista_valores[3]*(18) + lista_valores[4]*(-5)
         listaResultados.append((numerador1)/(h**3))
+        listaSalidaFinal.append(
+            "Segunda diferencia f'''(x): "+str((numerador1)/(h**3))+"\n")
 
         numerador1 = lista_valores[0]*(-2) + lista_valores[1]*(11) + lista_valores[2] * \
             (-24) + lista_valores[3]*(26) + \
             lista_valores[4]*(-14) + lista_valores[5]*(3)
+
         listaResultados.append((numerador1)/(h**4))
+        listaSalidaFinal.append(
+            "Segunda diferencia f''''(x): "+str((numerador1)/(h**4))+"\n")
 
-        print(listaResultados)
-
-        return listaResultados
+        return listaSalidaFinal
 
 
 def diferenicacion_numerica_atras_orden_superior(funcion, puntoInicial, h, tablaValores):
@@ -721,10 +856,13 @@ def diferenicacion_numerica_centrales_orden_superior(funcion, puntoInicial, h, t
 
 # <------------- metodo de richardson --------------------->
 
+
 def metodo_richardson(funcion, puntoInicial, h, nivel):
 
     # lista con respuestas
     listResultados = []
+    listaSalidaFinal = []  # Lista que se mostrar en el formulario
+    listaSalidaFinal.append("Tabla richardson\n")
 
     # lista con los valores de h
     valores_h = []
@@ -739,7 +877,8 @@ def metodo_richardson(funcion, puntoInicial, h, nivel):
     # lista donde se encontrara el primer nivel
     primer_nivel = []
     for i in valores_h:
-        valor = diferenciacion_numerica_centrada(funcion, puntoInicial, i, [])
+        valor = diferenciacion_numerica_centrada(
+            funcion, puntoInicial, i, [], 1)
         primer_nivel.append(valor[1])
 
     # lista que ira cambiando de tamaño con respecto al nivel en el que se encuente
@@ -779,12 +918,23 @@ def metodo_richardson(funcion, puntoInicial, h, nivel):
 
     listResultados = matriz_con_niveles
 
-    return listResultados
+    for i in range(0, len(listResultados), 1):
+        listaSalidaFinal.append(str(listResultados[i])+"\n")
+
+    listaSalidaFinal.append(
+        "\nRespuesta: "+str(listResultados[len(listResultados)-1]))
+
+    return listaSalidaFinal
 
 # <------------- Integración numérica --------------------->
 
-def regla_del_trapecio_simple(funcion, a, b, tablaValores):
+
+# Si en el parametro formaRespuesta enviamos 0 la respuesta sera con todo el texto
+# Si enviamos 1 como parametro la respuesta sera solamente el numero
+
+def regla_del_trapecio_simple(funcion, a, b, tablaValores, formaRespuesta):
     listaResultados = []
+    listaSalidaFinal = []  # Lista que se mostrar en el formulario
 
     if funcion != '':
 
@@ -793,8 +943,12 @@ def regla_del_trapecio_simple(funcion, a, b, tablaValores):
         evaluacion = (b-a)*(numerador/2)
 
         listaResultados.append(evaluacion)
+        listaSalidaFinal.append("La respuesta es:"+str(evaluacion))
 
-        return listaResultados
+        if formaRespuesta == 0:
+            return listaSalidaFinal
+        else:
+            return listaResultados
 
     else:  # Para cuando trabajamos con puntos y no con funciones
 
@@ -805,16 +959,26 @@ def regla_del_trapecio_simple(funcion, a, b, tablaValores):
         if tamanio == 2:
             resultado = (listaX[1]-listaX[0])*((listaY[0]+listaY[1])/2)
             listaResultados.append(resultado)
-            print(listaResultados)
-            return listaResultados
+
+            listaSalidaFinal.append("La respuesta es:"+str(resultado))
+
+            if formaRespuesta == 0:
+                return listaSalidaFinal
+            else:
+                return listaResultados
 
         else:
             print("Para resolver mediante el trapecio simple solo se utilizan 2 puntos")
 
-def regla_del_trapecio_compuesta(funcion, a, b, n, tablaValores):
+# Si en el parametro formaRespuesta enviamos 0 la respuesta sera con todo el texto
+# Si enviamos 1 como parametro la respuesta sera solamente el numero
+
+
+def regla_del_trapecio_compuesta(funcion, a, b, n, tablaValores, formaRespuesta):
 
     # respuesta
     listaResultados = []
+    listaSalidaFinal = []  # Lista que se mostrar en el formulario
 
     if funcion != '':
 
@@ -839,7 +1003,12 @@ def regla_del_trapecio_compuesta(funcion, a, b, n, tablaValores):
             b-a)*((lista_evaluaciones[0] + 2*sumatoria_puntos_medios + lista_evaluaciones[n]))/(2*n)
 
         listaResultados.append(resultado)
-        return listaResultados
+        listaSalidaFinal.append("Respuesta: "+str(resultado))
+
+        if formaRespuesta == 0:
+            return listaSalidaFinal
+        else:
+            return listaResultados
 
     else:
 
@@ -857,13 +1026,19 @@ def regla_del_trapecio_compuesta(funcion, a, b, n, tablaValores):
             b-a)*(listaY[0] + 2*sumatoria_puntos_medios + listaY[tamanio])/(2*tamanio)
 
         listaResultados.append(resultado)
-        print(listaResultados)
-        return listaResultados
+        listaSalidaFinal.append("Respuesta: "+str(resultado))
+
+        if formaRespuesta == 0:
+            return listaSalidaFinal
+        else:
+            return listaResultados
+
 
 def trapecio_para_dobles_y_triples(funcion, lista_a, lista_b, n, orden_integral):
 
     # lista con respuestas
     listaResultados = []
+    listaSalidaFinal = []  # Lista que se mostrar en el formulario
 
     if orden_integral == 2:  # integral doble
         a = lista_a[0]
@@ -891,6 +1066,8 @@ def trapecio_para_dobles_y_triples(funcion, lista_a, lista_b, n, orden_integral)
         funcion_encontrada = (
             (b-a)/(2*n))*(lista_operaciones_de_evaluarX[0] + 2*valores_sumados_simplificados + lista_operaciones_de_evaluarX[n])
         print('primera funcion encontrada:  ------------> ', funcion_encontrada)
+        listaSalidaFinal.append(
+            "Primer funcion encontrada: "+str(funcion_encontrada)+"\n")
         funcion_encontrada = sp.expand(funcion_encontrada)
 
         # Se resuelve la siguiente integral con el polinomio que encontramos
@@ -917,8 +1094,11 @@ def trapecio_para_dobles_y_triples(funcion, lista_a, lista_b, n, orden_integral)
 
         resultado = (
             (b-a)/(2*n))*(lista_operaciones_de_evaluarX[0] + 2*valores_sumados + lista_operaciones_de_evaluarX[n])
-        print('valor encontrado:  ------------>', resultado)
+        #print('valor encontrado:  ------------>', resultado)
+
         listaResultados.append(resultado)
+        listaSalidaFinal.append("Respuesta: "+str(resultado))
+        return listaSalidaFinal
 
     elif orden_integral == 3:  # Integral Triple
         a = lista_a[0]
@@ -947,7 +1127,8 @@ def trapecio_para_dobles_y_triples(funcion, lista_a, lista_b, n, orden_integral)
             (b-a)/(2*n))*(lista_operaciones_de_evaluarX[0] + 2*valores_sumados_simplificados + lista_operaciones_de_evaluarX[n])
         funcion_encontrada = sp.expand(funcion_encontrada)
 
-        print('primera funcion encontrada: ------------> ', funcion_encontrada)
+        listaSalidaFinal.append(
+            "Primer funcion encontrada: "+str(funcion_encontrada)+"\n")
         # Se resuelve la siguiente integral con el polinomio que encontramos
 
         a = lista_a[1]
@@ -975,7 +1156,8 @@ def trapecio_para_dobles_y_triples(funcion, lista_a, lista_b, n, orden_integral)
         funcion_encontrada_2 = (
             (b-a)/(2*n))*(lista_operaciones_de_evaluarX[0] + 2*valores_sumados_simplificados + lista_operaciones_de_evaluarX[n])
         funcion_encontrada_2 = sp.expand(funcion_encontrada_2)
-        print('segunda funcion encontrada: ------------> ', funcion_encontrada_2)
+        listaSalidaFinal.append(
+            "Segunda funcion encontrada: "+str(funcion_encontrada_2)+"\n")
 
         # Se resuelve la siguiente integral con el polinomio que encontramos
 
@@ -1002,14 +1184,17 @@ def trapecio_para_dobles_y_triples(funcion, lista_a, lista_b, n, orden_integral)
         resultado = (
             (b-a)/(2*n))*(lista_operaciones_de_evaluarX[0] + 2*valores_sumados + lista_operaciones_de_evaluarX[n])
         listaResultados.append(resultado)
-        print('valor encontrado: ------------> ', resultado)
-        return listaResultados
+        #print('valor encontrado: ------------> ', resultado)
+        listaSalidaFinal.append("Respuesta: "+str(resultado))
+        return listaSalidaFinal
+
 
 def integracion_simpson_unTercio_simple(funcion, a, b, listaX, listaY):
 
     # Variables a utilizar
     puntoMedio = (a + b)/2
     respuesta = 0
+    listaSalidaFinal = []  # Lista que se mostrar en el formulario
 
     # Si el usuario solo digito una funcion se realiza por el if:
     if funcion != "":
@@ -1021,9 +1206,10 @@ def integracion_simpson_unTercio_simple(funcion, a, b, listaX, listaY):
 
         # Realizamos la formula de integracion de simpson
         respuesta = (b-a)*((funcion_Evaludad_En_A +
-                           (4*funcion_Evaludad_En_PM)+funcion_Evaludad_En_B)/6)
+                            (4*funcion_Evaludad_En_PM)+funcion_Evaludad_En_B)/6)
 
-        return respuesta
+        listaSalidaFinal.append("Respuesta: "+str(respuesta))
+        return listaSalidaFinal
 
     # Si el usuario digito los valores de la tabla se realiza el else:
     else:
@@ -1031,11 +1217,14 @@ def integracion_simpson_unTercio_simple(funcion, a, b, listaX, listaY):
         respuesta = (listaX[2]-listaX[0]
                      )((listaY[0]+(4*listaY[1])+listaY[2])/6)
 
-        return respuesta
+        listaSalidaFinal.append("Respuesta: "+str(respuesta))
+        return listaSalidaFinal
+
 
 def integracion_simpson_unTercio_compuesta(funcion, a, b, n_Intervalos, valoresX, valoresY):
 
     # Variables a utilizar
+    listaSalidaFinal = []
     h = (b - a)/n_Intervalos  # Distanca de separacion entre punto y punto
     listaX = []  # Aqui guardaremos todos los x
     lista_Puntos_Medios = []
@@ -1091,8 +1280,8 @@ def integracion_simpson_unTercio_compuesta(funcion, a, b, n_Intervalos, valoresX
         respuesta = (b-a)*((listaX[0]+(4*sumatoria_Fx_Medios) +
                            (2*sumatoria_Fx)+listaX[len(listaX)-1])/(6*n_Intervalos))
 
-        print(respuesta)
-        return respuesta
+        listaSalidaFinal.append("Respuesta: "+str(respuesta))
+        return listaSalidaFinal
 
     else:
         # Hacemos la suma de todos los f(x) de los x
@@ -1117,12 +1306,14 @@ def integracion_simpson_unTercio_compuesta(funcion, a, b, n_Intervalos, valoresX
         respuesta = (b-a)*((valoresX[0]+(4*sumatoria_Fx_Medios) +
                             (2*sumatoria_Fx)+valoresX[len(valoresX)-1])/(6*n_Intervalos))
 
-        print(respuesta)
-        return respuesta
+        listaSalidaFinal.append("Respuesta: "+str(respuesta))
+        return listaSalidaFinal
+
 
 def integracion_simpson_tresOctavos_simple(funcion, a, b):
     # Variables a utilizar
     respuesta = 0
+    listaSalidaFinal = []
     h = (b - a)/3
     listaX = []
 
@@ -1138,8 +1329,9 @@ def integracion_simpson_tresOctavos_simple(funcion, a, b):
                             (3*evaluarFuncion(funcion, listaX[2], 0, 0)) +
                             (evaluarFuncion(funcion, listaX[3], 0, 0)))/8)
 
-        print(respuesta)
-        return respuesta
+        listaSalidaFinal.append("Respuesta: "+str(respuesta))
+        return listaSalidaFinal
+
 
 def integracion_simpson_tresOctavos_compuesta(funcion, a, b, n_Intervalos):
     # Variables a utilizar
@@ -1153,6 +1345,7 @@ def integracion_simpson_tresOctavos_compuesta(funcion, a, b, n_Intervalos):
     # aqui sumaremos todos los f(x) de los subindices
     sumatoria_Fx_Subindices = 0
     respuesta = 0
+    listaSalidaFinal = []
 
     if funcion != "":
 
@@ -1184,13 +1377,15 @@ def integracion_simpson_tresOctavos_compuesta(funcion, a, b, n_Intervalos):
                                               2*sumatoria_Fx +
                                               evaluarFuncion(funcion, listaX[len(listaX)-1], 0, 0))
 
-        print(respuesta)
-        return respuesta
+        listaSalidaFinal.append("Respuesta: "+str(respuesta))
+        return listaSalidaFinal
+
 
 def integracion_rosemberg(funcion, a, b, nivel):
 
     # lista con respuestas
     listaResultados = []
+    listaSalidaFinal = []
 
     # lista donde se encontrara el primer nivel
     primer_nivel = []
@@ -1198,10 +1393,10 @@ def integracion_rosemberg(funcion, a, b, nivel):
 
     for i in range(0, nivel, 1):
         if i == 0:
-            valor = regla_del_trapecio_simple(funcion, a, b, [])
+            valor = regla_del_trapecio_simple(funcion, a, b, [], 1)
             primer_nivel.append((valor[0]).evalf())
         else:
-            valor = regla_del_trapecio_compuesta(funcion, a, b, n, [])
+            valor = regla_del_trapecio_compuesta(funcion, a, b, n, [], 1)
             primer_nivel.append(valor[0].evalf())
             n += 2
 
@@ -1241,14 +1436,20 @@ def integracion_rosemberg(funcion, a, b, nivel):
             contador_nivel += 1
 
     listaResultados = matriz_con_niveles
-    for i in listaResultados:
-        print(i)
 
-    return listaResultados
+    listaSalidaFinal.append("Tabla rosemberg:\n")
+
+    listaSalidaFinal.append(matriz_con_niveles)
+    listaSalidaFinal.append("\nRespuesta final: " +
+                            str(matriz_con_niveles[len(matriz_con_niveles)-1]))
+
+    return listaSalidaFinal
+
 
 def integracion_cuadratura_Gaussiana(funcion, a, b, n):
     # cada sub-lista va a representar un punto
     listaResultado = []
+    listaSalidaFinal = []
     lista_Wk = [[2], [1, 1], [0.555556, 0.888889, 0.555556], [0.347855, 0.652145, -0.652145, -
                                                               0.347855], [0.236927, 0.478629, 0.568889, 0.478629, 0.236927], [], [], [], [], [], [], []]
 
@@ -1266,16 +1467,19 @@ def integracion_cuadratura_Gaussiana(funcion, a, b, n):
 
     resultado = resultado*(b-a)/2
 
-    print(resultado)
+    listaSalidaFinal("Respuesta: "+str(resultado))
     listaResultado.append(resultado)
-    return listaResultado
+    return listaSalidaFinal
 
 # Creo que como funcion aparte es inecesaria pero xd luego se puede integrar al metodo
+
+
 def evaluar_formula_Simpson_adapatativo(a, b, funcion):
     puntoS = []
     puntoS = ((b-a)/6)*(evaluarFuncion(funcion, a, 0, 0)+evaluarFuncion(funcion,
                                                                         b, 0, 0) + (4 * evaluarFuncion(funcion, ((a+b)/2), 0, 0)))
     return puntoS
+
 
 def integracion_simpson_unTercio_adaptativo(tolerancia, a, b, funcion):
     ListaResultados = []  # Aca irá respuesta final
@@ -1377,6 +1581,7 @@ def integracion_simpson_unTercio_adaptativo(tolerancia, a, b, funcion):
 
     return ListaResultados
 
+
 def integracion_Boole(a, b, funcion):
 
     listaResultados = []
@@ -1391,6 +1596,7 @@ def integracion_Boole(a, b, funcion):
         12*evaluarFuncion(funcion, puntos[2], 0, 0))+(32*evaluarFuncion(funcion, puntos[3], 0, 0))+(7*evaluarFuncion(funcion, puntos[4], 0, 0)))
 
     return listaResultados
+
 
 #-------------------------PRUEBA INTEGRACION SIMPSON  1/3 ADAPTATIVO CON ARBOL BINARIO-----------------------------------------#
 
