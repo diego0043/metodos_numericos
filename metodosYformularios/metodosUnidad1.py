@@ -133,7 +133,7 @@ def metodo7(punto,cifras):
 
     return listaResultados
 
-def metodo7(punto,cifras):
+def metodo8(punto,cifras):
     listaResultados = []
     salida = 0
     valorAnterior = 0

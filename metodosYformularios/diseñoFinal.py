@@ -202,7 +202,7 @@ class Ui_MainWindow(object):
         self.comboBox.activated[str].connect(self.cambiar_metodos_cmb2)
 
         self.comboBox_3 = QtWidgets.QComboBox(self.centralwidget)
-        self.comboBox_3.setGeometry(QtCore.QRect(440, 80, 70, 26))
+        self.comboBox_3.setGeometry(QtCore.QRect(460, 80, 70, 26))
         self.comboBox_3.setObjectName("comboBox_3")
         self.comboBox_3.setStyleSheet("QComboBox{\n""background-color: rgb(242, 242, 242);\n""border-radius: 5px;\n""border: 2px solid rgb(232, 137, 137);\n""padding: 5px;\n""padding-left: 10px;\n""color: rgb(216, 55, 55)\n""}\n""QComboBox:hover{\n""border: 2px solid rgb(216, 55, 55);\n""border_left-color: rgb(215,55,55);\n""}\n""QComboBox::drop-down {\n""subcontrol-origin: padding;\n""subcontrol-position: top right;\n""width: 25px; \n""border-left-width: 3px;\n""border-left-color: rgb(232, 137, 137);\n""border-left-style: solid;\n""border-top-right-radius: 3px;\n""border-bottom-right-radius: 3px;    \n""background-image: url(recursos/row_baja.png);\n""background-position: center;\n""background-repeat: no-reperat;\n"" }\n""QComboBox QAbstractItemView {\n""color: rgb(216, 55, 55);    \n""background-color: rgb(242, 242, 242);\n""padding: 5px;\n""selection-background-color: rgb(232, 137 , 137);\n""}\n""")
         self.comboBox_3.addItem("")
@@ -434,7 +434,7 @@ class Ui_MainWindow(object):
         font.setWeight(75)
 
         self.label_ver_tabla = QtWidgets.QLabel(self.centralwidget)
-        self.label_ver_tabla.setGeometry(QtCore.QRect(440, 45, 150, 16))
+        self.label_ver_tabla.setGeometry(QtCore.QRect(460, 45, 150, 16))
         self.label_ver_tabla.setObjectName("label_ver_tabla")
         self.label_ver_tabla.setFont(font)
         self.label_ver_tabla.setStyleSheet("color: rgb(134, 155, 208);")
@@ -673,6 +673,31 @@ class Ui_MainWindow(object):
         self.n_dobles.setText("")
         self.n_dobles.setObjectName("n_dobles")
 
+
+        #Widget para las integrales normales 
+        self.lbl_integral_normal = QtWidgets.QLabel(self.centralwidget)
+        self.lbl_integral_normal.setGeometry(QtCore.QRect(160, 165, 25, 50))
+        self.lbl_integral_normal.setStyleSheet(
+            "background-image: url(recursos/integral.png);")
+        self.lbl_integral_normal.setText("")
+        self.lbl_integral_normal.setObjectName("lbl_integral_normal")
+
+        self.b0_normal = QtWidgets.QLineEdit(self.centralwidget)
+        self.b0_normal.setGeometry(QtCore.QRect(190, 145, 21, 20))
+        self.b0_normal.setFont(font)
+        self.b0_normal.setStyleSheet(
+            "border: 1px solid;\n""border-color: rgb(240, 240, 240);\n""border-bottom-color: rgb(232, 137, 137);\n""color: rgb(232, 137, 137);\n""\n""")
+        self.b0_normal.setText("")
+        self.b0_normal.setObjectName("b0_normal")
+
+        self.a0_normal = QtWidgets.QLineEdit(self.centralwidget)
+        self.a0_normal.setGeometry(QtCore.QRect(150, 222, 21, 20))
+        self.a0_normal.setFont(font)
+        self.a0_normal.setStyleSheet(
+            "border: 1px solid;\n""border-color: rgb(240, 240, 240);\n""border-bottom-color: rgb(232, 137, 137);\n""color: rgb(232, 137, 137);\n""\n""")
+        self.a0_normal.setText("")
+        self.a0_normal.setObjectName("a0_normal")
+
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
@@ -843,6 +868,9 @@ class Ui_MainWindow(object):
         self.cmb_doble_triple.setVisible(False)
         self.n_dobles.setVisible(False)
         self.lbl_n.setVisible(False)
+        self.lbl_integral_normal.setVisible(False)
+        self.a0_normal.setVisible(False)
+        self.b0_normal.setVisible(False)
 
     # En este metodo vamos a capturar la posicion del primer combobox y luego dependiendo
     # de cual este seleccionado asi se llenara el otro combobox
@@ -1016,7 +1044,7 @@ class Ui_MainWindow(object):
             self.lineEdit_5.setVisible(False)
 
         elif cual == 3:  # metodos de la unidad 4
-            self.comboBox_2.setGeometry(QtCore.QRect(200, 80, 200, 26))
+            self.comboBox_2.setGeometry(QtCore.QRect(200, 80, 230, 26))
 
             # Siempre limpiamos el combobox para evitar duplicados o cosas raras
             self.comboBox_2.clear()
@@ -1108,8 +1136,10 @@ class Ui_MainWindow(object):
             self.tableWidget_2.setVisible(False)
             self.pushButton_5.setVisible(False)
             self.pushButton_6.setVisible(False)
+            self.lineEdit_6.setVisible(False)
+            self.label_14.setVisible(False)
 
-            if metodo >= 2:
+            if metodo == 2:
                 self.funcion_uni4.setVisible(True)
                 self.puntoInicial_uni4.setVisible(True)
                 self.h_uni4.setVisible(True)
@@ -1117,7 +1147,7 @@ class Ui_MainWindow(object):
                 self.label_puntoInicial_uni4.setVisible(True)
                 self.label_h_uni4.setVisible(True)
 
-            elif metodo >= 3:
+            elif metodo == 3:
                 self.funcion_uni4.setVisible(True)
                 self.puntoInicial_uni4.setVisible(True)
                 self.h_uni4.setVisible(True)
@@ -1125,7 +1155,7 @@ class Ui_MainWindow(object):
                 self.label_puntoInicial_uni4.setVisible(True)
                 self.label_h_uni4.setVisible(True)
 
-            elif metodo >= 4:
+            elif metodo == 4:
                 self.funcion_uni4.setVisible(True)
                 self.puntoInicial_uni4.setVisible(True)
                 self.h_uni4.setVisible(True)
@@ -1133,7 +1163,7 @@ class Ui_MainWindow(object):
                 self.label_puntoInicial_uni4.setVisible(True)
                 self.label_h_uni4.setVisible(True)
 
-            elif metodo >= 5:
+            elif metodo == 5:
                 self.funcion_uni4.setVisible(True)
                 self.puntoInicial_uni4.setVisible(True)
                 self.h_uni4.setVisible(True)
@@ -1141,7 +1171,7 @@ class Ui_MainWindow(object):
                 self.label_puntoInicial_uni4.setVisible(True)
                 self.label_h_uni4.setVisible(True)
 
-            elif metodo >= 6:
+            elif metodo == 6:
                 self.funcion_uni4.setVisible(True)
                 self.puntoInicial_uni4.setVisible(True)
                 self.h_uni4.setVisible(True)
@@ -1149,7 +1179,7 @@ class Ui_MainWindow(object):
                 self.label_puntoInicial_uni4.setVisible(True)
                 self.label_h_uni4.setVisible(True)
 
-            if metodo >= 8:
+            if metodo == 8:
                 self.funcion_uni4.setVisible(True)
                 self.puntoInicial_uni4.setVisible(True)
                 self.h_uni4.setVisible(True)
@@ -1157,7 +1187,7 @@ class Ui_MainWindow(object):
                 self.label_puntoInicial_uni4.setVisible(True)
                 self.label_h_uni4.setVisible(True)
 
-            elif metodo >= 9:
+            elif metodo == 9:
                 self.funcion_uni4.setVisible(True)
                 self.puntoInicial_uni4.setVisible(True)
                 self.h_uni4.setVisible(True)
@@ -1165,7 +1195,7 @@ class Ui_MainWindow(object):
                 self.label_puntoInicial_uni4.setVisible(True)
                 self.label_h_uni4.setVisible(True)
 
-            elif metodo >= 10:
+            elif metodo == 10:
                 self.funcion_uni4.setVisible(True)
                 self.puntoInicial_uni4.setVisible(True)
                 self.h_uni4.setVisible(True)
@@ -1174,20 +1204,35 @@ class Ui_MainWindow(object):
                 self.label_h_uni4.setVisible(True)
 
             elif metodo == 13:
+                self.lbl_integral_normal.setVisible(True)
+                self.a0_normal.setVisible(True)
+                self.b0_normal.setVisible(True)
                 self.funcion_uni4.setVisible(True)
 
             elif metodo == 14:
+                self.label_puntoInicial_uni4.setText('n: ')
                 self.label_puntoInicial_uni4.setVisible(True)
                 self.puntoInicial_uni4.setVisible(True)
                 self.funcion_uni4.setVisible(True)
+                self.lbl_integral_normal.setVisible(True)
+                self.a0_normal.setVisible(True)
+                self.b0_normal.setVisible(True)
 
             elif metodo == 16:
                 self.funcion_uni4.setVisible(True)
+                self.lbl_integral_normal.setVisible(True)
+                self.a0_normal.setVisible(True)
+                self.b0_normal.setVisible(True)
+
 
             elif metodo == 17:
+                self.label_puntoInicial_uni4.setText('n: ')
                 self.label_puntoInicial_uni4.setVisible(True)
                 self.puntoInicial_uni4.setVisible(True)
                 self.funcion_uni4.setVisible(True)
+                self.lbl_integral_normal.setVisible(True)
+                self.a0_normal.setVisible(True)
+                self.b0_normal.setVisible(True)
 
         elif si_o_no == 1:
             global cuantasFilasYColumnas
@@ -1202,7 +1247,11 @@ class Ui_MainWindow(object):
             self.label_h_uni4.setVisible(False)
             tabla_unidad4_si_no = 1
             self.lineEdit_6.setVisible(True)
+            self.label_14.setText('X0 :')
             self.label_14.setVisible(True)
+            self.lbl_integral_normal.setVisible(False)
+            self.a0_normal.setVisible(False)
+            self.b0_normal.setVisible(False)
 
     def control_integral_doble_triple(self):
         doble_o_triple = self.cmb_doble_triple.currentIndex()
@@ -1210,12 +1259,17 @@ class Ui_MainWindow(object):
             self.funcion_txt.setVisible(True)
             self.lbl_integral1.setVisible(True)
             self.lbl_integral2.setVisible(True)
+            self.lbl_integral3.setVisible(False)
             self.a0.setVisible(True)
             self.a1.setVisible(True)
+            self.a2.setVisible(False)
             self.b0.setVisible(True)
             self.b1.setVisible(True)
+            self.b2.setVisible(False)
             self.diff1.setVisible(True)
             self.diff2.setVisible(True)
+            self.diff3.setVisible(False)
+
         elif doble_o_triple == 1:
             self.funcion_txt.setVisible(True)
             self.lbl_integral1.setVisible(True)
@@ -1275,6 +1329,14 @@ class Ui_MainWindow(object):
         self.diff1.setVisible(False)
         self.diff2.setVisible(False)
         self.diff3.setVisible(False)
+        self.lbl_integral_normal.setVisible(False)
+        self.a0_normal.setVisible(False)
+        self.b0_normal.setVisible(False)
+        self.label_ver_tabla.setVisible(False)
+        self.label_14.setText('Evaluar en')
+        self.label_puntoInicial_uni4.setText("Punto Inicial")
+        self.lbl_cmb.setVisible(False)
+        self.cmb_doble_triple.setVisible(False)
 
         if queUnidad == 0:  # unidad 1
 
@@ -1567,33 +1629,55 @@ class Ui_MainWindow(object):
 
             elif queMetodo == 18:
                 self.funcion_uni4.setVisible(True)
+                self.lbl_integral_normal.setVisible(True)
+                self.a0_normal.setVisible(True)
+                self.b0_normal.setVisible(True)
 
             elif queMetodo == 19:
+                self.label_puntoInicial_uni4.setText('n: ')
                 self.funcion_uni4.setVisible(True)
                 self.label_puntoInicial_uni4.setVisible(True)
                 self.puntoInicial_uni4.setVisible(True)
+                self.lbl_integral_normal.setVisible(True)
+                self.a0_normal.setVisible(True)
+                self.b0_normal.setVisible(True)
 
             elif queMetodo == 20:
+                self.label_puntoInicial_uni4.setText('nivel: ')
                 self.funcion_uni4.setVisible(True)
                 self.label_puntoInicial_uni4.setVisible(True)
                 self.puntoInicial_uni4.setVisible(True)
+                self.lbl_integral_normal.setVisible(True)
+                self.a0_normal.setVisible(True)
+                self.b0_normal.setVisible(True)
 
             elif queMetodo == 21:
+                self.label_puntoInicial_uni4.setText('n: ')
                 self.funcion_uni4.setVisible(True)
                 self.label_puntoInicial_uni4.setVisible(True)
                 self.puntoInicial_uni4.setVisible(True)
+                self.lbl_integral_normal.setVisible(True)
+                self.a0_normal.setVisible(True)
+                self.b0_normal.setVisible(True)
 
             elif queMetodo == 22:
+                self.label_puntoInicial_uni4.setText('Tolerancia: ')
                 self.funcion_uni4.setVisible(True)
                 self.label_puntoInicial_uni4.setVisible(True)
                 self.puntoInicial_uni4.setVisible(True)
+                self.lbl_integral_normal.setVisible(True)
+                self.a0_normal.setVisible(True)
+                self.b0_normal.setVisible(True)
 
             elif queMetodo == 23:
                 self.funcion_uni4.setVisible(True)
+                self.lbl_integral_normal.setVisible(True)
+                self.a0_normal.setVisible(True)
+                self.b0_normal.setVisible(True)
             else:
                 self.comboBox_2.setCurrentIndex(0)
-                self.label_ver_tabla.setVisible(False)
-                self.comboBox_3.setVisible(False)
+                self.label_ver_tabla.setVisible(True)
+                self.comboBox_3.setVisible(True)
 
     # Metodos que controlan las tablas ó que trabajan con las tablas
     def creacion_tabla_por_defecto_unidad3(self, columnas, si_es_hermite):

@@ -122,7 +122,7 @@ def diferenciacion_numerica_adelante(funcion, puntoInicial, h, tablaValores):
         numerador1 = 0
 
         numerador1 = lista_valores[0] * \
-            (-1) + lista_valores[1]*(4) + lista_valores[-3]
+            (-1) + lista_valores[1]*(4) + lista_valores[2]*(-3)
 
         # guardamos la segunda diferencia
         listaResultados.append((numerador1)/(h*2))
@@ -779,6 +779,7 @@ def metodo_richardson(funcion, puntoInicial, h, nivel):
 
     listResultados = matriz_con_niveles
 
+    print(listResultados)
     return listResultados
 
 # <------------- Integración numérica --------------------->
@@ -1396,14 +1397,12 @@ def integracion_Boole(a, b, funcion):
 
 # Definiendo nodo y arbol
 
-
 class Nodo:
     def __init__(self, dato):
         # "dato" puede ser de cualquier tipo, incluso un objeto si se sobrescriben los operadores de comparación
         self.dato = dato
         self.izquierda = None
         self.derecha = None
-
 
 class Arbol:
     # Funciones privadas
@@ -1472,3 +1471,5 @@ class Arbol:
 
     def buscar(self, busqueda):
         return self.__buscar(self.raiz, busqueda)
+
+metodo_richardson('ln(x)',0.7,0.1,5)
