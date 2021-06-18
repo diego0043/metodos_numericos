@@ -1490,7 +1490,7 @@ class Ui_MainWindow(object):
                 self.lineEdit_3.setVisible(False)
                 self.label_5.setVisible(False)
 
-            elif queMetodo >= 7 and queMetodo <= 8:
+            elif queMetodo == 7:
                 # <---- dejamos solo los componentes que usa metodo de cero de polinomios --->
                 self.label_4.setText("#1")
                 self.label_5.setText("#2")
@@ -1506,6 +1506,17 @@ class Ui_MainWindow(object):
                 self.lineEdit_3.setVisible(False)
                 self.lineEdit_4.setVisible(False)
                 self.lineEdit_5.setVisible(False)
+            elif queMetodo == 8:
+
+                self.label_4.setText("#1")
+                self.label_4.setVisible(True)
+                self.lineEdit_2.setVisible(True)
+                self.lineEdit_5.setVisible(True)
+                self.label_5.setVisible(False)
+                self.label_6.setVisible(False)
+                self.label_7.setVisible(True)
+                self.lineEdit.setVisible(True)
+                self.label_2.setVisible(True)
 
             elif queMetodo == 9:
 
@@ -1525,7 +1536,7 @@ class Ui_MainWindow(object):
 
             elif queMetodo == 10:
 
-                # <---- dejamos solo los componentes que usa metodo muller -->
+                # <---- dejamos solo los componentes que usa metodo baristown -->
                 self.label_4.setText("R")
                 self.label_5.setText("S")
                 self.label_4.setVisible(True)
@@ -2141,9 +2152,9 @@ class Ui_MainWindow(object):
             else:
                 print("Intento ingresar una función mayor a x^4 o menor a x^1")
 
-        # tabla Horder
+        # tabla Horner
         elif metodo == 8:
-            lista_Coeficientes = metodos.coefs(self.lineEdiit.text())
+            lista_Coeficientes = metodos.coefs(self.lineEdit.text())
             lst = metodos.metodoHorner(
                 lista_Coeficientes, x1Prueba, cifrasPrueba)
 
