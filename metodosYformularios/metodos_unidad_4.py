@@ -1462,8 +1462,7 @@ def integracion_cuadratura_Gaussiana(funcion, a, b, n):
 
 def evaluar_formula_Simpson_adapatativo(a, b, funcion):
     puntoS = []
-    puntoS = ((b-a)/6)*(evaluarFuncion(funcion, a, 0, 0)+evaluarFuncion(funcion,
-                                                                        b, 0, 0) + (4 * evaluarFuncion(funcion, ((a+b)/2), 0, 0)))
+    puntoS = ((b-a)/6)*(evaluarFuncion(funcion, a, 0, 0)+evaluarFuncion(funcion,b, 0, 0) + (4 * evaluarFuncion(funcion, ((a+b)/2), 0, 0)))
     return puntoS
 
 def integracion_simpson_unTercio_adaptativo(tolerancia, a, b, funcion):
@@ -1581,81 +1580,3 @@ def integracion_Boole(a, b, funcion):
     salida.append(listaResultados)
     return salida
 
-#-------------------------PRUEBA INTEGRACION SIMPSON  1/3 ADAPTATIVO CON ARBOL BINARIO-----------------------------------------#
-
-# Definiendo nodo y arbol
-
-class Nodo:
-    def __init__(self, dato):
-        # "dato" puede ser de cualquier tipo, incluso un objeto si se sobrescriben los operadores de comparación
-        self.dato = dato
-        self.izquierda = None
-        self.derecha = None
-
-class Arbol:
-    # Funciones privadas
-    def __init__(self, dato):
-        self.raiz = Nodo(dato)
-
-    def __agregar_recursivo(self, nodo, dato):
-        if dato < nodo.dato:
-            if nodo.izquierda is None:
-                nodo.izquierda = Nodo(dato)
-            else:
-                self.__agregar_recursivo(nodo.izquierda, dato)
-        else:
-            if nodo.derecha is None:
-                nodo.derecha = Nodo(dato)
-            else:
-                self.__agregar_recursivo(nodo.derecha, dato)
-
-    def __inorden_recursivo(self, nodo):
-        if nodo is not None:
-            self.__inorden_recursivo(nodo.izquierda)
-            print(nodo.dato, end=", ")
-            self.__inorden_recursivo(nodo.derecha)
-
-    def __preorden_recursivo(self, nodo):
-        if nodo is not None:
-            print(nodo.dato, end=", ")
-            self.__preorden_recursivo(nodo.izquierda)
-            self.__preorden_recursivo(nodo.derecha)
-
-    def __postorden_recursivo(self, nodo):
-        if nodo is not None:
-            self.__postorden_recursivo(nodo.izquierda)
-            self.__postorden_recursivo(nodo.derecha)
-            print(nodo.dato, end=", ")
-
-    def __buscar(self, nodo, busqueda):
-        if nodo is None:
-            return None
-        if nodo.dato == busqueda:
-            return nodo
-        if busqueda < nodo.dato:
-            return self.__buscar(nodo.izquierda, busqueda)
-        else:
-            return self.__buscar(nodo.derecha, busqueda)
-
-    # Funciones públicas
-
-    def agregar(self, dato):
-        self.__agregar_recursivo(self.raiz, dato)
-
-    def inorden(self):
-        print("Imprimiendo árbol inorden: ")
-        self.__inorden_recursivo(self.raiz)
-        print("")
-
-    def preorden(self):
-        print("Imprimiendo árbol preorden: ")
-        self.__preorden_recursivo(self.raiz)
-        print("")
-
-    def postorden(self):
-        print("Imprimiendo árbol postorden: ")
-        self.__postorden_recursivo(self.raiz)
-        print("")
-
-    def buscar(self, busqueda):
-        return self.__buscar(self.raiz, busqueda)
