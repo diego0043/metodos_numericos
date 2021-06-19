@@ -4,12 +4,12 @@ from PyQt5.QtCore import Qt, QRegExp
 from PyQt5.QtWidgets import (QApplication, QDialog, QPushButton, QTableWidget, QTableWidgetItem,
                              QAbstractItemView, QHeaderView, QMenu, QActionGroup, QAction, QMessageBox)
 from PyQt5 import *
-from PySide2 import QtCore, QtGui, QtWidgets
-from PySide2.QtCore import (QCoreApplication, QPropertyAnimation, QDate, QDateTime,
+from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtCore import (QCoreApplication, QPropertyAnimation, QDate, QDateTime,
                             QMetaObject, QObject, QPoint, QRect, QSize, QTime, QUrl, Qt, QEvent)
-from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont, QFontDatabase,
+from PyQt5.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont, QFontDatabase,
                            QIcon, QKeySequence, QLinearGradient, QPalette, QPainter, QPixmap, QRadialGradient)
-from PySide2.QtWidgets import *
+from PyQt5.QtWidgets import *
 from sympy.core.evalf import pure_complex
 from sympy.core.symbol import symbols
 
@@ -18,6 +18,8 @@ from metodosYformularios import *
 import metodosYformularios.metodos_Unidad_2y3 as metodos
 import metodosYformularios.metodos_unidad_4 as metodos_uni4
 import metodosYformularios.metodosUnidad1 as metodos_uni1
+
+from metodosYformularios.mensajesUi import Ui_Mensajes
 
 
 import matplotlib.pyplot as plt
@@ -41,8 +43,17 @@ posicionX = 1
 posicionY = 1
 cuantasFilasYColumnas = 3
 
-# Dentro de esta clase declaramos todos nuestros componentes
+class Mensajes_error(QMainWindow):
+    def __init__(self):
+        QMainWindow.__init__(self)
+        self.ui = Ui_Mensajes()
+        self.ui.setupUi(self)
 
+        self.ui.btnAceptar.clicked.connect(self.close)
+        self.ui.btnClose.clicked.connect(self.close)
+
+        def close(self):
+            self.close()
 
 class Ui_MainWindow(object):
 
@@ -71,7 +82,7 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         self.label_10 = QtWidgets.QLabel(self.frame)
-        self.label_10.setGeometry(QtCore.QRect(5, 8, 200, 16))
+        self.label_10.setGeometry(QtCore.QRect(5, 8, 400, 16))
         self.label_10.setObjectName("label_10")
         self.label_10.setFont(font)
         self.label_10.setStyleSheet("color: rgb(134, 155, 208);")
@@ -843,6 +854,7 @@ class Ui_MainWindow(object):
         self.nivel_uni4.setVisible(False)
         self.label_nivel_uni4.setVisible(False)
         self.cajaTexto.setVisible(False)
+        self.tableWidget.setVisible(False)
 
         self.funcion_txt.setVisible(False)
         self.lbl_integral1.setVisible(False)
@@ -894,9 +906,29 @@ class Ui_MainWindow(object):
         self.label_h_uni4.setVisible(False)
         self.tableWidget.setVisible(True)
         self.cajaTexto.setVisible(False)
+        self.funcion_txt.setVisible(False)
+        self.lbl_integral1.setVisible(False)
+        self.lbl_integral2.setVisible(False)
+        self.lbl_integral3.setVisible(False)
+        self.a0.setVisible(False)
+        self.a1.setVisible(False)
+        self.a2.setVisible(False)
+        self.b0.setVisible(False)
+        self.b1.setVisible(False)
+        self.b2.setVisible(False)
+        self.diff1.setVisible(False)
+        self.diff2.setVisible(False)
+        self.diff3.setVisible(False)
+        self.lbl_cmb.setVisible(False)
+        self.cmb_doble_triple.setVisible(False)
+        self.tableWidget.setVisible(False)
+        self.tableWidget.setColumnCount(0)
+        self.tableWidget.setRowCount(9)
+        self.tableWidget.clear()
 
         if cual == 0:  # Metodos de la primera unidad
             self.comboBox_2.setGeometry(QtCore.QRect(200, 80, 172, 24))
+            self.label_10.setText('Series de Taylor')
 
             # Siempre limpiamos el combobox para evitar duplicados o cosas raras
             self.comboBox_2.clear()
@@ -952,6 +984,8 @@ class Ui_MainWindow(object):
 
         elif cual == 1:  # Metodos de la segunda unidad
             self.comboBox_2.setGeometry(QtCore.QRect(200, 80, 172, 24))
+            self.label_10.setText('Ecuaciones de una variable')
+
             # Siempre limpiamos el combobox para evitar duplicados o cosas raras
             self.comboBox_2.clear()
             self.comboBox_2.addItem("")
@@ -1003,6 +1037,7 @@ class Ui_MainWindow(object):
 
         elif cual == 2:  # Metodos de la unidad 3
             self.comboBox_2.setGeometry(QtCore.QRect(360, 45, 172, 24))
+            self.label_10.setText('Interpolación y aproximacion lineal')
 
             self.comboBox_2.clear()
             self.comboBox_2.addItem("")
@@ -1040,6 +1075,7 @@ class Ui_MainWindow(object):
 
         elif cual == 3:  # metodos de la unidad 4
             self.comboBox_2.setGeometry(QtCore.QRect(200, 80, 230, 26))
+            self.label_10.setText('Diferenciación e integración numérica')
 
             # Siempre limpiamos el combobox para evitar duplicados o cosas raras
             self.comboBox_2.clear()
@@ -1416,6 +1452,10 @@ class Ui_MainWindow(object):
         self.lbl_cmb.setVisible(False)
         self.cmb_doble_triple.setVisible(False)
         self.cajaTexto.setVisible(False)
+        self.tableWidget.setVisible(False)
+        self.tableWidget.setColumnCount(0)
+        self.tableWidget.setRowCount(9)
+        self.tableWidget.clear()
 
         if queUnidad == 0:  # unidad 1
 
@@ -1951,13 +1991,14 @@ class Ui_MainWindow(object):
         self.tableWidget.verticalHeader().setDefaultAlignment(QtCore.Qt.AlignHCenter)
         rows = len(lst)  # Numero de filas
         columns = len(lst[0])  # Numero de columnas
-        len_Col = int(930/columns)-5  # Tamaño que tendran las columnas
+        len_Col = int(930/columns)  # Tamaño que tendran las columnas
 
         # Aplicamos unas configuraciones a la tabla
         self.tableWidget.setColumnCount(columns)
         self.tableWidget.setRowCount(rows)
         self.tableWidget.verticalHeader().setVisible(False)
         self.tableWidget.horizontalHeader().setVisible(False)
+        self.tableWidget.setVisible(True)
 
         font = QtGui.QFont()
         font.setFamily("Segoe UI")
@@ -2025,7 +2066,7 @@ class Ui_MainWindow(object):
         funcion = self.lineEdit.text()  # función a evaluar
         cifras = self.lineEdit_5.text()  # numero de cifras significativas
 
-        # Si nos devuelven la palabra: 'falsisimo' estan malos
+        # Si nos devuelven la palabra: 'falsisimo' estan vacios
         x1Prueba = metodos.pedirValoresIniciales(x1)
         x2Prueba = metodos.pedirValoresIniciales(x2)
         x3Prueba = metodos.pedirValoresIniciales(x3)
@@ -2035,6 +2076,19 @@ class Ui_MainWindow(object):
         self.tableWidget.clear()
         self.tableWidget.setColumnCount(0)
         self.tableWidget.setRowCount(0)
+        self.tableWidget.setVisible(True)
+
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+
+        brush = QtGui.QBrush(QtGui.QColor(242, 242, 242))
+        brush.setStyle(QtCore.Qt.NoBrush)
+
+        brush_2 = QtGui.QBrush(QtGui.QColor(134, 135, 208))
+        brush_2.setStyle(QtCore.Qt.SolidPattern)
 
         # tabla de biseccion - hasta secante
         if metodo >= 1 and metodo <= 6:
@@ -2063,7 +2117,7 @@ class Ui_MainWindow(object):
             self.tableWidget.verticalHeader().setDefaultAlignment(QtCore.Qt.AlignHCenter)
             rows = len(lst)  # Numero de filas
             columns = len(lst[0])  # Numero de columnas
-            len_Col = int(930/columns)-5  # Tamaño que tendran las columnas
+            len_Col = int(930/columns) # Tamaño que tendran las columnas
 
             # Aplicamos unas configuraciones a la tabla
             self.tableWidget.setColumnCount(columns)
@@ -2074,21 +2128,29 @@ class Ui_MainWindow(object):
             for row in range(rows):  # Primer for recorre las filas en lst
                 # Segundo for recorre las columnas en lst
                 for column in range(columns):
+
+                    item = QtWidgets.QTableWidgetItem()
+                    item.setTextAlignment(QtCore.Qt.AlignCenter)
+                    item.setFont(font)
+                    item.setBackground(brush)
+                    item.setForeground(brush_2)
+                    item.setFlags(QtCore.Qt.ItemIsEditable|QtCore.Qt.ItemIsDragEnabled|QtCore.Qt.ItemIsUserCheckable)
+
                     if row == 0:  # Encabezado o header
                         salida = lst[row][column]
-                        self.tableWidget.setItem(
-                            row, column, QtWidgets.QTableWidgetItem(str(salida)))
+                        item.setText(str(salida))
+                        self.tableWidget.setItem(row, column, item)
                         self.tableWidget.setColumnWidth(column, len_Col)
                     else:
                         if column == 0:
                             salida = (lst[row][column])
-                            self.tableWidget.setItem(
-                                row, column, QtWidgets.QTableWidgetItem(str(salida)))
+                            item.setText(str(salida))
+                            self.tableWidget.setItem(row, column, item)
                             self.tableWidget.setColumnWidth(column, len_Col)
                         else:
                             salida = "%.5f" % float(lst[row][column])
-                            self.tableWidget.setItem(
-                                row, column, QtWidgets.QTableWidgetItem(str(salida)))
+                            item.setText(str(salida))
+                            self.tableWidget.setItem(row, column, item)
                             self.tableWidget.setColumnWidth(column, len_Col)
 
         # tabla de ceros de polinomios
@@ -2128,7 +2190,16 @@ class Ui_MainWindow(object):
 
                 columns = len(lst)  # Numero de columnas
                 rows = 2  # Numero de filas
-                len_Col = int(930/columns)-5  # Tamaño de cada columna
+                
+                # Controlamos el tamaño que tendra cada columna de forma variable y no estatica 
+                tamanioColumnas = 0
+                listaTamanio = []
+                contadorTamanio = 0
+                for x in range(0, columns):
+                    listaTamanio.append(len(str(lst[x]))*7)
+                    contadorTamanio += len(str(lst[x]))*7
+
+                listaTamanio.sort()
 
                 # Aplicamos unas configuraciones a la tabla
                 self.tableWidget.setColumnCount(columns)
@@ -2139,16 +2210,35 @@ class Ui_MainWindow(object):
                 for row in range(rows):  # Primer for controla las filas
                     # Segundo for controla las columnas
                     for column in range(columns):
+                        item = QtWidgets.QTableWidgetItem()
+                        item.setTextAlignment(QtCore.Qt.AlignCenter)
+                        item.setFont(font)
+                        item.setBackground(brush)
+                        item.setForeground(brush_2)
+                        item.setFlags(QtCore.Qt.ItemIsEditable|QtCore.Qt.ItemIsDragEnabled|QtCore.Qt.ItemIsUserCheckable)
                         if row == 0:  # cabezera o header
                             salida = "raiz #"+str(column+1)
-                            self.tableWidget.setItem(
-                                row, column, QtWidgets.QTableWidgetItem(str(salida)))
-                            self.tableWidget.setColumnWidth(column, len_Col)
+                            item.setText(salida)
+                            self.tableWidget.setItem(row, column, item)
+                            if contadorTamanio < 930:
+                                tamanioColumnas = float(listaTamanio[len(listaTamanio)-1])
+                                self.tableWidget.setColumnWidth(
+                                    column, tamanioColumnas)
+                            else:
+                                tamanioColumnas = len(str(lst[column]))*7
+                                self.tableWidget.setColumnWidth(
+                                    column, tamanioColumnas)
                         else:
                             salida = str(lst[column])
-                            self.tableWidget.setItem(
-                                row, column, QtWidgets.QTableWidgetItem(str(salida)))
-                            self.tableWidget.setColumnWidth(column, len_Col)
+                            item.setText(str(salida))
+                            self.tableWidget.setItem(row, column, item)
+                            if contadorTamanio < 930:
+                                tamanioColumnas = float(listaTamanio[len(listaTamanio)-1])
+                                self.tableWidget.setColumnWidth(
+                                    column, tamanioColumnas)
+                            else:
+                                tamanioColumnas = len(str(lst[column]))*7
+                                self.tableWidget.setColumnWidth(column, tamanioColumnas)
             else:
                 print("Intento ingresar una función mayor a x^4 o menor a x^1")
 
@@ -2160,7 +2250,7 @@ class Ui_MainWindow(object):
 
             rows = len(lst)  # Numero de filas
             columns = len(lst[0])  # Numero de columnas
-            len_Col = int(930/columns)-5  # Tamaño de las columnas
+            len_Col = int(930/columns)  # Tamaño de las columnas
 
             # Aplicamos unas configuraciones a la tabla
             self.tableWidget.setColumnCount(columns)
@@ -2170,21 +2260,29 @@ class Ui_MainWindow(object):
 
             for row in range(rows):  # Primer for controla las filas
                 for column in range(columns):  # Segundo for controla las columnas
+
+                    item = QtWidgets.QTableWidgetItem()
+                    item.setTextAlignment(QtCore.Qt.AlignCenter)
+                    item.setFont(font)
+                    item.setBackground(brush)
+                    item.setForeground(brush_2)
+                    item.setFlags(QtCore.Qt.ItemIsEditable|QtCore.Qt.ItemIsDragEnabled|QtCore.Qt.ItemIsUserCheckable)
+
                     if row == 0:  # header o encabezado
                         salida = lst[row][column]
-                        self.tableWidget.setItem(
-                            row, column, QtWidgets.QTableWidgetItem(str(salida)))
+                        item.setText(salida)
+                        self.tableWidget.setItem(row, column, item)
                         self.tableWidget.setColumnWidth(column, len_Col)
                     else:
                         if column == 0:
                             salida = "%.0f" % (lst[row][column])
-                            self.tableWidget.setItem(
-                                row, column, QtWidgets.QTableWidgetItem(str(salida)))
+                            item.setText(str(salida))
+                            self.tableWidget.setItem(row, column, item)
                             self.tableWidget.setColumnWidth(column, len_Col)
                         else:
                             salida = "%.5f" % float(lst[row][column])
-                            self.tableWidget.setItem(
-                                row, column, QtWidgets.QTableWidgetItem(str(salida)))
+                            item.setText(str(salida))
+                            self.tableWidget.setItem(row, column, item)
                             self.tableWidget.setColumnWidth(column, len_Col)
 
         # tabla de muller
@@ -2194,7 +2292,7 @@ class Ui_MainWindow(object):
 
             rows = len(lst)  # Numero de filas
             columns = len(lst[0])  # Numero de columnas
-            len_Col = int(930/columns)-5  # Tamaño de las columnas
+            len_Col = int(930/columns)  # Tamaño de las columnas
 
             # Aplicamos unas configuraciones a la tabla
             self.tableWidget.setColumnCount(columns)
@@ -2204,21 +2302,31 @@ class Ui_MainWindow(object):
 
             for row in range(rows):  # primer for controla las filas
                 for column in range(columns):  # Segundo for controla las columnas
+                   
+                    item = QtWidgets.QTableWidgetItem()
+                    item.setTextAlignment(QtCore.Qt.AlignCenter)
+                    item.setFont(font)
+                    item.setBackground(brush)
+                    item.setForeground(brush_2)
+                    item.setFlags(QtCore.Qt.ItemIsEditable|QtCore.Qt.ItemIsDragEnabled|QtCore.Qt.ItemIsUserCheckable)
+                    
                     if row == 0:
                         salida = lst[row][column]
-                        self.tableWidget.setItem(
-                            row, column, QtWidgets.QTableWidgetItem(str(salida)))
+                        item.setText(salida)
+                        self.tableWidget.setItem(row, column, item)
                         self.tableWidget.setColumnWidth(column, len_Col)
                     else:
                         if column == 0:
                             salida = "%.0f" % (lst[row][column])
+                            item.setText(str(salida))
                             self.tableWidget.setItem(
-                                row, column, QtWidgets.QTableWidgetItem(str(salida)))
+                                row, column, item)
                             self.tableWidget.setColumnWidth(column, len_Col)
                         else:
                             salida = "%.5f" % float(lst[row][column])
+                            item.setText(str(salida))
                             self.tableWidget.setItem(
-                                row, column, QtWidgets.QTableWidgetItem(str(salida)))
+                                row, column, item)
                             self.tableWidget.setColumnWidth(column, len_Col)
 
         # tabla de bairstown
@@ -2250,10 +2358,19 @@ class Ui_MainWindow(object):
 
             for row in range(0, 2):
                 for column in range(0, columns):
+
+                    item = QtWidgets.QTableWidgetItem()
+                    item.setTextAlignment(QtCore.Qt.AlignCenter)
+                    item.setFont(font)
+                    item.setBackground(brush)
+                    item.setForeground(brush_2)
+                    item.setFlags(QtCore.Qt.ItemIsEditable|QtCore.Qt.ItemIsDragEnabled|QtCore.Qt.ItemIsUserCheckable)
+                    
                     if row == 0:
                         salida = "Raiz #"+str(column+1)
+                        item.setText(salida)
                         self.tableWidget.setItem(
-                            row, column, QtWidgets.QTableWidgetItem(salida))
+                            row, column, item)
                         if contadorTamanio < 930:
                             tamanioColumnas = float(
                                 listaTamanio[len(listaTamanio)-1])
@@ -2265,8 +2382,9 @@ class Ui_MainWindow(object):
                                 column, tamanioColumnas)
                     else:
                         salida = str(lst[column])
+                        item.setText(str(salida))
                         self.tableWidget.setItem(
-                            row, column, QtWidgets.QTableWidgetItem(salida))
+                            row, column, item)
                         if contadorTamanio < 930:
                             tamanioColumnas = float(
                                 listaTamanio[len(listaTamanio)-1])
@@ -2284,6 +2402,7 @@ class Ui_MainWindow(object):
         self.tableWidget.setColumnCount(0)
         self.tableWidget.setRowCount(0)
         self.tableWidget.clear()
+        self.tableWidget.setVisible(True)
 
         # Aplicamos unas configuraciones
         self.tableWidget.verticalHeader().setVisible(False)
@@ -2557,6 +2676,7 @@ class Ui_MainWindow(object):
         listaYapoyo = []
         h = 0
         puntoInicial = 0
+        control_mostrar_respuesta = 0
 
         global cuantasFilasYColumnas, tabla_unidad4_si_no
 
@@ -2570,8 +2690,6 @@ class Ui_MainWindow(object):
                         listaX.append(self.tableWidget_2.item(x, y).text())
                     elif x == 1:
                         listaY.append(self.tableWidget_2.item(x, y).text())
-
-           
 
             for i in listaX:
                 listaXapoyo.append(float(i))
@@ -2691,13 +2809,23 @@ class Ui_MainWindow(object):
             if tabla_unidad4_si_no == 0:
                 a = float(self.a0_normal.text())
                 b = float(self.b0_normal.text())
-                lst = metodos_uni4.regla_del_trapecio_simple(
-                    funcion,a,b,[], 0)
+                if a > b:
+
+                    self.main = Mensajes_error()
+                    self.main.ui.label.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">!UPS¡ El limite inferior no</span></p><p align=\"center\"><span style=\" font-size:12pt;\">puede ser mayor al superior</span></p></body></html>")
+                    self.main.show()
+
+                    control_mostrar_respuesta = 1
+                else:
+                    lst = metodos_uni4.regla_del_trapecio_simple(funcion,a,b,[], 0)
             else:
                 a = listaXapoyo[len(listaXapoyo)-1]
                 b = listaXapoyo[0]
 
-                lst = metodos_uni4.regla_del_trapecio_simple(
+                if a > b:
+                    print('El limite inferior no puede ser mayor al limite superior')
+                else:
+                    lst = metodos_uni4.regla_del_trapecio_simple(
                     '', a, b, puntos, 0)
 
         elif metodo == 14: # Trapecio Compuesto
@@ -2706,13 +2834,19 @@ class Ui_MainWindow(object):
                 n = int(self.puntoInicial_uni4.text())
                 a = float(self.a0_normal.text())
                 b = float(self.b0_normal.text())
-                lst = metodos_uni4.regla_del_trapecio_compuesta(
+                if a > b:
+                    print('El limite inferior no puede ser mayor al limite superior')
+                else:
+                    lst = metodos_uni4.regla_del_trapecio_compuesta(
                     funcion, a,b,n, [],0)
             else:
                 a = listaXapoyo[len(listaXapoyo)-1]
                 b = listaXapoyo[0]
                 n = len(listaXapoyo)-1
-                lst = metodos_uni4.regla_del_trapecio_compuesta(
+                if a > b:
+                    print('El limite inferior no puede ser mayor al limite superior')
+                else:
+                    lst = metodos_uni4.regla_del_trapecio_compuesta(
                     '', a,b,n, puntos,0)
 
         elif metodo == 15:  # Integrales dobles y triples 
@@ -2723,12 +2857,18 @@ class Ui_MainWindow(object):
             if tabla_unidad4_si_no == 0:
                 a = float(self.a0_normal.text())
                 b = float(self.b0_normal.text())
-                lst = metodos_uni4.integracion_simpson_unTercio_simple(
+                if a > b:
+                    print('El limite inferior no puede ser mayor al limite superior')
+                else:
+                    lst = metodos_uni4.integracion_simpson_unTercio_simple(
                     funcion, a, b, [], [])
             else:
                 a = listaXapoyo[len(listaXapoyo)-1]
                 b = listaXapoyo[0]
-                lst = metodos_uni4.integracion_simpson_unTercio_simple(
+                if a > b:
+                    print('El limite inferior no puede ser mayor al limite superior')
+                else: 
+                    lst = metodos_uni4.integracion_simpson_unTercio_simple(
                     '', a, b, listaXapoyo, listaYapoyo)
 
         elif metodo == 17: # simpson 1/3 compuesto
@@ -2737,19 +2877,28 @@ class Ui_MainWindow(object):
                 a = float(self.a0_normal.text())
                 b = float(self.b0_normal.text())
                 n = int(self.puntoInicial_uni4.text())
-                lst = metodos_uni4.integracion_simpson_unTercio_compuesta(
+                if a > b:
+                    print('El limite inferior no puede ser mayor al limite superior')
+                else: 
+                    lst = metodos_uni4.integracion_simpson_unTercio_compuesta(
                     funcion, a, b, n, [],[])
             else:
                 a = listaXapoyo[len(listaXapoyo)-1]
                 b = listaXapoyo[0]
                 n = len(listaXapoyo)-1
-                lst = metodos_uni4.integracion_simpson_unTercio_compuesta(
+                if a > b:
+                    print('El limite inferior no puede ser mayor al limite superior')
+                else: 
+                    lst = metodos_uni4.integracion_simpson_unTercio_compuesta(
                     '', a, b, n, listaXapoyo, listaYapoyo)
 
         elif metodo == 18: # simpson 3/8 simple
             a = float(self.a0_normal.text())
             b = float(self.b0_normal.text())
-            lst = metodos_uni4.integracion_simpson_tresOctavos_simple(
+            if a > b:
+                print('El limite inferior no puede ser mayor al limite superior')
+            else:
+                lst = metodos_uni4.integracion_simpson_tresOctavos_simple(
                 funcion, a, b)
 
         elif metodo == 19: # simpson 3/8 compuesto
@@ -2757,44 +2906,60 @@ class Ui_MainWindow(object):
             b = float(self.b0_normal.text())
             n = int(self.puntoInicial_uni4.text())
 
-            lst = metodos_uni4.integracion_simpson_tresOctavos_compuesta(
+            if a > b:
+                print('El limite inferior no puede ser mayor al limite superior')
+            else:
+                lst = metodos_uni4.integracion_simpson_tresOctavos_compuesta(
                 funcion, a, b, n)
 
         elif metodo == 20: # rosemberg
             a = float(self.a0_normal.text())
             b = float(self.b0_normal.text())
             n = int(self.puntoInicial_uni4.text())
-            lst = metodos_uni4.integracion_rosemberg(funcion, a, b, n)
+            if a > b:
+                print('El limite inferior no puede ser mayor al limite superior')
+            else:
+                lst = metodos_uni4.integracion_rosemberg(funcion, a, b, n)
 
         elif metodo == 21: # cuadratura gaussiana
             a = float(self.a0_normal.text())
             b = float(self.b0_normal.text())
             n = int(self.puntoInicial_uni4.text())
-            lst = metodos_uni4.integracion_cuadratura_Gaussiana(
+            if a > b:
+                print('El limite inferior no puede ser mayor al limite superior')
+            else:
+                lst = metodos_uni4.integracion_cuadratura_Gaussiana(
                 funcion, a, b, n)
 
         elif metodo == 22: # simpson adaptativo
             a = float(self.a0_normal.text())
             b = float(self.b0_normal.text())
             tolerancia = float(self.puntoInicial_uni4.text())
-            lst = metodos_uni4.integracion_simpson_unTercio_adaptativo(
+            if a > b:
+                print('El limite inferior no puede ser mayor al limite superior')
+            else:
+                lst = metodos_uni4.integracion_simpson_unTercio_adaptativo(
                 tolerancia, a, b, funcion)
 
         elif metodo == 23: # boole
             a = float(self.a0_normal.text())
             b = float(self.b0_normal.text())
-            lst = metodos_uni4.integracion_Boole(a, b, funcion)
+            if a > b:
+                print('El limite inferior no puede ser mayor al limite superior')
+            else:
+                lst = metodos_uni4.integracion_Boole(a, b, funcion)
 
-        self.tableWidget.setVisible(False)
-        self.cajaTexto.setVisible(True)
+        if control_mostrar_respuesta == 0:
+            self.tableWidget.setVisible(False)
+            self.cajaTexto.setVisible(True)
 
-        # Agregando respuesta a la caja de texto
-        salida = ""
+            # Agregando respuesta a la caja de texto
+            salida = ""
 
-        for i in lst:
-            salida += "\n"+str(i)+"\n"
+            for i in lst:
+                salida += "\n"+str(i)+"\n"
 
-        self.cajaTexto.setText(salida)
+            self.cajaTexto.setText(salida)
 
     def control_agregar_columna_tabla_Unidad3(self):
         global cuantasFilasYColumnas

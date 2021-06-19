@@ -1,11 +1,11 @@
 import sys
 import platform
-from PySide2 import QtCore, QtGui, QtWidgets
-from PySide2.QtCore import (QCoreApplication, QPropertyAnimation, QDate, QDateTime,
+from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtCore import (QCoreApplication, QPropertyAnimation, QDate, QDateTime,
                             QMetaObject, QObject, QPoint, QRect, QSize, QTime, QUrl, Qt, QEvent)
-from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont, QFontDatabase,
+from PyQt5.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont, QFontDatabase,
                            QIcon, QKeySequence, QLinearGradient, QPalette, QPainter, QPixmap, QRadialGradient)
-from PySide2.QtWidgets import *
+from PyQt5.QtWidgets import *
 
 # Importamos la carpeta donde estan los metodos numéricos
 from metodosYformularios import *

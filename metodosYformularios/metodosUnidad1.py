@@ -21,7 +21,7 @@ def metodo1(punto,cifras):
     exponente = 2
 
     #cabezera de tabla
-    header = ['Iteracion', 'Valor', 'Ea','Es']
+    header = ['ITERACIÓN', 'VALOR', 'Ea','Es']
     listaResultados.append(header)
 
     while salida == 0:
@@ -71,7 +71,7 @@ def metodo2(punto,cifras):
     exponente = 2
 
     #cabezera de tabla
-    header = ['Iteracion', 'Valor', 'Ea','Es']
+    header = ['ITERACIÓN', 'VALOR', 'Ea','Es']
     listaResultados.append(header)
 
     while salida == 0:
@@ -112,7 +112,7 @@ def metodo3(punto,cifras):
     exponente = 3
 
     #cabezera de tabla
-    header = ['Iteracion', 'Valor', 'Ea','Es']
+    header = ['ITERACIÓN', 'VALOR', 'Ea','Es']
     listaResultados.append(header)
 
     while salida == 0:
@@ -194,7 +194,7 @@ def metodo5(punto,cifras):
     exponente = 1
 
     #cabezera de tabla
-    header = ['Iteracion', 'Valor', 'Ea','Es']
+    header = ['ITERACIÓN', 'VALOR', 'Ea','Es']
     listaResultados.append(header)
 
     while salida == 0:
@@ -235,7 +235,7 @@ def metodo6(punto,cifras):
     exponente = 3
 
     #cabezera de tabla
-    header = ['Iteracion', 'Valor', 'Ea','Es']
+    header = ['ITERACIÓN', 'VALOR', 'Ea','Es']
     listaResultados.append(header)
 
     while salida == 0:
@@ -276,7 +276,7 @@ def metodo7(punto,cifras):
     exponente = 2
 
     #cabezera de tabla
-    header = ['Iteracion', 'Valor', 'Ea','Es']
+    header = ['ITERACIÓN', 'VALOR', 'Ea','Es']
     listaResultados.append(header)
 
     while salida == 0:
@@ -317,7 +317,7 @@ def metodo8(punto,cifras):
     exponente = 3
 
     #cabezera de tabla
-    header = ['Iteracion', 'Valor', 'Ea','Es']
+    header = ['ITERACIÓN', 'VALOR', 'Ea','Es']
     listaResultados.append(header)
 
     while salida == 0:
@@ -357,7 +357,7 @@ def metodo9(punto,cifras):
     exponente = 2
 
     #cabezera de tabla
-    header = ['Iteracion', 'Valor', 'Ea','Es']
+    header = ['ITERACIÓN', 'VALOR', 'Ea','Es']
     listaResultados.append(header)
 
     while salida == 0:
@@ -396,7 +396,7 @@ def metodo10(punto,cifras):
     exponente = 2
 
     #cabezera de tabla
-    header = ['Iteracion', 'Valor', 'Ea','Es']
+    header = ['ITERACIÓN', 'VALOR', 'Ea','Es']
     listaResultados.append(header)
 
     while salida == 0:
@@ -436,7 +436,7 @@ def metodo11(punto,cifras):
     exponente = 3
 
     #cabezera de tabla
-    header = ['Iteracion', 'Valor', 'Ea','Es']
+    header = ['ITERACIÓN', 'VALOR', 'Ea','Es']
     listaResultados.append(header)
 
     while salida == 0:

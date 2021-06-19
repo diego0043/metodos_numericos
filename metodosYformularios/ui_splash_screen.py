@@ -1,11 +1,11 @@
 
 
-from PySide2.QtCore import (QCoreApplication, QMetaObject, QObject, QPoint,
+from PyQt5.QtCore import (QCoreApplication, QMetaObject, QObject, QPoint,
     QRect, QSize, QUrl, Qt)
-from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont,
+from PyQt5.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont,
     QFontDatabase, QIcon, QLinearGradient, QPalette, QPainter, QPixmap,
     QRadialGradient)
-from PySide2.QtWidgets import *
+from PyQt5.QtWidgets import *
 
 
 class Ui_SplashScreen(object):
