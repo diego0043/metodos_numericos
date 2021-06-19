@@ -55,6 +55,17 @@ class Mensajes_error(QMainWindow):
         def close(self):
             self.close()
 
+        def moveWinsdow(event):
+            if event.buttons() == Qt.LeftButton:
+                self.move(self.pos() + event.globalPos() - self.dragPos)
+                self.dragPos = event.globalPos()
+                event.accept()
+            
+        self.ui.frame_2.mouseMoveEvent = moveWinsdow
+        
+    def mousePressEvent(self, event):
+        self.dragPos = event.globalPos()
+                
 class Ui_MainWindow(object):
 
     def setupUi(self, MainWindow):
@@ -1952,110 +1963,135 @@ class Ui_MainWindow(object):
 
     def insertar_datos_a_tabla_unidad1(self, metodo):
         
-        punto = float(self.lineEdit_2.text())
-        cifras = float(self.lineEdit_5.text())
+        cmb = self.comboBox_2.currentIndex()
+        punto = self.lineEdit_2.text()
+        cifras = self.lineEdit_5.text()
+        control = 1
 
-        if metodo == 1:
-            lst = metodos_uni1.metodo1(punto,cifras)
+
+        if cmb == 0 and punto == '' and cifras == '':
+            self.mensajesAlerta(0,3)
+            control = 0
+        elif cmb == 0 and punto != '' and cifras != '':
+            self.mensajesAlerta(0,2)
+            control = 0
+        elif cmb != 0 and punto != '' and cifras == '':
+            self.mensajesAlerta(0,1)
+            control = 0
+        elif cmb != 0 and punto == '' and cifras != '':
+            self.mensajesAlerta(0,0)
+            control = 0
+        elif cmb != 0 and punto == '' and cifras == '':
+            self.mensajesAlerta(0,3)
+            control = 0
+
         
-        elif metodo == 2:
-            lst = metodos_uni1.metodo2(punto,cifras)
 
-        elif metodo == 3:
-            lst = metodos_uni1.metodo3(punto,cifras)
+        if control == 1:
+            cifras = float(cifras)
+            punto = float(punto)
 
-        elif metodo == 4:
-            lst = metodos_uni1.metodo4(punto,cifras)
+            if metodo == 1:
+                lst = metodos_uni1.metodo1(punto,cifras)
+            
+            elif metodo == 2:
+                lst = metodos_uni1.metodo2(punto,cifras)
 
-        elif metodo == 5:
-            lst = metodos_uni1.metodo5(punto,cifras)
+            elif metodo == 3:
+                lst = metodos_uni1.metodo3(punto,cifras)
 
-        elif metodo == 6:
-            lst = metodos_uni1.metodo6(punto,cifras)
+            elif metodo == 4:
+                lst = metodos_uni1.metodo4(punto,cifras)
 
-        elif metodo == 7:
-            lst = metodos_uni1.metodo7(punto,cifras)
-        
-        elif metodo == 8:
-            lst = metodos_uni1.metodo8(punto,cifras)
-        
-        elif metodo == 9:
-            lst = metodos_uni1.metodo9(punto,cifras)
-        
-        elif metodo == 10:
-            lst = metodos_uni1.metodo10(punto,cifras)
-        
-        elif metodo == 11:
-            lst = metodos_uni1.metodo11(punto,cifras)
+            elif metodo == 5:
+                lst = metodos_uni1.metodo5(punto,cifras)
 
-        self.tableWidget.verticalHeader().setDefaultAlignment(QtCore.Qt.AlignHCenter)
-        rows = len(lst)  # Numero de filas
-        columns = len(lst[0])  # Numero de columnas
-        len_Col = int(930/columns)  # Tamaño que tendran las columnas
+            elif metodo == 6:
+                lst = metodos_uni1.metodo6(punto,cifras)
 
-        # Aplicamos unas configuraciones a la tabla
-        self.tableWidget.setColumnCount(columns)
-        self.tableWidget.setRowCount(rows)
-        self.tableWidget.verticalHeader().setVisible(False)
-        self.tableWidget.horizontalHeader().setVisible(False)
-        self.tableWidget.setVisible(True)
+            elif metodo == 7:
+                lst = metodos_uni1.metodo7(punto,cifras)
+            
+            elif metodo == 8:
+                lst = metodos_uni1.metodo8(punto,cifras)
+            
+            elif metodo == 9:
+                lst = metodos_uni1.metodo9(punto,cifras)
+            
+            elif metodo == 10:
+                lst = metodos_uni1.metodo10(punto,cifras)
+            
+            elif metodo == 11:
+                lst = metodos_uni1.metodo11(punto,cifras)
 
-        font = QtGui.QFont()
-        font.setFamily("Segoe UI")
-        font.setPointSize(10)
-        font.setBold(True)
-        font.setWeight(75)
+            self.tableWidget.verticalHeader().setDefaultAlignment(QtCore.Qt.AlignHCenter)
+            rows = len(lst)  # Numero de filas
+            columns = len(lst[0])  # Numero de columnas
+            len_Col = int(930/columns)  # Tamaño que tendran las columnas
 
-        brush = QtGui.QBrush(QtGui.QColor(242, 242, 242))
-        brush.setStyle(QtCore.Qt.NoBrush)
+            # Aplicamos unas configuraciones a la tabla
+            self.tableWidget.setColumnCount(columns)
+            self.tableWidget.setRowCount(rows)
+            self.tableWidget.verticalHeader().setVisible(False)
+            self.tableWidget.horizontalHeader().setVisible(False)
+            self.tableWidget.setVisible(True)
 
-        brush_2 = QtGui.QBrush(QtGui.QColor(134, 135, 208))
-        brush_2.setStyle(QtCore.Qt.SolidPattern)
+            font = QtGui.QFont()
+            font.setFamily("Segoe UI")
+            font.setPointSize(10)
+            font.setBold(True)
+            font.setWeight(75)
+
+            brush = QtGui.QBrush(QtGui.QColor(242, 242, 242))
+            brush.setStyle(QtCore.Qt.NoBrush)
+
+            brush_2 = QtGui.QBrush(QtGui.QColor(134, 135, 208))
+            brush_2.setStyle(QtCore.Qt.SolidPattern)
 
 
-        for row in range(rows):  # Primer for recorre las filas en lst
-            # Segundo for recorre las columnas en lst
-            for column in range(columns):
-                if row == 0:  # Encabezado o header
+            for row in range(rows):  # Primer for recorre las filas en lst
+                # Segundo for recorre las columnas en lst
+                for column in range(columns):
+                    if row == 0:  # Encabezado o header
 
-                    item = QtWidgets.QTableWidgetItem()
-                    item.setTextAlignment(QtCore.Qt.AlignCenter)
-                    item.setFont(font)
-                    item.setBackground(brush)
-                    item.setForeground(brush_2)
-                    item.setFlags(QtCore.Qt.ItemIsEditable|QtCore.Qt.ItemIsDragEnabled|QtCore.Qt.ItemIsUserCheckable)
+                        item = QtWidgets.QTableWidgetItem()
+                        item.setTextAlignment(QtCore.Qt.AlignCenter)
+                        item.setFont(font)
+                        item.setBackground(brush)
+                        item.setForeground(brush_2)
+                        item.setFlags(QtCore.Qt.ItemIsEditable|QtCore.Qt.ItemIsDragEnabled|QtCore.Qt.ItemIsUserCheckable)
 
-                    salida = lst[row][column]
-                    item.setText(str(salida))
-
-                    self.tableWidget.setItem(row, column, item)
-                    self.tableWidget.setColumnWidth(column, len_Col)
-                else:
-
-                    item = QtWidgets.QTableWidgetItem()
-                    item.setTextAlignment(QtCore.Qt.AlignCenter)
-                    item.setFont(font)
-                    item.setBackground(brush)
-                    item.setForeground(brush_2)
-                    item.setFlags(QtCore.Qt.ItemIsEditable|QtCore.Qt.ItemIsDragEnabled|QtCore.Qt.ItemIsUserCheckable)
-                   
-                    if column == 0:
-                        salida = (lst[row][column])
+                        salida = lst[row][column]
                         item.setText(str(salida))
+
                         self.tableWidget.setItem(row, column, item)
                         self.tableWidget.setColumnWidth(column, len_Col)
                     else:
 
-                        if row == 1 and column == 2:
-                            salida = lst[row][column]
-                            item.setText(str(salida))
-                            self.tableWidget.setItem(row, column,item)
-                            self.tableWidget.setColumnWidth(column, len_Col)
-                        else:
-                            salida = "%.5f" % float(lst[row][column])
+                        item = QtWidgets.QTableWidgetItem()
+                        item.setTextAlignment(QtCore.Qt.AlignCenter)
+                        item.setFont(font)
+                        item.setBackground(brush)
+                        item.setForeground(brush_2)
+                        item.setFlags(QtCore.Qt.ItemIsEditable|QtCore.Qt.ItemIsDragEnabled|QtCore.Qt.ItemIsUserCheckable)
+                    
+                        if column == 0:
+                            salida = (lst[row][column])
                             item.setText(str(salida))
                             self.tableWidget.setItem(row, column, item)
                             self.tableWidget.setColumnWidth(column, len_Col)
+                        else:
+
+                            if row == 1 and column == 2:
+                                salida = lst[row][column]
+                                item.setText(str(salida))
+                                self.tableWidget.setItem(row, column,item)
+                                self.tableWidget.setColumnWidth(column, len_Col)
+                            else:
+                                salida = "%.5f" % float(lst[row][column])
+                                item.setText(str(salida))
+                                self.tableWidget.setItem(row, column, item)
+                                self.tableWidget.setColumnWidth(column, len_Col)
 
     def insertar_datos_a_tabla_unidad2(self, metodo):
 
@@ -2807,13 +2843,10 @@ class Ui_MainWindow(object):
         elif metodo == 13: # Trapecio simple
         
             if tabla_unidad4_si_no == 0:
+                print(metodo)
                 a = float(self.a0_normal.text())
                 b = float(self.b0_normal.text())
                 if a > b:
-
-                    self.main = Mensajes_error()
-                    self.main.ui.label.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">!UPS¡ El limite inferior no</span></p><p align=\"center\"><span style=\" font-size:12pt;\">puede ser mayor al superior</span></p></body></html>")
-                    self.main.show()
 
                     control_mostrar_respuesta = 1
                 else:
@@ -3259,7 +3292,7 @@ class Ui_MainWindow(object):
         metodo = self.comboBox_2.currentIndex()
 
         if unidad == 0:  # Metodos de la unidad 1
-            if metodo >= 1:
+            if metodo >= 0:
                 self.insertar_datos_a_tabla_unidad1(metodo)
 
         elif unidad == 1:  # Metodos de la unidad 2
@@ -3319,3 +3352,27 @@ class Ui_MainWindow(object):
                 p1.show()
             except:
                 print("Algo salio mal")
+
+    def mensajesAlerta(self,unidad,numero_mensaje):
+        if unidad == 0:            
+            if numero_mensaje == 0:
+                self.main = Mensajes_error()
+                self.main.ui.label.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">!UPS¡ Parece que olvido introducir</span></p><p align=\"center\"><span style=\" font-size:12pt;\">el punto inical</span></p></body></html>")
+                self.main.show()
+            elif numero_mensaje == 1:
+                self.main = Mensajes_error()
+                self.main.ui.label.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">!UPS¡ Parece que olvido introducir</span></p><p align=\"center\"><span style=\" font-size:12pt;\">el numero de cifras significativas</span></p></body></html>")
+                self.main.show()
+            elif numero_mensaje == 2:
+                self.main = Mensajes_error()
+                self.main.ui.label.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">!Hey¡ Parece que se te olvido </span></p><p align=\"center\"><span style=\" font-size:12pt;\">seleccionar un metodo para trabajar</span></p></body></html>")
+                self.main.show()
+            elif numero_mensaje == 3:
+                print('si esntre')
+                self.main = Mensajes_error()
+                self.main.ui.label.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">!MMMMMMM...¡ Parece que </span></p><p align=\"center\"><span style=\" font-size:12pt;\">olvidaste introcucir algo arriba </span></p></body></html>")
+                self.main.show()
+
+        
+
+
