@@ -11,9 +11,7 @@ from sympy.core.function import expand
 from sympy.simplify.radsimp import fraction, numer
 from fractions import Fraction
 from sympy.solvers.ode.ode import dsolve
-import sympy
-sympy.init_printing(use_latex="mathjax")
-
+from sympy import*
 
 
 
@@ -196,40 +194,33 @@ def metodo_Euler_Mejorado(funcion, x_Inicial, y_Inicial, x_Final, n_intervalos):
 
 # <-------------------------------- metodo de Taylor ------------------------------>
 
-# Falta
 
+def metodo_taylor(funcion,listaT,y_inicial,h):
 
-def metodo_Taylor(funcion, t_inicial, t_final, y_inicial, h, n):
+    y = sp.Function('y')
 
-    y = sp.Function('y')  
+    func = Eq(y(t).diff(),y(t)-t**2) #Creamos la funcion
+    CI = {y(listaT[0]):y_inicial} #condicion inicial
 
+    #resolvemos la edo
+    edo_sol = sp.dsolve(func,y(t),ics=CI)
+    pprint(edo_sol.subs(t,listaT[1]))
 
-    f = y(t)-t**2                         # Esta sera la función principal
-    ics = {y(t_inicial):y_inicial}        # Condicion Inicial
 
     '''
-    #convertimos la funcion en una que acepte sympy 
-    for i in funcion:
-        if i == y:
-            f += y(t)
-        else:
-            f += i
+        el problema que esta dando es que no se le puede
+        mandar texto a la función 
     '''
-    
-    edo_sol = sp.dsolve(y(t).diff(t)-f)
-    c_eq = sp.Eq(edo_sol.lhs.subs(t,0).subs(ics),edo_sol.rhs.subs(t,0))
-    print(sp.solve(c_eq))
-    print(edo_sol)
+
+#Aqui practicamente solo llamamos al metodo solamente agarramos la lista y el punto inicial ya que
+# si usamos la funcion falla
+
+# Funcion: y' = y - t^2
+# y(0) = 2
+# y(1) = ?
 
 
-    
-
-    
-
-
-
-
-metodo_Taylor('(1/2)*(y**2-1)', 0, 3, 2, 1, 3)
+metodo_taylor('', [0,1], 2,0.5)
 
 # <-------------------------------- metodo de Runge Kutta ------------------------------>
 
