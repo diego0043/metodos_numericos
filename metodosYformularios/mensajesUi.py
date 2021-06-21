@@ -15,7 +15,7 @@ class Ui_Mensajes(object):
         self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame.setObjectName("frame")
         self.label = QtWidgets.QLabel(self.frame)
-        self.label.setGeometry(QtCore.QRect(20, 30, 261, 121))
+        self.label.setGeometry(QtCore.QRect(20, 30, 275, 131))
         font = QtGui.QFont()
         font.setFamily("Segoe UI")
         font.setPointSize(11)

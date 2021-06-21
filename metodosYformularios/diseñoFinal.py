@@ -1470,7 +1470,6 @@ class Ui_MainWindow(object):
 
         if queUnidad == 0:  # unidad 1
 
-            # <---- dejamos solo los componentes que usa metodo punto fijo y los de newton -->
             self.label_4.setText("#1")
             self.label_5.setText("#2")
             self.label_4.setVisible(True)
@@ -1502,7 +1501,7 @@ class Ui_MainWindow(object):
             self.cajaTexto.setVisible(False)
 
 
-            if queMetodo >= 1 and queMetodo <= 2:
+            if queMetodo == 1 or queMetodo == 2 or queMetodo == 6:
 
                 # <---- dejamos solo los componentes que usa metodo biseccion, falsa posicion y secante -->
                 self.label_4.setText("#1")
@@ -1522,7 +1521,7 @@ class Ui_MainWindow(object):
                 self.lineEdit_4.setVisible(False)
                 self.label_6.setVisible(False)
 
-            elif queMetodo >= 3 and queMetodo <= 6:
+            elif queMetodo >= 3 and queMetodo <= 5:
 
                 # <---- dejamos solo los componentes que usa metodo punto fijo y los de newton -->
                 self.label_4.setText("#1")
@@ -1561,6 +1560,7 @@ class Ui_MainWindow(object):
 
                 self.label_4.setText("#1")
                 self.label_4.setVisible(True)
+                self.label_3.setVisible(True)
                 self.lineEdit_2.setVisible(True)
                 self.lineEdit_5.setVisible(True)
                 self.label_5.setVisible(False)
@@ -1597,12 +1597,12 @@ class Ui_MainWindow(object):
                 self.lineEdit_2.setVisible(True)
                 self.lineEdit_3.setVisible(True)
                 self.lineEdit.setVisible(True)
+                self.label_7.setVisible(True)
+                self.lineEdit_5.setVisible(True)
 
                 # <-------- ocultamos lo demas ---------->
 
-                self.lineEdit_5.setVisible(False)
                 self.lineEdit_4.setVisible(False)
-                self.label_7.setVisible(False)
 
         elif queUnidad == 2:  # unidad 3
 
@@ -1857,7 +1857,7 @@ class Ui_MainWindow(object):
                 self.radioButton_2.setVisible(True)
                 self.label_9.setVisible(True)
             else:
-                # Mostramos los radio button
+                # N0 mostramos los radio button
                 self.radioButton.setVisible(False)
                 self.radioButton_2.setVisible(False)
                 self.label_9.setVisible(False)
@@ -1878,13 +1878,12 @@ class Ui_MainWindow(object):
             brush_2.setStyle(QtCore.Qt.SolidPattern)
 
             for x in range(0, 2):
-                for y in range(0, 3):
+                for y in range(0, columnas):
                     item = QtWidgets.QTableWidgetItem()
                     item.setTextAlignment(QtCore.Qt.AlignCenter)
                     item.setFont(font)
                     item.setBackground(brush)
                     item.setForeground(brush_2)
-                    #item.setFlags(QtCore.Qt.ItemIsEditable|QtCore.Qt.ItemIsDragEnabled|QtCore.Qt.ItemIsUserCheckable)
                     
                     if y == 0 and x == 0:
                         salida = "X"
@@ -1934,7 +1933,7 @@ class Ui_MainWindow(object):
             brush_2.setStyle(QtCore.Qt.SolidPattern)
 
             for x in range(0, 2):
-                for y in range(0, 3):
+                for y in range(0, columnas):
                     item = QtWidgets.QTableWidgetItem()
                     item.setTextAlignment(QtCore.Qt.AlignCenter)
                     item.setFont(font)
@@ -2108,11 +2107,12 @@ class Ui_MainWindow(object):
         x3Prueba = metodos.pedirValoresIniciales(x3)
         cifrasPrueba = metodos.pedirCifrasSignificativas(cifras)
 
+        control = 0
+
         # Limpiamos la tabla antes de llenarla
         self.tableWidget.clear()
         self.tableWidget.setColumnCount(0)
         self.tableWidget.setRowCount(0)
-        self.tableWidget.setVisible(True)
 
         font = QtGui.QFont()
         font.setFamily("Segoe UI")
@@ -2129,105 +2129,385 @@ class Ui_MainWindow(object):
         # tabla de biseccion - hasta secante
         if metodo >= 1 and metodo <= 6:
 
-            # Llamamos al metodo que corresponda para obtener la respuesta y la guardamos en lst
-            if metodo == 1:
-                lst = metodos.metodoBiseccion(
-                    x1Prueba, x2Prueba, funcion, cifrasPrueba)
-            elif metodo == 2:
-                lst = metodos.metodoFalsaPosicion(
-                    x1Prueba, x2Prueba, funcion, cifrasPrueba)
-            elif metodo == 3:
-                lst = metodos.metodoPuntoFijo(x1Prueba, funcion, cifrasPrueba)
-            elif metodo == 4:
-                lst = metodos.metodoNewtonRaphson(
-                    x1Prueba, funcion, cifrasPrueba)
-            elif metodo == 5:
-                lst = metodos.metodoNewtonRaphsonMejorado(
-                    x1Prueba, funcion, cifrasPrueba)
-            elif metodo == 6:
-                lst = metodos.metodoSecante(
-                    x1Prueba, x2Prueba, funcion, cifrasPrueba)
+            if metodo == 1 or metodo == 2 or metodo == 6:
+                
+                if metodo != 0 and x1 == '' and x2 == '' and funcion == '' and cifras == '':
+                    self.mensajesAlerta(1,1)
+                    control = 1
+                elif metodo != 0 and x1 != '' and x2 != '' and funcion == '' and cifras != '':
+                    self.mensajesAlerta(1,2)
+                    control = 1
+                elif metodo != 0 and x1 == '' and x2 != '' and funcion != '' and cifras != '':
+                    self.mensajesAlerta(1,3)
+                    control = 1
+                elif metodo != 0 and x1 != '' and x2 == '' and funcion != '' and cifras != '':
+                    self.mensajesAlerta(1,4)
+                    control = 1
+                elif metodo != 0 and x1 != '' and x2 != '' and funcion != '' and cifras == '':
+                    self.mensajesAlerta(1,7)
+                    control = 1
+                elif metodo != 0 and (x1 == '' or x2 == '' or funcion == '' or cifras == ''):
+                    self.mensajesAlerta(1,6)
+                    control = 1
 
-            # Insertamos los valores de lst en la tabla de respuestas
+            elif metodo == 3 or metodo == 4 or metodo == 5:
 
-            self.tableWidget.verticalHeader().setDefaultAlignment(QtCore.Qt.AlignHCenter)
-            rows = len(lst)  # Numero de filas
-            columns = len(lst[0])  # Numero de columnas
-            len_Col = int(930/columns) # Tamaño que tendran las columnas
+                if metodo != 0 and x1 == '' and funcion == '' and cifras == '':
+                    self.mensajesAlerta(1,1)
+                    control = 1
+                elif metodo != 0 and x1 != '' and funcion == '' and cifras != '':
+                    self.mensajesAlerta(1,2)
+                    control = 1
+                elif metodo != 0 and x1 == '' and funcion != '' and cifras != '':
+                    self.mensajesAlerta(1,3)
+                    control = 1
+                elif metodo != 0 and x1 != '' and funcion != '' and cifras == '':
+                    self.mensajesAlerta(1,7)
+                    control = 1
+                elif metodo != 0 and (x1 == '' or funcion == '' or cifras == ''):
+                    self.mensajesAlerta(1,6)
+                    control = 1
 
-            # Aplicamos unas configuraciones a la tabla
-            self.tableWidget.setColumnCount(columns)
-            self.tableWidget.setRowCount(rows)
-            self.tableWidget.verticalHeader().setVisible(False)
-            self.tableWidget.horizontalHeader().setVisible(False)
+            
+            if control == 0:
 
-            for row in range(rows):  # Primer for recorre las filas en lst
-                # Segundo for recorre las columnas en lst
-                for column in range(columns):
+                # Llamamos al metodo que corresponda para obtener la respuesta y la guardamos en lst
+                if metodo == 1:
+                    lst = metodos.metodoBiseccion(
+                        x1Prueba, x2Prueba, funcion, cifrasPrueba)
+                elif metodo == 2:
+                    lst = metodos.metodoFalsaPosicion(
+                        x1Prueba, x2Prueba, funcion, cifrasPrueba)
+                elif metodo == 3:
+                    lst = metodos.metodoPuntoFijo(x1Prueba, funcion, cifrasPrueba)
+                elif metodo == 4:
+                    lst = metodos.metodoNewtonRaphson(
+                        x1Prueba, funcion, cifrasPrueba)
+                elif metodo == 5:
+                    lst = metodos.metodoNewtonRaphsonMejorado(
+                        x1Prueba, funcion, cifrasPrueba)
+                elif metodo == 6:
+                    lst = metodos.metodoSecante(
+                        x1Prueba, x2Prueba, funcion, cifrasPrueba)
 
-                    item = QtWidgets.QTableWidgetItem()
-                    item.setTextAlignment(QtCore.Qt.AlignCenter)
-                    item.setFont(font)
-                    item.setBackground(brush)
-                    item.setForeground(brush_2)
-                    item.setFlags(QtCore.Qt.ItemIsEditable|QtCore.Qt.ItemIsDragEnabled|QtCore.Qt.ItemIsUserCheckable)
+                # Insertamos los valores de lst en la tabla de respuestas
 
-                    if row == 0:  # Encabezado o header
-                        salida = lst[row][column]
-                        item.setText(str(salida))
-                        self.tableWidget.setItem(row, column, item)
-                        self.tableWidget.setColumnWidth(column, len_Col)
-                    else:
-                        if column == 0:
-                            salida = (lst[row][column])
+                self.tableWidget.verticalHeader().setDefaultAlignment(QtCore.Qt.AlignHCenter)
+                rows = len(lst)  # Numero de filas
+                columns = len(lst[0])  # Numero de columnas
+                len_Col = int(930/columns) # Tamaño que tendran las columnas
+
+                # Aplicamos unas configuraciones a la tabla
+                self.tableWidget.setColumnCount(columns)
+                self.tableWidget.setRowCount(rows)
+                self.tableWidget.verticalHeader().setVisible(False)
+                self.tableWidget.horizontalHeader().setVisible(False)
+                self.tableWidget.setVisible(True)
+
+                for row in range(rows):  # Primer for recorre las filas en lst
+                    # Segundo for recorre las columnas en lst
+                    for column in range(columns):
+
+                        item = QtWidgets.QTableWidgetItem()
+                        item.setTextAlignment(QtCore.Qt.AlignCenter)
+                        item.setFont(font)
+                        item.setBackground(brush)
+                        item.setForeground(brush_2)
+                        item.setFlags(QtCore.Qt.ItemIsEditable|QtCore.Qt.ItemIsDragEnabled|QtCore.Qt.ItemIsUserCheckable)
+
+                        if row == 0:  # Encabezado o header
+                            salida = lst[row][column]
                             item.setText(str(salida))
                             self.tableWidget.setItem(row, column, item)
                             self.tableWidget.setColumnWidth(column, len_Col)
                         else:
-                            salida = "%.5f" % float(lst[row][column])
-                            item.setText(str(salida))
-                            self.tableWidget.setItem(row, column, item)
-                            self.tableWidget.setColumnWidth(column, len_Col)
+                            if column == 0:
+                                salida = (lst[row][column])
+                                item.setText(str(salida))
+                                self.tableWidget.setItem(row, column, item)
+                                self.tableWidget.setColumnWidth(column, len_Col)
+                            else:
+                                salida = "%.5f" % float(lst[row][column])
+                                item.setText(str(salida))
+                                self.tableWidget.setItem(row, column, item)
+                                self.tableWidget.setColumnWidth(column, len_Col)
 
         # tabla de ceros de polinomios
         elif metodo == 7:
 
-            # Esta lista contiene los numeros que acompañan a las x
-            lista_Coeficientes = metodos.coefs(self.lineEdit.text())
-            largo = len(lista_Coeficientes)
+            if metodo != 0 and  funcion == '':
+                self.mensajesAlerta(1,2)
+                control = 1
 
-            if largo >= 2 and largo <= 5:
-                if largo == 2:  # Lineal
-                    a = 0
-                    b = 0
-                    c = 0
-                    d = lista_Coeficientes[1]
-                    e = lista_Coeficientes[0]
-                elif largo == 3:  # Cuadratico
-                    a = 0
-                    b = 0
-                    c = lista_Coeficientes[2]
-                    d = lista_Coeficientes[1]
-                    e = lista_Coeficientes[0]
-                elif largo == 4:  # Cubico
-                    a = 0
-                    b = lista_Coeficientes[3]
-                    c = lista_Coeficientes[2]
-                    d = lista_Coeficientes[1]
-                    e = lista_Coeficientes[0]
-                elif largo == 5:  # Cuartico
-                    a = lista_Coeficientes[4]
-                    b = lista_Coeficientes[3]
-                    c = lista_Coeficientes[2]
-                    d = lista_Coeficientes[1]
-                    e = lista_Coeficientes[0]
+            if control == 0:
 
-                lst = metodos.factorizar(a, b, c, d, e)
+                # Esta lista contiene los numeros que acompañan a las x
+                lista_Coeficientes = metodos.coefs(self.lineEdit.text())
+                largo = len(lista_Coeficientes)
 
-                columns = len(lst)  # Numero de columnas
-                rows = 2  # Numero de filas
-                
-                # Controlamos el tamaño que tendra cada columna de forma variable y no estatica 
+                if largo >= 2 and largo <= 5:
+                    if largo == 2:  # Lineal
+                        a = 0
+                        b = 0
+                        c = 0
+                        d = lista_Coeficientes[1]
+                        e = lista_Coeficientes[0]
+                    elif largo == 3:  # Cuadratico
+                        a = 0
+                        b = 0
+                        c = lista_Coeficientes[2]
+                        d = lista_Coeficientes[1]
+                        e = lista_Coeficientes[0]
+                    elif largo == 4:  # Cubico
+                        a = 0
+                        b = lista_Coeficientes[3]
+                        c = lista_Coeficientes[2]
+                        d = lista_Coeficientes[1]
+                        e = lista_Coeficientes[0]
+                    elif largo == 5:  # Cuartico
+                        a = lista_Coeficientes[4]
+                        b = lista_Coeficientes[3]
+                        c = lista_Coeficientes[2]
+                        d = lista_Coeficientes[1]
+                        e = lista_Coeficientes[0]
+
+                    lst = metodos.factorizar(a, b, c, d, e)
+
+                    columns = len(lst)  # Numero de columnas
+                    rows = 2  # Numero de filas
+                    
+                    # Controlamos el tamaño que tendra cada columna de forma variable y no estatica 
+                    tamanioColumnas = 0
+                    listaTamanio = []
+                    contadorTamanio = 0
+                    for x in range(0, columns):
+                        listaTamanio.append(len(str(lst[x]))*7)
+                        contadorTamanio += len(str(lst[x]))*7
+
+                    listaTamanio.sort()
+
+                    # Aplicamos unas configuraciones a la tabla
+                    self.tableWidget.setColumnCount(columns)
+                    self.tableWidget.setRowCount(rows)
+                    self.tableWidget.verticalHeader().setVisible(False)
+                    self.tableWidget.horizontalHeader().setVisible(False)
+                    self.tableWidget.setVisible(True)
+
+                    for row in range(rows):  # Primer for controla las filas
+                        # Segundo for controla las columnas
+                        for column in range(columns):
+                            item = QtWidgets.QTableWidgetItem()
+                            item.setTextAlignment(QtCore.Qt.AlignCenter)
+                            item.setFont(font)
+                            item.setBackground(brush)
+                            item.setForeground(brush_2)
+                            item.setFlags(QtCore.Qt.ItemIsEditable|QtCore.Qt.ItemIsDragEnabled|QtCore.Qt.ItemIsUserCheckable)
+                            if row == 0:  # cabezera o header
+                                salida = "raiz #"+str(column+1)
+                                item.setText(salida)
+                                self.tableWidget.setItem(row, column, item)
+                                if contadorTamanio < 930:
+                                    tamanioColumnas = float(listaTamanio[len(listaTamanio)-1])
+                                    self.tableWidget.setColumnWidth(
+                                        column, tamanioColumnas)
+                                else:
+                                    tamanioColumnas = len(str(lst[column]))*7
+                                    self.tableWidget.setColumnWidth(
+                                        column, tamanioColumnas)
+                            else:
+                                salida = str(lst[column])
+                                item.setText(str(salida))
+                                self.tableWidget.setItem(row, column, item)
+                                if contadorTamanio < 930:
+                                    tamanioColumnas = float(listaTamanio[len(listaTamanio)-1])
+                                    self.tableWidget.setColumnWidth(
+                                        column, tamanioColumnas)
+                                else:
+                                    tamanioColumnas = len(str(lst[column]))*7
+                                    self.tableWidget.setColumnWidth(column, tamanioColumnas)
+                else:
+                    print("Intento ingresar una función mayor a x^4 o menor a x^1")
+
+        # tabla Horner
+        elif metodo == 8:
+
+            control = 0
+
+            if metodo != 0 and x1 == '' and funcion == '' and cifras == '':
+                    self.mensajesAlerta(1,1)
+                    control = 1
+            elif metodo != 0 and x1 != '' and funcion == '' and cifras != '':
+                self.mensajesAlerta(1,2)
+                control = 1
+            elif metodo != 0 and x1 == '' and funcion != '' and cifras != '':
+                self.mensajesAlerta(1,3)
+                control = 1
+            elif metodo != 0 and x1 != '' and funcion != '' and cifras == '':
+                self.mensajesAlerta(1,7)
+                control = 1
+            elif metodo != 0 and (x1 == '' or funcion == '' or cifras == ''):
+                self.mensajesAlerta(1,6)
+                control = 1
+
+
+            if control == 0:
+
+                self.tableWidget.setVisible(True)
+                lista_Coeficientes = metodos.coefs(self.lineEdit.text())
+                lst = metodos.metodoHorner(
+                    lista_Coeficientes, x1Prueba, cifrasPrueba)
+
+                rows = len(lst)  # Numero de filas
+                columns = len(lst[0])  # Numero de columnas
+                len_Col = int(930/columns)  # Tamaño de las columnas
+
+                # Aplicamos unas configuraciones a la tabla
+                self.tableWidget.setColumnCount(columns)
+                self.tableWidget.setRowCount(rows)
+                self.tableWidget.verticalHeader().setVisible(False)
+                self.tableWidget.horizontalHeader().setVisible(False)
+
+                for row in range(rows):  # Primer for controla las filas
+                    for column in range(columns):  # Segundo for controla las columnas
+
+                        item = QtWidgets.QTableWidgetItem()
+                        item.setTextAlignment(QtCore.Qt.AlignCenter)
+                        item.setFont(font)
+                        item.setBackground(brush)
+                        item.setForeground(brush_2)
+                        item.setFlags(QtCore.Qt.ItemIsEditable|QtCore.Qt.ItemIsDragEnabled|QtCore.Qt.ItemIsUserCheckable)
+
+                        if row == 0:  # header o encabezado
+                            salida = lst[row][column]
+                            item.setText(salida)
+                            self.tableWidget.setItem(row, column, item)
+                            self.tableWidget.setColumnWidth(column, len_Col)
+                        else:
+                            if column == 0:
+                                salida = "%.0f" % (lst[row][column])
+                                item.setText(str(salida))
+                                self.tableWidget.setItem(row, column, item)
+                                self.tableWidget.setColumnWidth(column, len_Col)
+                            else:
+                                salida = "%.5f" % float(lst[row][column])
+                                item.setText(str(salida))
+                                self.tableWidget.setItem(row, column, item)
+                                self.tableWidget.setColumnWidth(column, len_Col)
+
+        # tabla de muller
+        elif metodo == 9:
+
+            control = 0
+
+            if metodo != 0 and x1 == '' and x2 == '' and x3 == '' and funcion == '' and cifras == '':
+                    self.mensajesAlerta(1,1)
+                    control = 1
+            elif metodo != 0 and x1 != '' and x2 != '' and x3 != '' and funcion == '' and cifras != '':
+                self.mensajesAlerta(1,2)
+                control = 1
+            elif metodo != 0 and x1 == '' and x2 != '' and x3 != '' and funcion != '' and cifras != '':
+                self.mensajesAlerta(1,3)
+                control = 1
+            elif metodo != 0 and x1 != '' and x2 == '' and x3 != '' and funcion != '' and cifras != '':
+                self.mensajesAlerta(1,4)
+                control = 1
+            elif metodo != 0 and x1 != '' and x2 != '' and x3 != '' and funcion != '' and cifras == '':
+                self.mensajesAlerta(1,7)
+                control = 1
+            elif metodo != 0 and x1 != '' and x2 != '' and x3 == '' and funcion != '' and cifras != '':
+                self.mensajesAlerta(1,5)
+                control = 1
+            elif metodo != 0 and (x1 == '' or x2 == '' and x3 == '' or funcion == '' or cifras == ''):
+                self.mensajesAlerta(1,6)
+                control = 1
+
+
+
+            if control == 0:
+                lst = metodos.metodoMuller(
+                    funcion, x1Prueba, x2Prueba, x3Prueba, cifrasPrueba)
+
+                rows = len(lst)  # Numero de filas
+                columns = len(lst[0])  # Numero de columnas
+                len_Col = int(930/columns)  # Tamaño de las columnas
+
+                # Aplicamos unas configuraciones a la tabla
+                self.tableWidget.setColumnCount(columns)
+                self.tableWidget.setRowCount(rows)
+                self.tableWidget.verticalHeader().setVisible(False)
+                self.tableWidget.horizontalHeader().setVisible(False)
+
+                for row in range(rows):  # primer for controla las filas
+                    for column in range(columns):  # Segundo for controla las columnas
+                    
+                        item = QtWidgets.QTableWidgetItem()
+                        item.setTextAlignment(QtCore.Qt.AlignCenter)
+                        item.setFont(font)
+                        item.setBackground(brush)
+                        item.setForeground(brush_2)
+                        item.setFlags(QtCore.Qt.ItemIsEditable|QtCore.Qt.ItemIsDragEnabled|QtCore.Qt.ItemIsUserCheckable)
+                        
+                        if row == 0:
+                            salida = lst[row][column]
+                            item.setText(salida)
+                            self.tableWidget.setItem(row, column, item)
+                            self.tableWidget.setColumnWidth(column, len_Col)
+                        else:
+                            if column == 0:
+                                salida = "%.0f" % (lst[row][column])
+                                item.setText(str(salida))
+                                self.tableWidget.setItem(
+                                    row, column, item)
+                                self.tableWidget.setColumnWidth(column, len_Col)
+                            else:
+                                salida = "%.5f" % float(lst[row][column])
+                                item.setText(str(salida))
+                                self.tableWidget.setItem(
+                                    row, column, item)
+                                self.tableWidget.setColumnWidth(column, len_Col)
+
+        # tabla de bairstown
+        elif metodo == 10:
+
+            control = 0
+
+            if metodo != 0 and x1 == '' and x2 == '' and funcion == '' and cifras == '':
+                self.mensajesAlerta(1,1)
+                control = 1
+            elif metodo != 0 and x1 != '' and x2 != '' and funcion == '' and cifras != '':
+                self.mensajesAlerta(1,2)
+                control = 1
+            elif metodo != 0 and x1 == '' and x2 != '' and funcion != '' and cifras != '':
+                self.mensajesAlerta(1,10)
+                control = 1
+            elif metodo != 0 and x1 != '' and x2 == '' and funcion != '' and cifras != '':
+                self.mensajesAlerta(1,11)
+                control = 1
+            elif metodo != 0 and x1 != '' and x2 != '' and funcion != '' and cifras == '':
+                self.mensajesAlerta(1,7)
+                control = 1
+            elif metodo != 0 and (x1 == '' or x2 == '' or funcion == '' or cifras == ''):
+                self.mensajesAlerta(1,6)
+                control = 1
+
+            if control == 0:
+
+                lista_Coeficientes = metodos.coefs(funcion)
+                lista_Coeficientes.reverse()
+
+                lst = metodos.metodoBairstow(
+                    lista_Coeficientes, x1Prueba, x2Prueba, cifrasPrueba)
+
+                columns = len(lst)
+
+                # Aplicamos unas configuraciones a la tabla
+                self.tableWidget.setColumnCount(columns)
+                self.tableWidget.setRowCount(2)
+                self.tableWidget.verticalHeader().setVisible(False)
+                self.tableWidget.horizontalHeader().setVisible(False)
+                self.tableWidget.setVisible(True)
+
+                # Controlamos el tamaño que tendra cada columna de forma variable y no estatica como loveniamos haciendo
                 tamanioColumnas = 0
                 listaTamanio = []
                 contadorTamanio = 0
@@ -2237,27 +2517,24 @@ class Ui_MainWindow(object):
 
                 listaTamanio.sort()
 
-                # Aplicamos unas configuraciones a la tabla
-                self.tableWidget.setColumnCount(columns)
-                self.tableWidget.setRowCount(rows)
-                self.tableWidget.verticalHeader().setVisible(False)
-                self.tableWidget.horizontalHeader().setVisible(False)
+                for row in range(0, 2):
+                    for column in range(0, columns):
 
-                for row in range(rows):  # Primer for controla las filas
-                    # Segundo for controla las columnas
-                    for column in range(columns):
                         item = QtWidgets.QTableWidgetItem()
                         item.setTextAlignment(QtCore.Qt.AlignCenter)
                         item.setFont(font)
                         item.setBackground(brush)
                         item.setForeground(brush_2)
                         item.setFlags(QtCore.Qt.ItemIsEditable|QtCore.Qt.ItemIsDragEnabled|QtCore.Qt.ItemIsUserCheckable)
-                        if row == 0:  # cabezera o header
-                            salida = "raiz #"+str(column+1)
+                        
+                        if row == 0:
+                            salida = "Raiz #"+str(column+1)
                             item.setText(salida)
-                            self.tableWidget.setItem(row, column, item)
+                            self.tableWidget.setItem(
+                                row, column, item)
                             if contadorTamanio < 930:
-                                tamanioColumnas = float(listaTamanio[len(listaTamanio)-1])
+                                tamanioColumnas = float(
+                                    listaTamanio[len(listaTamanio)-1])
                                 self.tableWidget.setColumnWidth(
                                     column, tamanioColumnas)
                             else:
@@ -2267,170 +2544,18 @@ class Ui_MainWindow(object):
                         else:
                             salida = str(lst[column])
                             item.setText(str(salida))
-                            self.tableWidget.setItem(row, column, item)
+                            self.tableWidget.setItem(
+                                row, column, item)
                             if contadorTamanio < 930:
-                                tamanioColumnas = float(listaTamanio[len(listaTamanio)-1])
+                                tamanioColumnas = float(
+                                    listaTamanio[len(listaTamanio)-1])
                                 self.tableWidget.setColumnWidth(
                                     column, tamanioColumnas)
+
                             else:
                                 tamanioColumnas = len(str(lst[column]))*7
-                                self.tableWidget.setColumnWidth(column, tamanioColumnas)
-            else:
-                print("Intento ingresar una función mayor a x^4 o menor a x^1")
-
-        # tabla Horner
-        elif metodo == 8:
-            lista_Coeficientes = metodos.coefs(self.lineEdit.text())
-            lst = metodos.metodoHorner(
-                lista_Coeficientes, x1Prueba, cifrasPrueba)
-
-            rows = len(lst)  # Numero de filas
-            columns = len(lst[0])  # Numero de columnas
-            len_Col = int(930/columns)  # Tamaño de las columnas
-
-            # Aplicamos unas configuraciones a la tabla
-            self.tableWidget.setColumnCount(columns)
-            self.tableWidget.setRowCount(rows)
-            self.tableWidget.verticalHeader().setVisible(False)
-            self.tableWidget.horizontalHeader().setVisible(False)
-
-            for row in range(rows):  # Primer for controla las filas
-                for column in range(columns):  # Segundo for controla las columnas
-
-                    item = QtWidgets.QTableWidgetItem()
-                    item.setTextAlignment(QtCore.Qt.AlignCenter)
-                    item.setFont(font)
-                    item.setBackground(brush)
-                    item.setForeground(brush_2)
-                    item.setFlags(QtCore.Qt.ItemIsEditable|QtCore.Qt.ItemIsDragEnabled|QtCore.Qt.ItemIsUserCheckable)
-
-                    if row == 0:  # header o encabezado
-                        salida = lst[row][column]
-                        item.setText(salida)
-                        self.tableWidget.setItem(row, column, item)
-                        self.tableWidget.setColumnWidth(column, len_Col)
-                    else:
-                        if column == 0:
-                            salida = "%.0f" % (lst[row][column])
-                            item.setText(str(salida))
-                            self.tableWidget.setItem(row, column, item)
-                            self.tableWidget.setColumnWidth(column, len_Col)
-                        else:
-                            salida = "%.5f" % float(lst[row][column])
-                            item.setText(str(salida))
-                            self.tableWidget.setItem(row, column, item)
-                            self.tableWidget.setColumnWidth(column, len_Col)
-
-        # tabla de muller
-        elif metodo == 9:
-            lst = metodos.metodoMuller(
-                funcion, x1Prueba, x2Prueba, x3Prueba, cifrasPrueba)
-
-            rows = len(lst)  # Numero de filas
-            columns = len(lst[0])  # Numero de columnas
-            len_Col = int(930/columns)  # Tamaño de las columnas
-
-            # Aplicamos unas configuraciones a la tabla
-            self.tableWidget.setColumnCount(columns)
-            self.tableWidget.setRowCount(rows)
-            self.tableWidget.verticalHeader().setVisible(False)
-            self.tableWidget.horizontalHeader().setVisible(False)
-
-            for row in range(rows):  # primer for controla las filas
-                for column in range(columns):  # Segundo for controla las columnas
-                   
-                    item = QtWidgets.QTableWidgetItem()
-                    item.setTextAlignment(QtCore.Qt.AlignCenter)
-                    item.setFont(font)
-                    item.setBackground(brush)
-                    item.setForeground(brush_2)
-                    item.setFlags(QtCore.Qt.ItemIsEditable|QtCore.Qt.ItemIsDragEnabled|QtCore.Qt.ItemIsUserCheckable)
-                    
-                    if row == 0:
-                        salida = lst[row][column]
-                        item.setText(salida)
-                        self.tableWidget.setItem(row, column, item)
-                        self.tableWidget.setColumnWidth(column, len_Col)
-                    else:
-                        if column == 0:
-                            salida = "%.0f" % (lst[row][column])
-                            item.setText(str(salida))
-                            self.tableWidget.setItem(
-                                row, column, item)
-                            self.tableWidget.setColumnWidth(column, len_Col)
-                        else:
-                            salida = "%.5f" % float(lst[row][column])
-                            item.setText(str(salida))
-                            self.tableWidget.setItem(
-                                row, column, item)
-                            self.tableWidget.setColumnWidth(column, len_Col)
-
-        # tabla de bairstown
-        elif metodo == 10:
-
-            lista_Coeficientes = metodos.coefs(funcion)
-            lista_Coeficientes.reverse()
-
-            lst = metodos.metodoBairstow(
-                lista_Coeficientes, x1Prueba, x2Prueba, cifrasPrueba)
-
-            columns = len(lst)
-
-            # Aplicamos unas configuraciones a la tabla
-            self.tableWidget.setColumnCount(columns)
-            self.tableWidget.setRowCount(2)
-            self.tableWidget.verticalHeader().setVisible(False)
-            self.tableWidget.horizontalHeader().setVisible(False)
-
-            # Controlamos el tamaño que tendra cada columna de forma variable y no estatica como loveniamos haciendo
-            tamanioColumnas = 0
-            listaTamanio = []
-            contadorTamanio = 0
-            for x in range(0, columns):
-                listaTamanio.append(len(str(lst[x]))*7)
-                contadorTamanio += len(str(lst[x]))*7
-
-            listaTamanio.sort()
-
-            for row in range(0, 2):
-                for column in range(0, columns):
-
-                    item = QtWidgets.QTableWidgetItem()
-                    item.setTextAlignment(QtCore.Qt.AlignCenter)
-                    item.setFont(font)
-                    item.setBackground(brush)
-                    item.setForeground(brush_2)
-                    item.setFlags(QtCore.Qt.ItemIsEditable|QtCore.Qt.ItemIsDragEnabled|QtCore.Qt.ItemIsUserCheckable)
-                    
-                    if row == 0:
-                        salida = "Raiz #"+str(column+1)
-                        item.setText(salida)
-                        self.tableWidget.setItem(
-                            row, column, item)
-                        if contadorTamanio < 930:
-                            tamanioColumnas = float(
-                                listaTamanio[len(listaTamanio)-1])
-                            self.tableWidget.setColumnWidth(
-                                column, tamanioColumnas)
-                        else:
-                            tamanioColumnas = len(str(lst[column]))*7
-                            self.tableWidget.setColumnWidth(
-                                column, tamanioColumnas)
-                    else:
-                        salida = str(lst[column])
-                        item.setText(str(salida))
-                        self.tableWidget.setItem(
-                            row, column, item)
-                        if contadorTamanio < 930:
-                            tamanioColumnas = float(
-                                listaTamanio[len(listaTamanio)-1])
-                            self.tableWidget.setColumnWidth(
-                                column, tamanioColumnas)
-
-                        else:
-                            tamanioColumnas = len(str(lst[column]))*7
-                            self.tableWidget.setColumnWidth(
-                                column, tamanioColumnas)
+                                self.tableWidget.setColumnWidth(
+                                    column, tamanioColumnas)
 
     def insertar_datos_a_tabla_unidad3(self, metodo, puntos, valor):
 
@@ -2438,7 +2563,6 @@ class Ui_MainWindow(object):
         self.tableWidget.setColumnCount(0)
         self.tableWidget.setRowCount(0)
         self.tableWidget.clear()
-        self.tableWidget.setVisible(True)
 
         # Aplicamos unas configuraciones
         self.tableWidget.verticalHeader().setVisible(False)
@@ -2469,6 +2593,8 @@ class Ui_MainWindow(object):
                 self.tableWidget.setItem(
                     1, 1, QtWidgets.QTableWidgetItem(str(lst[1])))
                 self.tableWidget.setColumnWidth(1, 830)
+                self.tableWidget.setVisible(True)
+
 
             elif self.radioButton_2.isChecked():
 
@@ -2482,8 +2608,9 @@ class Ui_MainWindow(object):
                 self.tableWidget.setItem(
                     0, 1, QtWidgets.QTableWidgetItem(str(lst[1])))
                 self.tableWidget.setColumnWidth(1, 830)
+                self.tableWidget.setVisible(True)
             else:
-                print("Seleccione una acción en los radio button")
+                self.mensajesAlerta(2,7)
 
         elif metodo == 2:  # Interpolacion Cuadratica
 
@@ -2509,6 +2636,7 @@ class Ui_MainWindow(object):
                 self.tableWidget.setItem(
                     1, 1, QtWidgets.QTableWidgetItem(str(lst[1])))
                 self.tableWidget.setColumnWidth(1, 830)
+                self.tableWidget.setVisible(True)
 
             elif self.radioButton_2.isChecked():
 
@@ -2522,8 +2650,9 @@ class Ui_MainWindow(object):
                 self.tableWidget.setItem(
                     0, 1, QtWidgets.QTableWidgetItem(str(lst[1])))
                 self.tableWidget.setColumnWidth(1, 830)
+                self.tableWidget.setVisible(True)
             else:
-                print("Seleccione una acción en los radio button")
+                self.mensajesAlerta(2,7)
 
         elif metodo == 3:  # Interpolacion de lagrange
 
@@ -2549,6 +2678,7 @@ class Ui_MainWindow(object):
                 self.tableWidget.setItem(
                     1, 1, QtWidgets.QTableWidgetItem(str(lst[1])))
                 self.tableWidget.setColumnWidth(1, 830)
+                self.tableWidget.setVisible(True)
 
             elif self.radioButton_2.isChecked():
 
@@ -2562,9 +2692,10 @@ class Ui_MainWindow(object):
                 self.tableWidget.setItem(
                     0, 1, QtWidgets.QTableWidgetItem(str(lst[1])))
                 self.tableWidget.setColumnWidth(1, 830)
+                self.tableWidget.setVisible(True)
 
             else:
-                print("Seleccione una acción en los radio button")
+                self.mensajesAlerta(2,7)
 
         elif metodo == 4:  # Interpolacion de newton
 
@@ -2590,6 +2721,7 @@ class Ui_MainWindow(object):
                 self.tableWidget.setItem(
                     1, 1, QtWidgets.QTableWidgetItem(str(lst[1])))
                 self.tableWidget.setColumnWidth(1, 830)
+                self.tableWidget.setVisible(True)
 
             elif self.radioButton_2.isChecked():
 
@@ -2603,9 +2735,10 @@ class Ui_MainWindow(object):
                 self.tableWidget.setItem(
                     0, 1, QtWidgets.QTableWidgetItem(str(lst[1])))
                 self.tableWidget.setColumnWidth(1, 830)
+                self.tableWidget.setVisible(True)
 
             else:
-                print("Seleccione una acción en los radio button")
+                self.mensajesAlerta(2,7)
 
         elif metodo == 5:  # polinomio de hermite
             lst = metodos.interpolacionHermite(puntos, valor)
@@ -2630,6 +2763,7 @@ class Ui_MainWindow(object):
                 self.tableWidget.setItem(
                     1, 1, QtWidgets.QTableWidgetItem(str(lst[1])))
                 self.tableWidget.setColumnWidth(1, 830)
+                self.tableWidget.setVisible(True)
 
             elif self.radioButton_2.isChecked():
 
@@ -2643,9 +2777,10 @@ class Ui_MainWindow(object):
                 self.tableWidget.setItem(
                     0, 1, QtWidgets.QTableWidgetItem(str(lst[1])))
                 self.tableWidget.setColumnWidth(1, 830)
+                self.tableWidget.setVisible(True)
 
             else:
-                print("Seleccione una acción en los radio button")
+                self.mensajesAlerta(2,7)
 
         elif metodo == 6:  # funciones splines
 
@@ -2660,6 +2795,8 @@ class Ui_MainWindow(object):
                     self.tableWidget.setItem(
                         row, 0, QtWidgets.QTableWidgetItem(str(lst[row])))
                     self.tableWidget.setColumnWidth(0, 830)
+                
+                self.tableWidget.setVisible(True)
 
             elif self.radioButton_2.isChecked():  # uno
 
@@ -2674,6 +2811,8 @@ class Ui_MainWindow(object):
                         row, 0, QtWidgets.QTableWidgetItem(str(lst[row])))
                     self.tableWidget.setColumnWidth(0, 830)
 
+                self.tableWidget.setVisible(True)
+
             elif self.radioButton_3.isChecked():  # dos
 
                 lst = metodos.trazadoresCubicos(puntos[0], puntos[1], 2, valor)
@@ -2686,6 +2825,8 @@ class Ui_MainWindow(object):
                     self.tableWidget.setItem(
                         row, 0, QtWidgets.QTableWidgetItem(str(lst[row])))
                     self.tableWidget.setColumnWidth(0, 830)
+
+                self.tableWidget.setVisible(True)
 
             elif self.radioButton_4.isChecked():  # tres
 
@@ -2700,8 +2841,10 @@ class Ui_MainWindow(object):
                         row, 0, QtWidgets.QTableWidgetItem(str(lst[row])))
                     self.tableWidget.setColumnWidth(0, 830)
 
+                self.tableWidget.setVisible(True)
+
             else:
-                print("Seleccione una acción en los radio button")
+                self.mensajesAlerta(2,7)
 
     def insertar_datos_a_tabla_unidad4(self, metodo):
 
@@ -2998,7 +3141,6 @@ class Ui_MainWindow(object):
         global cuantasFilasYColumnas
         global etiquetaHermite
         metodo = self.comboBox_2.currentIndex()
-
         unidad = self.comboBox.currentIndex()
         
         if unidad == 2:
@@ -3006,20 +3148,18 @@ class Ui_MainWindow(object):
                 print("Seleccione un metodo primero ")
 
             elif metodo == 1:
-                print("Solamente se puede trabajar con 2 puntos")
-
+                self.mensajesAlerta(2,1)
             else:
-
                 if metodo >= 1 and metodo <= 4:
                     if cuantasFilasYColumnas == 11:
-                        print("Maximo numero de columnas alcanzado")
+                        self.mensajesAlerta(2,3)
                     else:
                         self.tableWidget_2.insertColumn(cuantasFilasYColumnas+1)
                         cuantasFilasYColumnas += 1
 
                 if metodo == 5:
                     if cuantasFilasYColumnas == 6:
-                        print("Maximo de columnas alcanzado")
+                        self.mensajesAlerta(2,6)
                     else:
                         if etiquetaHermite == "y'":
                             etiquetaHermite += "'"
@@ -3033,8 +3173,8 @@ class Ui_MainWindow(object):
                             0, cuantasFilasYColumnas+1, QtWidgets.QTableWidgetItem(salida))
                         cuantasFilasYColumnas += 1
                 if metodo == 6:
-                    if cuantasFilasYColumnas == 10:
-                        print("Maximo de columnas alcanzado")
+                    if cuantasFilasYColumnas == 11:
+                        self.mensajesAlerta(2,3)
                     else:
                         self.tableWidget_2.insertColumn(cuantasFilasYColumnas+1)
                         cuantasFilasYColumnas += 1
@@ -3042,7 +3182,7 @@ class Ui_MainWindow(object):
         elif unidad == 3:
             
             if cuantasFilasYColumnas == 11:
-                print("Maximo numero de columnas alcanzado")
+                self.mensajesAlerta(2,3)
             else:
                 self.tableWidget_2.insertColumn(cuantasFilasYColumnas+1)
                 cuantasFilasYColumnas += 1
@@ -3053,42 +3193,42 @@ class Ui_MainWindow(object):
 
         if metodo == 1:  # lineal
             if cuantasFilasYColumnas == 3:
-                print("Se necesitan al menos 2 puntos")
+                self.mensajesAlerta(2,5)
             else:
                 self.tableWidget_2.removeColumn(cuantasFilasYColumnas)
                 cuantasFilasYColumnas = cuantasFilasYColumnas - 1
 
         elif metodo == 2:  # Cuadratica
             if cuantasFilasYColumnas == 4:
-                print("Se necesitan al menos 3 puntos")
+                self.mensajesAlerta(2,5)
             else:
                 self.tableWidget_2.removeColumn(cuantasFilasYColumnas)
                 cuantasFilasYColumnas = cuantasFilasYColumnas - 1
 
         elif metodo == 3:  # Lagrange
             if cuantasFilasYColumnas == 3:
-                print("Se necesitan al menos 2 puntos")
+                self.mensajesAlerta(2,5)
             else:
                 self.tableWidget_2.removeColumn(cuantasFilasYColumnas)
                 cuantasFilasYColumnas = cuantasFilasYColumnas - 1
 
         elif metodo == 4:  # Newton
             if cuantasFilasYColumnas == 3:
-                print("Se neecesitan al menos 2 puntos")
+                self.mensajesAlerta(2,5)
             else:
                 self.tableWidget_2.removeColumn(cuantasFilasYColumnas)
                 cuantasFilasYColumnas = cuantasFilasYColumnas-1
 
         elif metodo == 5:  # hermite
             if cuantasFilasYColumnas == 2:
-                print("Se neecesitan al menos 2 puntos")
+                self.mensajesAlerta(2,5)
             else:
                 self.tableWidget_2.removeColumn(cuantasFilasYColumnas)
                 cuantasFilasYColumnas = cuantasFilasYColumnas-1
 
         elif metodo == 6:  # trazadores cubicos
             if cuantasFilasYColumnas == 3:
-                print("Se neecesitan al menos 2 puntos")
+                self.mensajesAlerta(2,5)
             else:
                 self.tableWidget_2.removeColumn(cuantasFilasYColumnas)
                 cuantasFilasYColumnas = cuantasFilasYColumnas-1
@@ -3117,10 +3257,11 @@ class Ui_MainWindow(object):
         listaXapoyo = []
         listaYapoyo = []
         listaValoresHermite = []
+        control = 0
+        tb_vacia = 0
 
         if metodo == 5:
 
-            print(cuantasFilasYColumnas, filasHermite)
             # Agregamos los puntos a listas separadas
             for x in range(0, cuantasFilasYColumnas+1):
                 listaX = []
@@ -3130,6 +3271,7 @@ class Ui_MainWindow(object):
                         listaX.append(self.tableWidget_2.item(j, x).text())
                     except:
                         listaX.append('')
+                        
                 for x in listaX:
                     if x == '':
                         listaXapoyo.append(x)
@@ -3138,29 +3280,95 @@ class Ui_MainWindow(object):
 
                 listaValoresHermite.append(listaXapoyo)
 
-            self.insertar_datos_a_tabla_unidad3(
-                5, listaValoresHermite, self.lineEdit_6.text())
+            tb_vacia = 0
+            controlX = 0
+            controlY = 0
+
+            for i in range(0,len(listaValoresHermite),1):
+                for j in range(0,len(listaValoresHermite[i]),1):
+                    if i == 0:
+                        if listaValoresHermite[i][j] == '':
+                            controlX = 1
+
+                    elif i == 1:
+                        if listaValoresHermite[i][j] == '':
+                            controlY = 1
+
+            if controlX != 0 or controlY != 0:
+                tb_vacia = 1
+
+            if tb_vacia == 0:
+
+
+                if self.lineEdit_6.text() == '':
+                    self.mensajesAlerta(2,4)
+                    control = 1
+
+                if control == 0:
+                    self.insertar_datos_a_tabla_unidad3(
+                        5, listaValoresHermite, self.lineEdit_6.text())
+
+            else:
+                self.mensajesAlerta(2,2)
 
         elif metodo == 6:
             # Agregamos los puntos a listas separadas
+            for x in range(0,2):
+                for y in range(1,cuantasFilasYColumnas+1):
+                    print(x,y)
+            
+            print('\n')
+            print(cuantasFilasYColumnas+1)
+            print('\n')
+
             for x in range(0, 2):
                 for y in range(1, cuantasFilasYColumnas+1):
+                    print(x,y)
                     if x == 0:
                         listaX.append(self.tableWidget_2.item(x, y).text())
                     elif x == 1:
                         listaY.append(self.tableWidget_2.item(x, y).text())
 
-            for i in listaX:
-                listaXapoyo.append(float(i))
 
-            for i in listaY:
-                listaYapoyo.append(float(i))
+            tb_vacia = 0
+            controlX = 0
+            controlY = 0
 
-            puntos = [listaXapoyo, listaYapoyo]
-            self.insertar_datos_a_tabla_unidad3(
-                6, puntos, self.lineEdit_6.text())
+            for i in range(0,2,1):
+                for j in range(1,len(listaX),1):
+                    if i == 0:
+                        if listaX[j] == '':
+                            controlX = 1
+
+                    elif i == 1:
+                        if listaY[j] == '':
+                            controlY = 1
+
+            if controlX != 0 or controlY != 0:
+                tb_vacia = 1
+
+            if tb_vacia == 0:
+
+                if self.lineEdit_6.text() == '':
+                    self.mensajesAlerta(2,4)
+                    control = 1
+                
+                if control == 0:
+                    for i in listaX:
+                        listaXapoyo.append(float(i))
+
+                    for i in listaY:
+                        listaYapoyo.append(float(i))
+
+                    puntos = [listaXapoyo, listaYapoyo]
+
+                    self.insertar_datos_a_tabla_unidad3(
+                        6, puntos, self.lineEdit_6.text())
+            else:
+                self.mensajesAlerta(2,2)
 
         else:
+            
             # Agregamos los puntos a listas separadas
             for x in range(0, 2):
                 for y in range(0, cuantasFilasYColumnas+1):
@@ -3296,13 +3504,17 @@ class Ui_MainWindow(object):
                 self.insertar_datos_a_tabla_unidad1(metodo)
 
         elif unidad == 1:  # Metodos de la unidad 2
-            if metodo >= 1:
+            if metodo == 0:
+                self.mensajesAlerta(1,0)
+            elif metodo >= 1:
                 self.insertar_datos_a_tabla_unidad2(metodo)
             
         elif unidad == 2:  # Metodos de la unidad 3
-            if metodo >= 1:  # lineal
-                self.encontrar_puntos_para_metodos_unidad3(metodo)
-            
+            if metodo == 0:
+                self.mensajesAlerta(2,0)
+            elif metodo >= 1:  # Metodos de la unidad 3
+                self.encontrar_puntos_para_metodos_unidad3(metodo) 
+
         elif unidad == 3:  # Metodos de la unidad 4
             if metodo >= 2:
                 self.insertar_datos_a_tabla_unidad4(metodo)
@@ -3310,51 +3522,61 @@ class Ui_MainWindow(object):
     def graficar(self):
         x = symbols('x')
         y = symbols('y')
+        #8
+
         queMetodo = self.comboBox_2.currentIndex()
-        if queMetodo >= 0 and queMetodo <= 6 or queMetodo == 9:
-            try:
-                funcion = str(self.lineEdit.text())
-                funcionFinal = ''
-                title = 'Funcion: '+str(self.lineEdit.text())
+        control = 0
 
-                for i in range(0, len(funcion)):
-                    if funcion[i] == 'e':
-                        if funcion[i+1] == '^':
-                            funcionFinal += str(cmath.e)
+        if self.lineEdit.text() == '':
+            self.mensajesAlerta(1,8)
+            control = 1
+
+        if control == 0:
+            if queMetodo >= 0 and queMetodo <= 6 or queMetodo == 9:
+                try:
+                    funcion = str(self.lineEdit.text())
+                    funcionFinal = ''
+                    title = 'Funcion: '+str(self.lineEdit.text())
+
+                    for i in range(0, len(funcion)):
+                        if funcion[i] == 'e':
+                            if funcion[i+1] == '^':
+                                funcionFinal += str(cmath.e)
+                            else:
+                                funcionFinal += funcion[i]
                         else:
                             funcionFinal += funcion[i]
-                    else:
-                        funcionFinal += funcion[i]
 
-                p1 = plot((funcionFinal, (x, -100, 100)), box_background='red', show=False, line_color='#96ADEA',
-                          ylabel='Y', xlabel='X', title=title, size=(6, 5), xlim=(-25, 25), ylim=(-25, 25))
-                p1.show()
-            except:
-                print("Algo salio mal")
+                    p1 = plot((funcionFinal, (x, -100, 100)), box_background='red', show=False, line_color='#96ADEA',
+                            ylabel='Y', xlabel='X', title=title, size=(6, 5), xlim=(-25, 25), ylim=(-25, 25))
+                    p1.show()
+                except:
+                    self.mensajesAlerta(1,9)
 
-        elif queMetodo >= 7 and queMetodo <= 8 or queMetodo == 10:
-            try:
-                funcion = str(self.lineEdit.text())
-                funcionFinal = ''
-                title = 'Funcion: '+str(self.lineEdit.text())
+            elif queMetodo >= 7 and queMetodo <= 8 or queMetodo == 10:
+                try:
+                    funcion = str(self.lineEdit.text())
+                    funcionFinal = ''
+                    title = 'Funcion: '+str(self.lineEdit.text())
 
-                for i in range(0, len(funcion)):
-                    if funcion[i] == 'e':
-                        if funcion[i+1] == '^':
-                            funcionFinal += str(cmath.e)
+                    for i in range(0, len(funcion)):
+                        if funcion[i] == 'e':
+                            if funcion[i+1] == '^':
+                                funcionFinal += str(cmath.e)
+                            else:
+                                funcionFinal += funcion[i]
                         else:
                             funcionFinal += funcion[i]
-                    else:
-                        funcionFinal += funcion[i]
 
-                p1 = plot(funcionFinal, show=False, line_color='#96ADEA', ylabel='Y',
-                          xlabel='X', title=title, size=(6, 5), xlim=(-25, 25), ylim=(-25, 25))
-                p1.show()
-            except:
-                print("Algo salio mal")
+                    p1 = plot(funcionFinal, show=False, line_color='#96ADEA', ylabel='Y',
+                            xlabel='X', title=title, size=(6, 5), xlim=(-25, 25), ylim=(-25, 25))
+                    p1.show()
+                except:
+                    self.mensajesAlerta(1,9)
 
     def mensajesAlerta(self,unidad,numero_mensaje):
-        if unidad == 0:            
+
+        if unidad == 0:        # Mensajes de validación unidad 1
             if numero_mensaje == 0:
                 self.main = Mensajes_error()
                 self.main.ui.label.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">!UPS¡ Parece que olvido introducir</span></p><p align=\"center\"><span style=\" font-size:12pt;\">el punto inical</span></p></body></html>")
@@ -3372,7 +3594,89 @@ class Ui_MainWindow(object):
                 self.main = Mensajes_error()
                 self.main.ui.label.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">!MMMMMMM...¡ Parece que </span></p><p align=\"center\"><span style=\" font-size:12pt;\">olvidaste introcucir algo arriba </span></p></body></html>")
                 self.main.show()
+            
+        elif unidad == 1:      # Mensajes de validacion unidad 2
+            if numero_mensaje == 0:
+                self.main = Mensajes_error()
+                self.main.ui.label.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">!Hey¡ Creo que olvidamos la</span></p><p align=\"center\"><span style=\" font-size:12pt;\">parte de ingresar los datos</span></p></body></html>")
+                self.main.show()
+            elif numero_mensaje == 1:
+                self.main = Mensajes_error()
+                self.main.ui.label.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:11pt;\">Te contare un secreto: </span></p><p align=\"center\"><span style=\" font-size:12pt;\">Luego de seleccionar un metodo</span></p><p align=\"center\"><span style=\" font-size:12pt;\">debes ingresar los datos necesarios</span></p></body></html>")
+                self.main.show()
+            elif numero_mensaje == 2:
+                self.main = Mensajes_error()
+                self.main.ui.label.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">Si no me equivoco y suele ser asi</span></p><p align=\"center\"><span style=\" font-size:12pt;\">olvidamos introducir una función</span></p></body></html>")
+                self.main.show()
+            elif numero_mensaje == 3:
+                self.main = Mensajes_error()
+                self.main.ui.label.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">El valor #1 fue muy pequeño...</span></p><p align=\"center\"><span style=\" font-size:12pt;\">Te lo digo porque desaparecio</span></p></body></html>")
+                self.main.show()
+            elif numero_mensaje == 4:
+                self.main = Mensajes_error()
+                self.main.ui.label.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">El valor #2 fue muy pequeño...</span></p><p align=\"center\"><span style=\" font-size:12pt;\">Te lo digo porque desaparecio</span></p></body></html>")
+                self.main.show()
+            elif numero_mensaje == 5:
+                self.main = Mensajes_error()
+                self.main.ui.label.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">El valor #3 fue muy pequeño...</span></p><p align=\"center\"><span style=\" font-size:12pt;\">Te lo digo porque desaparecio</span></p></body></html>")
+                self.main.show()
+            elif numero_mensaje == 6:
+                self.main = Mensajes_error()
+                self.main.ui.label.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:11pt;\">Tengo la sencación que olvidamos algo</span></p><p align=\"center\"><span style=\" font-size:12pt;\">Podrias revisar que nos falta?</span></p></body></html>")
+                self.main.show()
+            elif numero_mensaje == 7:
+                self.main = Mensajes_error()
+                self.main.ui.label.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:11pt;\">¡PIENSA RAPIDO!</span></p><p align=\"center\"><span style=\" font-size:12pt;\">Mira a tu derecha y hacia arriba</span></p></body></html>")
+                self.main.show()
+            elif numero_mensaje == 8:
+                self.main = Mensajes_error()
+                self.main.ui.label.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:11pt;\">Me gustaria realizar tu grafica</span></p><p align=\"center\"><span style=\" font-size:12pt;\">Pero sin la función no puedo hacerlo</span></p></body></html>")
+                self.main.show()
+            elif numero_mensaje == 9:
+                self.main = Mensajes_error()
+                self.main.ui.label.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:11pt;\">Si recibiera una moneda siempre</span></p><p align=\"center\"><span style=\" font-size:12pt;\">que se introduce mal una función</span></p><p align=\"center\"><span style=\" font-size:12pt;\">tendria muchas monedas...</span></p></body></html>")
+                self.main.show()
+            elif numero_mensaje == 10:
+                self.main = Mensajes_error()
+                self.main.ui.label.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:11pt;\">Nos falta un valor pero no se cual :c</span></p><p align=\"center\"><span style=\" font-size:12pt;\">Menti si lo se, revisa R</span></p></body></html>")
+                self.main.show()
+            elif numero_mensaje == 11:
+                self.main = Mensajes_error()
+                self.main.ui.label.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:11pt;\">Nos falta un valor pero no se cual :c</span></p><p align=\"center\"><span style=\" font-size:12pt;\">Menti si lo se, revisa S</span></p></body></html>")
+                self.main.show()
 
-        
-
+        elif unidad == 2:      # Mensajes de validacion unidad 3
+            if numero_mensaje == 0:
+                self.main = Mensajes_error()
+                self.main.ui.label.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">Primero debes seleccionar un</span></p><p align=\"center\"><span style=\" font-size:12pt;\">metodo ya que no se que queremos</span></p><p align=\"center\"><span style=\" font-size:12pt;\">calcular exactamente</span></p></body></html>")
+                self.main.show()
+            elif numero_mensaje == 1:
+                self.main = Mensajes_error()
+                self.main.ui.label.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:11pt;\">Este metodo solo funciona</span></p><p align=\"center\"><span style=\" font-size:11pt;\">con tres puntos si necesitas más</span></p><p align=\"center\"><span style=\" font-size:11pt;\">podrias usar otro metodo</span></p></body></html>")
+                self.main.show()
+            elif numero_mensaje == 2:
+                self.main = Mensajes_error()
+                self.main.ui.label.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:11pt;\">No estoy seguro del motivo pero</span></p><p align=\"center\"><span style=\" font-size:11pt;\">la tabla esta vacia ó incompleta</span></p><p align=\"center\"><span style=\" font-size:11pt;\">podrias llenarla?</span></p></body></html>")
+                self.main.show()
+            elif numero_mensaje == 3:
+                self.main = Mensajes_error()
+                self.main.ui.label.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:11pt;\">Veo que descubriste mi debilidad...</span></p><p align=\"center\"><span style=\" font-size:11pt;\">Si, es trabajar con más</span></p><p align=\"center\"><span style=\" font-size:11pt;\">de once puntos</span></p></body></html>")
+                self.main.show()
+            elif numero_mensaje == 4:
+                self.main = Mensajes_error()
+                self.main.ui.label.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:11pt;\">Para que esto funcione necesito</span></p><p align=\"center\"><span style=\" font-size:11pt;\">un valor en el cual evaluar</span></p><p align=\"center\"><span style=\" font-size:11pt;\">el polinomio resultante</span></p></body></html>")
+                self.main.show()
+            elif numero_mensaje == 5:
+                self.main = Mensajes_error()
+                self.main.ui.label.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:11pt;\">Te cuento, si eliminas otro punto</span></p><p align=\"center\"><span style=\" font-size:11pt;\">probablemte deje de funcionar</span></p><p align=\"center\"><span style=\" font-size:11pt;\">Y no queremos eso verdad?</span></p></body></html>")
+                self.main.show()
+            elif numero_mensaje == 6:
+                self.main = Mensajes_error()
+                self.main.ui.label.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">Solo puedo ofrecer hasta derivada</span></p><p align=\"center\"><span style=\" font-size:12pt;\">de orden numéro cinco</span></p><p align=\"center\"><span style=\" font-size:11pt;\">Tomalo o dejalo...</span></p></body></html>")
+                self.main.show()
+            elif numero_mensaje == 7:
+                self.main = Mensajes_error()
+                self.main.ui.label.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:11pt;\">Se que no parecen muy importante</span></p><p align=\"center\"><span style=\" font-size:12pt;\"></span></p>pero debes seleccionar una opción en los <p align=\"center\"><span style=\" font-size:11pt;\">radio button</span></p></body></html>")
+                self.main.show()
+            
 
