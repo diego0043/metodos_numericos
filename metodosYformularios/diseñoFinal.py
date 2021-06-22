@@ -3434,8 +3434,23 @@ class Ui_MainWindow(object):
                     lst = metodos_uni4.regla_del_trapecio_compuesta(
                     '', a,b,n, puntos,0)
 
-        elif metodo == 15:  # Integrales dobles y triples 
-            self.insertar_datos_a_tabla_unidad4(15)
+        elif metodo == 15:  # Integrales dobles y triples
+            funcion = self.funcion_txt.text()
+            cmb3 = self.comboBox_3.currentIndex() 
+
+            if cmb3 == 0: #dobles
+                if self.a0.text() == '' or self.b0.text() == ''  or self.a1.text() == '' or self.b1.text() == '' or funcion == '':
+                    self.mensajesAlerta(3,5)
+                    control_mostrar_respuesta = 1            
+                else:
+                    lst = metodos_uni4.trapecio_para_dobles_y_triples(self.funcion_txt.text(), [float(self.a0.text()),float(self.a1.text())], [float(self.b0.text()),float(self.b1.text())],10,2)
+            
+            elif cmb3 == 1: #triples
+                if self.a0.text() == '' or self.b0.text() == ''  or self.a1.text() == '' or self.b1.text() == '' or  self.a1.text() == '' or self.b1.text() == '' or funcion == '':
+                    self.mensajesAlerta(3,5)
+                    control_mostrar_respuesta = 1            
+                else:
+                    lst = metodos_uni4.trapecio_para_dobles_y_triples(self.funcion_txt.text(), [float(self.a0.text()),float(self.a1.text()), float(self.a2.text())], [float(self.b0.text()),float(self.b1.text()), float(self.b2.text())],10,3)
 
         elif metodo == 16: # simpson 1/3 simple
                 
