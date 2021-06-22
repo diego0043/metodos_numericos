@@ -1895,11 +1895,11 @@ class Ui_MainWindow(object):
 
         elif queUnidad == 4:  # unidad 5
 
-            if queMetodo >= 1 and queMetodo <= 5:
+            if queMetodo >= 1 and queMetodo <= 4:
                 self.label_4.setText("T0")
                 self.label_5.setText("Y0")
                 self.label_6.setText("T1")
-                self.label_7.setText("N:")
+                self.label_7.setText("N")
                 self.label_4.setVisible(True)
                 self.label_2.setVisible(True)
                 self.label_3.setVisible(True)
@@ -1912,11 +1912,15 @@ class Ui_MainWindow(object):
                 self.lineEdit_4.setVisible(True)
                 self.lineEdit.setVisible(True)
 
-            elif queMetodo >= 6 and queMetodo <= 7:
+            elif queMetodo >= 5 and queMetodo <= 7:
+                if queMetodo == 5:
+                    self.label_7.setText("h")
+                else:
+                    self.label_7.setText("N")
+
                 self.label_4.setText("T0")
                 self.label_5.setText("Y0")
                 self.label_6.setText("T1")
-                self.label_7.setText("N:")
                 self.label_4.setVisible(True)
                 self.label_2.setVisible(True)
                 self.label_3.setVisible(True)
@@ -3760,7 +3764,7 @@ class Ui_MainWindow(object):
         
         control = 0
 
-        if metodo >= 1 and metodo <= 5:
+        if metodo >= 1 and metodo <= 4:
 
             if metodo != 0 and x1 == '' and x2 == '' and x3 == '' and funcion == '' and cifras == '':
                     self.mensajesAlerta(4,1)
@@ -3784,30 +3788,33 @@ class Ui_MainWindow(object):
                 self.mensajesAlerta(4,6)
                 control = 1
 
-        elif metodo >= 6 and metodo <= 7:
+        elif metodo >= 5 and metodo <= 7:
             orden = self.lineOrden.text()
-
+        
+        
             if metodo != 0 and x1 == '' and x2 == '' and x3 == '' and funcion == '' and cifras == '' and orden == '':
                     self.mensajesAlerta(4,1)
                     control = 1
-            elif metodo != 0 and x1 != '' and x2 != '' and x3 != '' and funcion == '' and cifras != '' and orden == '':
+            elif metodo != 0 and x1 != '' and x2 != '' and x3 != '' and funcion == '' and cifras != '' and orden != '':
                 self.mensajesAlerta(4,2)
                 control = 1
-            elif metodo != 0 and x1 == '' and x2 != '' and x3 != '' and funcion != '' and cifras != '' and orden == '':
+            elif metodo != 0 and x1 == '' and x2 != '' and x3 != '' and funcion != '' and cifras != '' and orden != '':
                 self.mensajesAlerta(4,3)
                 control = 1
-            elif metodo != 0 and x1 != '' and x2 == '' and x3 != '' and funcion != '' and cifras != '' and orden == '':
+            elif metodo != 0 and x1 != '' and x2 == '' and x3 != '' and funcion != '' and cifras != '' and orden != '':
                 self.mensajesAlerta(4,4)
                 control = 1
-            elif metodo != 0 and x1 != '' and x2 != '' and x3 != '' and funcion != '' and cifras == '' and orden == '':
+            elif metodo != 0 and x1 != '' and x2 != '' and x3 != '' and funcion != '' and cifras == '' and orden != '':
                 self.mensajesAlerta(4,7)
                 control = 1
-            elif metodo != 0 and x1 != '' and x2 != '' and x3 == '' and funcion != '' and cifras != '' and orden == '':
+            elif metodo != 0 and x1 != '' and x2 != '' and x3 == '' and funcion != '' and cifras != '' and orden != '':
                 self.mensajesAlerta(4,5)
                 control = 1
             elif metodo != 0 and (x1 == '' or x2 == '' and x3 == '' or funcion == '' or cifras == '' or orden == ''):
                 self.mensajesAlerta(4,6)
                 control = 1
+            
+            
 
 
         if control == 0:
@@ -3816,30 +3823,36 @@ class Ui_MainWindow(object):
             x1Prueba = float((x1))
             x2Prueba = float((x2))
             x3Prueba = float((x3))
-            cifrasPrueba = int((cifras))
 
             # Llamamos al metodo que corresponda para obtener la respuesta y la guardamos en lst
             if metodo == 1:
+                cifrasPrueba = int(cifras)
                 lst = metodos_uni5.metodo_Euler_Adelante(funcion, x1Prueba, x2Prueba, x3Prueba, cifrasPrueba)
             elif metodo == 2:
+                cifrasPrueba = int(cifras)
                 lst = metodos_uni5.metodo_Euler_Atras(funcion, x1Prueba, x2Prueba, x3Prueba, cifrasPrueba)
             elif metodo == 3:
+                cifrasPrueba = int(cifras)
                 lst = metodos_uni5.metodo_Euler_Centrado(funcion, x1Prueba, x2Prueba, x3Prueba, cifrasPrueba)
             elif metodo == 4:
+                cifrasPrueba = int(cifras)
                 lst = metodos_uni5.metodo_Euler_Mejorado(funcion, x1Prueba, x2Prueba, x3Prueba, cifrasPrueba)
             elif metodo == 5:
-                lst = metodos_uni5.metodo_taylor(funcion, x1Prueba, x2Prueba, x3Prueba, cifrasPrueba)
+                cifrasPrueba = float(cifras)
+                lst = metodos_uni5.metodo_taylor(funcion, x1Prueba, x2Prueba, x3Prueba, cifrasPrueba, int(self.lineOrden.text()))
             elif metodo == 6:
-                lst = metodos_uni5.metodo_Runge_Kutta(funcion, x1Prueba, x2Prueba, x3Prueba, cifrasPrueba, float(self.lineOrden.text()))
+                cifrasPrueba = int(cifras)
+                lst = metodos_uni5.metodo_Runge_Kutta(funcion, x1Prueba, x2Prueba, x3Prueba, cifrasPrueba, int(self.lineOrden.text()))
             elif metodo == 7:
-                lst = metodos_uni5.Adam_Bashforth_Moulton(funcion, x1Prueba, x2Prueba, x3Prueba, cifrasPrueba, float(self.lineOrden.text()))
+                cifrasPrueba = int(cifras)
+                lst = metodos_uni5.Adam_Bashforth_Moulton(funcion, x1Prueba, x2Prueba, x3Prueba, cifrasPrueba, int(self.lineOrden.text()))
 
             # Insertamos los valores de lst en la tabla de respuestas
 
             self.tableWidget.verticalHeader().setDefaultAlignment(QtCore.Qt.AlignHCenter)
             rows = len(lst)  # Numero de filas
             columns = len(lst[0])  # Numero de columnas
-            len_Col = int(930/columns)-5 # Tamaño que tendran las columnas
+            len_Col = int(930/columns) # Tamaño que tendran las columnas
 
             # Aplicamos unas configuraciones a la tabla
             self.tableWidget.setColumnCount(columns)
@@ -4530,10 +4543,12 @@ class Ui_MainWindow(object):
                 self.main = Mensajes_error()
                 self.main.ui.label.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:11pt;\">¡PIENSA RAPIDO!</span></p><p align=\"center\"><span style=\" font-size:12pt;\">Mira a tu derecha y hacia arriba</span></p></body></html>")
                 self.main.show()
+            elif numero_mensaje == 8:
+                self.main = Mensajes_error()
+                self.main.ui.label.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:11pt;\">N debe ser un valor positivo entero</span></p><p align=\"center\"><span style=\" font-size:12pt;\"></span></p></body></html>")
+                self.main.show()
+            elif numero_mensaje == 9:
+                self.main = Mensajes_error()
+                self.main.ui.label.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:11pt;\">Parece que ingresaste un valor</span></p><p align=\"center\"><span style=\" font-size:12pt;\">invalido en el campo de h</span></p></body></html>")
+                self.main.show()
            
-            
-
-            
-            
-            
-

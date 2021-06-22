@@ -211,14 +211,13 @@ def metodo_taylor(funcion,x_Inicial,y_inicial,x_Final, h, orden):
 
     for i in range(0,orden+1,1):
         if i == 0:
-            polinomio_evaluar += str(y_inicial) + ' + ('
+            polinomio_evaluar += str(y_inicial)
         elif i == 1:
-            polinomio_evaluar += str((lista_derivadas[0])) + ')*' + str(h) 
+            polinomio_evaluar +=  ' + (' + str((lista_derivadas[0])) + ')*' + str(h) 
         else:
             polinomio_evaluar +=  ' + (' + str(lista_derivadas[contador]) +  ')*' + str((h**contador)/math.factorial(contador))
             contador += 1
 
-    
     #Esta variable controla que las evluaciones no sobrepasen el valor de x_Final
     control_evaluacion = x_Inicial 
     lista_valores_y = []
@@ -233,32 +232,8 @@ def metodo_taylor(funcion,x_Inicial,y_inicial,x_Final, h, orden):
         listaResultados.append([control_evaluacion,lista_valores_y[contador_2+1]])
         contador_2 += 1 
         
+    return listaResultados
     
-    print(tabulate(listaResultados))
-
-metodo_taylor('y-t',1,3,5,1,3)
-
-
-
-
-
-
-#Aqui practicamente solo llamamos al metodo solamente agarramos la lista y el punto inicial ya que
-# si usamos la funcion falla
-
-# Funcion: y' = y - t^2
-# y(0) = 2
-# y(1) = ?
-
-# <-------------------------------- metodo de Runge Kutta ------------------------------>
-
-'''
-Nota: 
-El parametro "tipoRespuesta", es utilizado en el orden 4 (el else para seleccionar orden, solo es utilizada para orden 4)
-si en tipoRespuesta se envia un 0 se retornara una lista para mostrar al interfaz de usuario
-si en tipoRespuesta se envia cualquier otro numero, se retornara la lista de los Y, que es utilizada en multipasos
-'''
-
 def metodo_Runge_Kutta(funcion, x_Inicial, y_Inicial, x_Final, n_Intervalos, orden, tipoRespuesta):
 
     # Variables utilizadas
