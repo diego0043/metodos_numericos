@@ -18,6 +18,7 @@ from metodosYformularios import *
 import metodosYformularios.metodos_Unidad_2y3 as metodos
 import metodosYformularios.metodos_unidad_4 as metodos_uni4
 import metodosYformularios.metodosUnidad1 as metodos_uni1
+import metodosYformularios.metodos_Unidad5 as metodos_uni5
 
 from metodosYformularios.mensajesUi import Ui_Mensajes
 
@@ -293,6 +294,30 @@ class Ui_MainWindow(object):
             "background-color: rgb(242, 242, 242);\n""image: url(recursos/barra.png);\n""border:0px;\n""color:  rgb(232, 137, 137)")
         self.lineEdit_6.setObjectName("lineEdit_6")
         self.lineEdit_6.setFont(font)
+
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(12)
+        font.setBold(True)
+
+        self.lineOrden = QtWidgets.QLineEdit(self.centralwidget)
+        self.lineOrden.setGeometry(QtCore.QRect(745, 70, 51, 24))
+        self.lineOrden.setStyleSheet(
+            "background-color: rgb(242, 242, 242);\n""image: url(recursos/barra.png);\n""border:0px;\n""color:  rgb(232, 137, 137)")
+        self.lineOrden.setEchoMode(QtWidgets.QLineEdit.Normal)
+        self.lineOrden.setObjectName("lineOrden")
+        self.lineOrden.setFont(font)
+
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.lblOrden = QtWidgets.QLabel(self.centralwidget)
+        self.lblOrden.setGeometry(QtCore.QRect(745, 45, 191, 20))
+        self.lblOrden.setObjectName("lblOrden")
+        self.lblOrden.setFont(font)
+        self.lblOrden.setStyleSheet("color: rgb(134, 155, 208);")
 
         self.tableWidget = QtWidgets.QTableWidget(self.centralwidget)
         self.tableWidget.setGeometry(QtCore.QRect(30, 330, 931, 220))
@@ -749,6 +774,7 @@ class Ui_MainWindow(object):
         self.label_funcion_uni4.setText("Ingresa la función")
         self.label_puntoInicial_uni4.setText("Punto Inicial")
         self.label_h_uni4.setText("Valor de h")
+        self.lblOrden.setText(_translate("MaunWindows", "Nivel"))
         self.label_nivel_uni4.setText("Nivel")
         self.label_12.setText(_translate("MainWindow", "COLUMNAS:"))
         self.pushButton.setText(_translate("MainWindow", "CALCULAR"))
@@ -888,6 +914,9 @@ class Ui_MainWindow(object):
         self.a0_normal.setVisible(False)
         self.b0_normal.setVisible(False)
 
+        self.lineOrden.setVisible(False)
+        self.lblOrden.setVisible(False)
+
     # En este metodo vamos a capturar la posicion del primer combobox y luego dependiendo
     # de cual este seleccionado asi se llenara el otro combobox
 
@@ -936,6 +965,8 @@ class Ui_MainWindow(object):
         self.tableWidget.setColumnCount(0)
         self.tableWidget.setRowCount(9)
         self.tableWidget.clear()
+        self.lineOrden.setVisible(False)
+        self.lblOrden.setVisible(False)
 
         if cual == 0:  # Metodos de la primera unidad
             self.comboBox_2.setGeometry(QtCore.QRect(200, 80, 172, 24))
@@ -1162,6 +1193,32 @@ class Ui_MainWindow(object):
             self.lineEdit_5.setVisible(False)
 
           # <----------- Mostramos el combobox donde estan los metodos ---------->
+            self.comboBox_2.setVisible(True)
+            self.label.setVisible(True)
+
+        elif cual == 4:  # metodos de la unidad 5
+
+            self.comboBox_2.setGeometry(QtCore.QRect(200, 80, 172, 24))
+            self.label_10.setText('Ecuaciones diferenciales ordinarias')
+
+            self.comboBox_2.addItem("")
+            self.comboBox_2.addItem("")
+            self.comboBox_2.addItem("")
+            self.comboBox_2.addItem("")
+            self.comboBox_2.addItem("")
+            self.comboBox_2.addItem("")
+            self.comboBox_2.addItem("")
+            self.comboBox_2.addItem("")
+
+            self.comboBox_2.setItemText(0,  "Seleccione un metodo")
+            self.comboBox_2.setItemText(1,  "Euler adelante")
+            self.comboBox_2.setItemText(2,  "Euler atras")
+            self.comboBox_2.setItemText(3,  "Euler centrado")
+            self.comboBox_2.setItemText(4,  "Euler mejorado")
+            self.comboBox_2.setItemText(5,  "Met. Taylor")
+            self.comboBox_2.setItemText(6,  "Met. Runge Kutta")
+            self.comboBox_2.setItemText(7,  "Met. Adam Bashforth")
+
             self.comboBox_2.setVisible(True)
             self.label.setVisible(True)
 
@@ -1459,7 +1516,9 @@ class Ui_MainWindow(object):
         self.b0_normal.setVisible(False)
         self.label_ver_tabla.setVisible(False)
         self.label_14.setText('Evaluar en')
+        self.label_6.setText("#3")
         self.label_puntoInicial_uni4.setText("Punto Inicial")
+        self.label_7.setText("Cifras significativas")
         self.lbl_cmb.setVisible(False)
         self.cmb_doble_triple.setVisible(False)
         self.cajaTexto.setVisible(False)
@@ -1467,6 +1526,8 @@ class Ui_MainWindow(object):
         self.tableWidget.setColumnCount(0)
         self.tableWidget.setRowCount(9)
         self.tableWidget.clear()
+        self.lineOrden.setVisible(False)
+        self.lblOrden.setVisible(False)
 
         if queUnidad == 0:  # unidad 1
 
@@ -1556,6 +1617,7 @@ class Ui_MainWindow(object):
                 self.lineEdit_3.setVisible(False)
                 self.lineEdit_4.setVisible(False)
                 self.lineEdit_5.setVisible(False)
+
             elif queMetodo == 8:
 
                 self.label_4.setText("#1")
@@ -1829,6 +1891,44 @@ class Ui_MainWindow(object):
                 self.comboBox_2.setCurrentIndex(0)
                 self.label_ver_tabla.setVisible(True)
                 self.comboBox_3.setVisible(True)
+
+        elif queUnidad == 4:
+
+            if queMetodo >= 1 and queMetodo <= 5:
+                self.label_4.setText("T0")
+                self.label_5.setText("Y0")
+                self.label_6.setText("T1")
+                self.label_7.setText("N:")
+                self.label_4.setVisible(True)
+                self.label_2.setVisible(True)
+                self.label_3.setVisible(True)
+                self.label_5.setVisible(True)
+                self.label_7.setVisible(True)
+                self.label_6.setVisible(True)
+                self.lineEdit_2.setVisible(True)
+                self.lineEdit_3.setVisible(True)
+                self.lineEdit_5.setVisible(True)
+                self.lineEdit_4.setVisible(True)
+                self.lineEdit.setVisible(True)
+
+            elif queMetodo >= 6 and queMetodo <= 7:
+                self.label_4.setText("T0")
+                self.label_5.setText("Y0")
+                self.label_6.setText("T1")
+                self.label_7.setText("N:")
+                self.label_4.setVisible(True)
+                self.label_2.setVisible(True)
+                self.label_3.setVisible(True)
+                self.label_5.setVisible(True)
+                self.label_7.setVisible(True)
+                self.label_6.setVisible(True)
+                self.lineEdit_2.setVisible(True)
+                self.lineEdit_3.setVisible(True)
+                self.lineEdit_5.setVisible(True)
+                self.lineEdit_4.setVisible(True)
+                self.lineEdit.setVisible(True)
+                self.lineOrden.setVisible(True)
+                self.lblOrden.setVisible(True)
 
     # Metodos que controlan las tablas ó que trabajan con las tablas
     def creacion_tabla_por_defecto_unidad3(self, columnas, si_es_hermite):
@@ -3137,6 +3237,122 @@ class Ui_MainWindow(object):
 
             self.cajaTexto.setText(salida)
 
+    def insertar_datos_a_tabla_unidad5(self, metodo):
+        # Puntos a evaluar, funcion en la que evaluaremos y las cifras que se usaran
+        x1 = self.lineEdit_2.text()  # Primer punto a evaluar
+        x2 = self.lineEdit_3.text()  # Segundo punto a evaluar
+        x3 = self.lineEdit_4.text()  # Tercer punto a evaluar
+        cifras = self.lineEdit_5.text()  # numero de cifras significativas
+        funcion = self.lineEdit.text()  # función a evaluar
+
+
+        control = 0
+
+        # Limpiamos la tabla antes de llenarla
+        self.tableWidget.clear()
+        self.tableWidget.setColumnCount(0)
+        self.tableWidget.setRowCount(0)
+
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+
+        brush = QtGui.QBrush(QtGui.QColor(242, 242, 242))
+        brush.setStyle(QtCore.Qt.NoBrush)
+
+        brush_2 = QtGui.QBrush(QtGui.QColor(134, 135, 208))
+        brush_2.setStyle(QtCore.Qt.SolidPattern)
+
+        # tabla de biseccion - hasta secante
+        
+        control = 0
+
+        if metodo != 0 and x1 == '' and x2 == '' and x3 == '' and funcion == '' and cifras == '':
+                self.mensajesAlerta(1,1)
+                control = 1
+        elif metodo != 0 and x1 != '' and x2 != '' and x3 != '' and funcion == '' and cifras != '':
+            self.mensajesAlerta(1,2)
+            control = 1
+        elif metodo != 0 and x1 == '' and x2 != '' and x3 != '' and funcion != '' and cifras != '':
+            self.mensajesAlerta(1,3)
+            control = 1
+        elif metodo != 0 and x1 != '' and x2 == '' and x3 != '' and funcion != '' and cifras != '':
+            self.mensajesAlerta(1,4)
+            control = 1
+        elif metodo != 0 and x1 != '' and x2 != '' and x3 != '' and funcion != '' and cifras == '':
+            self.mensajesAlerta(1,7)
+            control = 1
+        elif metodo != 0 and x1 != '' and x2 != '' and x3 == '' and funcion != '' and cifras != '':
+            self.mensajesAlerta(1,5)
+            control = 1
+        elif metodo != 0 and (x1 == '' or x2 == '' and x3 == '' or funcion == '' or cifras == ''):
+            self.mensajesAlerta(1,6)
+            control = 1
+
+        if control == 0:
+
+             # Si nos devuelven la palabra: 'falsisimo' estan vacios
+            x1Prueba = float((x1))
+            x2Prueba = float((x2))
+            x3Prueba = float((x3))
+            cifrasPrueba = float((cifras))
+            
+            # Llamamos al metodo que corresponda para obtener la respuesta y la guardamos en lst
+            if metodo == 1:
+                lst = metodos_uni5.metodo_Euler_Adelante(funcion, x1Prueba, x2Prueba, x3Prueba, cifrasPrueba)
+            elif metodo == 2:
+                lst = metodos_uni5.metodo_Euler_Atras(funcion, x1Prueba, x2Prueba, x3Prueba, cifrasPrueba)
+            elif metodo == 3:
+                lst = metodos_uni5.metodo_Euler_Centrado(funcion, x1Prueba, x2Prueba, x3Prueba, cifrasPrueba)
+            elif metodo == 4:
+                lst = metodos_uni5.metodo_Euler_Mejorado(funcion, x1Prueba, x2Prueba, x3Prueba, cifrasPrueba)
+            elif metodo == 5:
+                lst = metodos_uni5.metodo_taylor(funcion, x1Prueba, x2Prueba, x3Prueba, cifrasPrueba)
+            elif metodo == 6:
+                lst = metodos_uni5.metodo_Runge_Kutta(funcion, x1Prueba, x2Prueba, x3Prueba, cifrasPrueba, float(self.lineOrden.text()))
+            elif metodo == 7:
+                lst = metodos_uni5.Adam_Bashforth_Moulton(funcion, x1Prueba, x2Prueba, x3Prueba, cifrasPrueba, float(self.lineOrden.text()))
+
+            # Insertamos los valores de lst en la tabla de respuestas
+
+            self.tableWidget.verticalHeader().setDefaultAlignment(QtCore.Qt.AlignHCenter)
+            rows = len(lst)  # Numero de filas
+            columns = len(lst[0])  # Numero de columnas
+            len_Col = int(930/columns) # Tamaño que tendran las columnas
+
+            # Aplicamos unas configuraciones a la tabla
+            self.tableWidget.setColumnCount(columns)
+            self.tableWidget.setRowCount(rows)
+            self.tableWidget.verticalHeader().setVisible(False)
+            self.tableWidget.horizontalHeader().setVisible(False)
+
+            for row in range(rows):  # Primer for recorre las filas en lst
+                # Segundo for recorre las columnas en lst
+                for column in range(columns):
+
+                    item = QtWidgets.QTableWidgetItem()
+                    item.setTextAlignment(QtCore.Qt.AlignCenter)
+                    item.setFont(font)
+                    item.setBackground(brush)
+                    item.setForeground(brush_2)
+                    item.setFlags(QtCore.Qt.ItemIsEditable|QtCore.Qt.ItemIsDragEnabled|QtCore.Qt.ItemIsUserCheckable)
+
+                    if row == 0:  # Encabezado o header
+                        salida = lst[row][column]
+                        item.setText(str(salida))
+                        self.tableWidget.setItem(row, column, item)
+                        self.tableWidget.setColumnWidth(column, len_Col)
+                    else:
+                        salida = "%.5f" % float(lst[row][column])
+                        item.setText(str(salida))
+                        self.tableWidget.setItem(row, column, item)
+                        self.tableWidget.setColumnWidth(column, len_Col)  
+
+            self.tableWidget.setVisible(True)
+          
+
     def control_agregar_columna_tabla_Unidad3(self):
         global cuantasFilasYColumnas
         global etiquetaHermite
@@ -3518,6 +3734,12 @@ class Ui_MainWindow(object):
         elif unidad == 3:  # Metodos de la unidad 4
             if metodo >= 2:
                 self.insertar_datos_a_tabla_unidad4(metodo)
+        
+        elif unidad == 4: # Metodos de la unidad 5
+            if metodo == 0:
+                self.mensajesAlerta(2,0)
+            elif metodo >= 1:
+                self.insertar_datos_a_tabla_unidad5(metodo)
 
     def graficar(self):
         x = symbols('x')
@@ -3677,6 +3899,44 @@ class Ui_MainWindow(object):
             elif numero_mensaje == 7:
                 self.main = Mensajes_error()
                 self.main.ui.label.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:11pt;\">Se que no parecen muy importante</span></p><p align=\"center\"><span style=\" font-size:12pt;\"></span></p>pero debes seleccionar una opción en los <p align=\"center\"><span style=\" font-size:11pt;\">radio button</span></p></body></html>")
+                self.main.show()
+
+        elif unidad == 4:      # Mensajes de validacion unidad 5
+            if numero_mensaje == 0:
+                self.main = Mensajes_error()
+                self.main.ui.label.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">!Hey¡ Creo que olvidamos la</span></p><p align=\"center\"><span style=\" font-size:12pt;\">parte de seleccionar un metodo</span></p></body></html>")
+                self.main.show()
+            elif numero_mensaje == 1:
+                self.main = Mensajes_error()
+                self.main.ui.label.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:11pt;\">Te contare un secreto: </span></p><p align=\"center\"><span style=\" font-size:12pt;\">Luego de seleccionar un metodo</span></p><p align=\"center\"><span style=\" font-size:12pt;\">debes ingresar los datos necesarios</span></p></body></html>")
+                self.main.show()
+            elif numero_mensaje == 2:
+                self.main = Mensajes_error()
+                self.main.ui.label.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">Si no me equivoco y suele ser asi</span></p><p align=\"center\"><span style=\" font-size:12pt;\">olvidamos introducir una función</span></p></body></html>")
+                self.main.show()
+            elif numero_mensaje == 3:
+                self.main = Mensajes_error()
+                self.main.ui.label.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">El valor T0 fue muy pequeño...</span></p><p align=\"center\"><span style=\" font-size:12pt;\">Te lo digo porque desaparecio</span></p></body></html>")
+                self.main.show()
+            elif numero_mensaje == 4:
+                self.main = Mensajes_error()
+                self.main.ui.label.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">El valor Y0 fue muy pequeño...</span></p><p align=\"center\"><span style=\" font-size:12pt;\">Te lo digo porque desaparecio</span></p></body></html>")
+                self.main.show()
+            elif numero_mensaje == 5:
+                self.main = Mensajes_error()
+                self.main.ui.label.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">El valor T1 fue muy pequeño...</span></p><p align=\"center\"><span style=\" font-size:12pt;\">Te lo digo porque desaparecio</span></p></body></html>")
+                self.main.show()
+            elif numero_mensaje == 6:
+                self.main = Mensajes_error()
+                self.main.ui.label.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:11pt;\">Tengo la sencación que olvidamos algo</span></p><p align=\"center\"><span style=\" font-size:12pt;\">Podrias revisar que nos falta?</span></p></body></html>")
+                self.main.show()
+            elif numero_mensaje == 7:
+                self.main = Mensajes_error()
+                self.main.ui.label.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:11pt;\">¡PIENSA RAPIDO!</span></p><p align=\"center\"><span style=\" font-size:12pt;\">Mira a tu derecha y hacia arriba</span></p></body></html>")
+                self.main.show()
+            elif numero_mensaje == 8:
+                self.main = Mensajes_error()
+                self.main.ui.label.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:11pt;\">Pobrecito el valor de orden</span></p><p align=\"center\"><span style=\" font-size:12pt;\">siempre se olvidad de ingresarlo</span></p></body></html>")
                 self.main.show()
             
 
