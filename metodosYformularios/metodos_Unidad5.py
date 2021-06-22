@@ -19,6 +19,7 @@ e = sp.Symbol('e')
 y = sp.Symbol('y')
 z = sp.Symbol('z')
 
+
 def evaluarFuncion(funcion, valor, valor2, seDeriva, ordenDerivada):
     try:
         funcioon = 0

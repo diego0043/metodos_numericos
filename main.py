@@ -22,7 +22,6 @@ jumper = 10
 
 # ==> YOUR APPLICATION WINDOW
 
-
 class MainWindow(QMainWindow):
     def __init__(self):
         QMainWindow.__init__(self)
@@ -47,7 +46,6 @@ class MainWindow(QMainWindow):
     def mousePressEvent(self, event):
         self.dragPos = event.globalPos()
 # ==> SPLASHSCREEN WINDOW
-
 
 class SplashScreen(QMainWindow):
     def __init__(self):
@@ -147,7 +145,6 @@ class SplashScreen(QMainWindow):
 
         # APPLY STYLESHEET WITH NEW VALUES
         self.ui.circularProgress.setStyleSheet(newStylesheet)
-
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

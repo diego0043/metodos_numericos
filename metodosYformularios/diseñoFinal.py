@@ -1200,6 +1200,7 @@ class Ui_MainWindow(object):
 
             self.comboBox_2.setGeometry(QtCore.QRect(200, 80, 172, 24))
             self.label_10.setText('Ecuaciones diferenciales ordinarias')
+            self.comboBox_2.clear()
 
             self.comboBox_2.addItem("")
             self.comboBox_2.addItem("")
@@ -1889,10 +1890,10 @@ class Ui_MainWindow(object):
                 self.b0_normal.setVisible(True)
             else:
                 self.comboBox_2.setCurrentIndex(0)
-                self.label_ver_tabla.setVisible(True)
-                self.comboBox_3.setVisible(True)
+                self.label_ver_tabla.setVisible(False)
+                self.comboBox_3.setVisible(False)
 
-        elif queUnidad == 4:
+        elif queUnidad == 4:  # unidad 5
 
             if queMetodo >= 1 and queMetodo <= 5:
                 self.label_4.setText("T0")
@@ -2987,12 +2988,37 @@ class Ui_MainWindow(object):
             except:
                 print('')
 
-
         if metodo == 2:  # Hacia delante
 
             if tabla_unidad4_si_no == 0:
-                lst = metodos_uni4.diferenciacion_numerica_adelante(
-                    funcion, puntoInicial, h, [])
+                cmb = self.comboBox_3.currentIndex()
+                
+                if cmb >= 0:
+                    if self.funcion_uni4.text() == '' and self.puntoInicial_uni4.text() == '' and self.h_uni4.text() == '':
+                        self.mensajesAlerta(3,1)
+                        control_mostrar_respuesta = 1
+
+                    elif self.funcion_uni4.text() == '' and self.puntoInicial_uni4.text() != '' and self.h_uni4.text() != '':
+                        self.mensajesAlerta(3,2)
+                        control_mostrar_respuesta = 1
+
+                    elif self.funcion_uni4.text() != '' and self.puntoInicial_uni4.text() == '' and self.h_uni4.text() != '':
+                        self.mensajesAlerta(3,3)
+                        control_mostrar_respuesta = 1
+
+                    elif self.funcion_uni4.text() != '' and self.puntoInicial_uni4.text() != '' and self.h_uni4.text() == '':
+                        self.mensajesAlerta(3,4)
+                        control_mostrar_respuesta = 1
+
+                    elif self.funcion_uni4.text() == '' or self.puntoInicial_uni4.text() == '' or self.h_uni4.text() == '':
+                        self.mensajesAlerta(3,5)
+                        control_mostrar_respuesta = 1
+
+                    else:
+                        lst = metodos_uni4.diferenciacion_numerica_adelante(funcion, puntoInicial, h, [])
+                else:
+                    self.mensajesAlerta(3,13)
+                    control_mostrar_respuesta = 1
             else:
 
                 h = float(listaX[1])-float(listaX[0])
@@ -3002,10 +3028,37 @@ class Ui_MainWindow(object):
                     '', puntoInicial, h, puntos)
 
         elif metodo == 3: # Hacia atras
-
             if tabla_unidad4_si_no == 0:
-                lst = metodos_uni4.diferenciacion_numerica_atras(
-                    funcion, puntoInicial, h, [])
+
+                cmb = self.comboBox_3.currentIndex()
+        
+                if cmb >= 0:
+                    if self.funcion_uni4.text() == '' and self.puntoInicial_uni4.text() == '' and self.h_uni4.text() == '':
+                        self.mensajesAlerta(3,1)
+                        control_mostrar_respuesta = 1
+
+                    elif self.funcion_uni4.text() == '' and self.puntoInicial_uni4.text() != '' and self.h_uni4.text() != '':
+                        self.mensajesAlerta(3,2)
+                        control_mostrar_respuesta = 1
+
+                    elif self.funcion_uni4.text() != '' and self.puntoInicial_uni4.text() == '' and self.h_uni4.text() != '':
+                        self.mensajesAlerta(3,3)
+                        control_mostrar_respuesta = 1
+
+                    elif self.funcion_uni4.text() != '' and self.puntoInicial_uni4.text() != '' and self.h_uni4.text() == '':
+                        self.mensajesAlerta(3,4)
+                        control_mostrar_respuesta = 1
+
+                    elif self.funcion_uni4.text() == '' or self.puntoInicial_uni4.text() == '' or self.h_uni4.text() == '':
+                        self.mensajesAlerta(3,5)
+                        control_mostrar_respuesta = 1
+
+                    else:
+                        lst = metodos_uni4.diferenciacion_numerica_atras(funcion, puntoInicial, h, [])
+                else:
+                    self.mensajesAlerta(3,13)
+                    control_mostrar_respuesta = 1
+
             else:
                 h = float(listaX[1])-float(listaX[0])
                 puntoInicial = float(self.lineEdit_6.text())
@@ -3015,8 +3068,36 @@ class Ui_MainWindow(object):
         elif metodo == 4: # centrada
 
             if tabla_unidad4_si_no == 0:
-                lst = metodos_uni4.diferenciacion_numerica_centrada(
-                    funcion, puntoInicial, h, [],0)
+
+                cmb = self.comboBox_3.currentIndex()
+                
+                if cmb >= 0:
+                
+                    if self.funcion_uni4.text() == '' and self.puntoInicial_uni4.text() == '' and self.h_uni4.text() == '':
+                        self.mensajesAlerta(3,1)
+                        control_mostrar_respuesta = 1
+
+                    elif self.funcion_uni4.text() == '' and self.puntoInicial_uni4.text() != '' and self.h_uni4.text() != '':
+                        self.mensajesAlerta(3,2)
+                        control_mostrar_respuesta = 1
+
+                    elif self.funcion_uni4.text() != '' and self.puntoInicial_uni4.text() == '' and self.h_uni4.text() != '':
+                        self.mensajesAlerta(3,3)
+                        control_mostrar_respuesta = 1
+
+                    elif self.funcion_uni4.text() != '' and self.puntoInicial_uni4.text() != '' and self.h_uni4.text() == '':
+                        self.mensajesAlerta(3,4)
+                        control_mostrar_respuesta = 1
+
+                    elif self.funcion_uni4.text() == '' or self.puntoInicial_uni4.text() == '' or self.h_uni4.text() == '':
+                        self.mensajesAlerta(3,5)
+                        control_mostrar_respuesta = 1
+
+                    else:
+                        lst = metodos_uni4.diferenciacion_numerica_centrada(funcion, puntoInicial, h, [],0)
+                else:
+                    self.mensajesAlerta(3,13)
+                    control_mostrar_respuesta = 1
             else:
                 h = float(listaX[1])-float(listaX[0])
                 puntoInicial = float(self.lineEdit_6.text())
@@ -3026,8 +3107,37 @@ class Ui_MainWindow(object):
         elif metodo == 5: # Tres puntos
 
             if tabla_unidad4_si_no == 0:
-                lst = metodos_uni4.diferenciacion_numerica_tres_puntos(
-                    funcion, puntoInicial, h, [])
+
+                cmb = self.comboBox_3.currentIndex()
+                
+                if cmb >= 0:
+                
+                    if self.funcion_uni4.text() == '' and self.puntoInicial_uni4.text() == '' and self.h_uni4.text() == '':
+                        self.mensajesAlerta(3,1)
+                        control_mostrar_respuesta = 1
+
+                    elif self.funcion_uni4.text() == '' and self.puntoInicial_uni4.text() != '' and self.h_uni4.text() != '':
+                        self.mensajesAlerta(3,2)
+                        control_mostrar_respuesta = 1
+
+                    elif self.funcion_uni4.text() != '' and self.puntoInicial_uni4.text() == '' and self.h_uni4.text() != '':
+                        self.mensajesAlerta(3,3)
+                        control_mostrar_respuesta = 1
+
+                    elif self.funcion_uni4.text() != '' and self.puntoInicial_uni4.text() != '' and self.h_uni4.text() == '':
+                        self.mensajesAlerta(3,4)
+                        control_mostrar_respuesta = 1
+
+                    elif self.funcion_uni4.text() == '' or self.puntoInicial_uni4.text() == '' or self.h_uni4.text() == '':
+                        self.mensajesAlerta(3,5)
+                        control_mostrar_respuesta = 1
+
+                    else:
+                        lst = metodos_uni4.diferenciacion_numerica_tres_puntos(
+                            funcion, puntoInicial, h, [])
+                else:
+                    self.mensajesAlerta(3,13)
+                    control_mostrar_respuesta = 1
             else:
                 h = float(listaX[1])-float(listaX[0])
                 puntoInicial = float(self.lineEdit_6.text())
@@ -3037,8 +3147,36 @@ class Ui_MainWindow(object):
         elif metodo == 6: # Cinco Puntos
 
             if tabla_unidad4_si_no == 0:
-                lst = metodos_uni4.diferenciacion_numerica_cinco_puntos(
-                    funcion, puntoInicial, h, [])
+                cmb = self.comboBox_3.currentIndex()
+                
+                if cmb >= 0:
+                
+                    if self.funcion_uni4.text() == '' and self.puntoInicial_uni4.text() == '' and self.h_uni4.text() == '':
+                            self.mensajesAlerta(3,1)
+                            control_mostrar_respuesta = 1
+
+                    elif self.funcion_uni4.text() == '' and self.puntoInicial_uni4.text() != '' and self.h_uni4.text() != '':
+                        self.mensajesAlerta(3,2)
+                        control_mostrar_respuesta = 1
+
+                    elif self.funcion_uni4.text() != '' and self.puntoInicial_uni4.text() == '' and self.h_uni4.text() != '':
+                        self.mensajesAlerta(3,3)
+                        control_mostrar_respuesta = 1
+
+                    elif self.funcion_uni4.text() != '' and self.puntoInicial_uni4.text() != '' and self.h_uni4.text() == '':
+                        self.mensajesAlerta(3,4)
+                        control_mostrar_respuesta = 1
+
+                    elif self.funcion_uni4.text() == '' or self.puntoInicial_uni4.text() == '' or self.h_uni4.text() == '':
+                        self.mensajesAlerta(3,5)
+                        control_mostrar_respuesta = 1
+
+                    else:
+                        lst = metodos_uni4.diferenciacion_numerica_cinco_puntos(
+                            funcion, puntoInicial, h, [])
+                else:
+                    self.mensajesAlerta(3,13)
+                    control_mostrar_respuesta = 1
             else:
                 h = float(listaX[1])-float(listaX[0])
                 puntoInicial = float(self.lineEdit_6.text())
@@ -3049,8 +3187,37 @@ class Ui_MainWindow(object):
 
 
             if tabla_unidad4_si_no == 0:
-                lst = metodos_uni4.diferenciacion_numerica_adelante_orden_superior(
-                    funcion, puntoInicial, h, [])
+
+                cmb = self.comboBox_3.currentIndex()
+                
+                if cmb >= 0:
+                
+                    if self.funcion_uni4.text() == '' and self.puntoInicial_uni4.text() == '' and self.h_uni4.text() == '':
+                            self.mensajesAlerta(3,1)
+                            control_mostrar_respuesta = 1
+
+                    elif self.funcion_uni4.text() == '' and self.puntoInicial_uni4.text() != '' and self.h_uni4.text() != '':
+                        self.mensajesAlerta(3,2)
+                        control_mostrar_respuesta = 1
+
+                    elif self.funcion_uni4.text() != '' and self.puntoInicial_uni4.text() == '' and self.h_uni4.text() != '':
+                        self.mensajesAlerta(3,3)
+                        control_mostrar_respuesta = 1
+
+                    elif self.funcion_uni4.text() != '' and self.puntoInicial_uni4.text() != '' and self.h_uni4.text() == '':
+                        self.mensajesAlerta(3,4)
+                        control_mostrar_respuesta = 1
+
+                    elif self.funcion_uni4.text() == '' or self.puntoInicial_uni4.text() == '' or self.h_uni4.text() == '':
+                        self.mensajesAlerta(3,5)
+                        control_mostrar_respuesta = 1
+
+                    else:
+                        lst = metodos_uni4.diferenciacion_numerica_adelante_orden_superior(
+                            funcion, puntoInicial, h, [])
+                else:
+                    self.mensajesAlerta(3,13)
+                    control_mostrar_respuesta = 1
             else:
                 h = float(listaX[1])-float(listaX[0])
                 puntoInicial = float(self.lineEdit_6.text())
@@ -3060,8 +3227,37 @@ class Ui_MainWindow(object):
         elif metodo == 9: # Atras orden superior
 
             if tabla_unidad4_si_no == 0:
-                lst = metodos_uni4.diferenicacion_numerica_atras_orden_superior(
-                    funcion, puntoInicial, h, [])
+
+                cmb = self.comboBox_3.currentIndex()
+                
+                if cmb >= 0:
+                
+                    if self.funcion_uni4.text() == '' and self.puntoInicial_uni4.text() == '' and self.h_uni4.text() == '':
+                            self.mensajesAlerta(3,1)
+                            control_mostrar_respuesta = 1
+
+                    elif self.funcion_uni4.text() == '' and self.puntoInicial_uni4.text() != '' and self.h_uni4.text() != '':
+                        self.mensajesAlerta(3,2)
+                        control_mostrar_respuesta = 1
+
+                    elif self.funcion_uni4.text() != '' and self.puntoInicial_uni4.text() == '' and self.h_uni4.text() != '':
+                        self.mensajesAlerta(3,3)
+                        control_mostrar_respuesta = 1
+
+                    elif self.funcion_uni4.text() != '' and self.puntoInicial_uni4.text() != '' and self.h_uni4.text() == '':
+                        self.mensajesAlerta(3,4)
+                        control_mostrar_respuesta = 1
+
+                    elif self.funcion_uni4.text() == '' or self.puntoInicial_uni4.text() == '' or self.h_uni4.text() == '':
+                        self.mensajesAlerta(3,5)
+                        control_mostrar_respuesta = 1
+
+                    else:
+                        lst = metodos_uni4.diferenicacion_numerica_atras_orden_superior(
+                            funcion, puntoInicial, h, [])
+                else:
+                    self.mensajesAlerta(3,13)
+                    control_mostrar_respuesta = 1
             else:
                 h = float(listaX[1])-float(listaX[0])
                 puntoInicial = float(self.lineEdit_6.text())
@@ -3071,35 +3267,113 @@ class Ui_MainWindow(object):
         elif metodo == 10: # Centrado orden superio
 
             if tabla_unidad4_si_no == 0:
-                lst = metodos_uni4.diferenicacion_numerica_centrales_orden_superior(
-                    funcion, puntoInicial, h, [])
+                cmb = self.comboBox_3.currentIndex()
+                
+                if cmb >= 0:
+                
+                    if self.funcion_uni4.text() == '' and self.puntoInicial_uni4.text() == '' and self.h_uni4.text() == '':
+                            self.mensajesAlerta(3,1)
+                            control_mostrar_respuesta = 1
+
+                    elif self.funcion_uni4.text() == '' and self.puntoInicial_uni4.text() != '' and self.h_uni4.text() != '':
+                        self.mensajesAlerta(3,2)
+                        control_mostrar_respuesta = 1
+
+                    elif self.funcion_uni4.text() != '' and self.puntoInicial_uni4.text() == '' and self.h_uni4.text() != '':
+                        self.mensajesAlerta(3,3)
+                        control_mostrar_respuesta = 1
+
+                    elif self.funcion_uni4.text() != '' and self.puntoInicial_uni4.text() != '' and self.h_uni4.text() == '':
+                        self.mensajesAlerta(3,4)
+                        control_mostrar_respuesta = 1
+
+                    elif self.funcion_uni4.text() == '' or self.puntoInicial_uni4.text() == '' or self.h_uni4.text() == '':
+                        self.mensajesAlerta(3,5)
+                        control_mostrar_respuesta = 1
+
+                    else:
+                        lst = metodos_uni4.diferenicacion_numerica_centrales_orden_superior(
+                            funcion, puntoInicial, h, [])
+                else:
+                    self.mensajesAlerta(3,13)
+                    control_mostrar_respuesta = 1
             else:
                 h = float(listaX[1])-float(listaX[0])
                 puntoInicial = float(self.lineEdit_6.text())
-                lst = metodos_uni4.diferenicacion_numerica_centrales_orden_superior(
-                    '', puntoInicial, h, puntos)
+                lst = metodos_uni4.diferenicacion_numerica_centrales_orden_superior('', puntoInicial, h, puntos)
 
         elif metodo == 11: # Richardson
-            nivel = int(self.nivel_uni4.text())
-            lst = metodos_uni4.metodo_richardson(funcion, puntoInicial, h, nivel)
+                
+            if self.funcion_uni4.text() == '' and self.puntoInicial_uni4.text() == '' and self.h_uni4.text() == '' and self.nivel_uni4.text() == '':
+                    self.mensajesAlerta(3,9)
+                    control_mostrar_respuesta = 1
+
+            elif self.funcion_uni4.text() == '' and self.puntoInicial_uni4.text() != '' and self.h_uni4.text() != '' and self.nivel_uni4.text() != '':
+                self.mensajesAlerta(3,2)
+                control_mostrar_respuesta = 1
+
+            elif self.funcion_uni4.text() != '' and self.puntoInicial_uni4.text() == '' and self.h_uni4.text() != '' and self.nivel_uni4.text() != '':
+                self.mensajesAlerta(3,3)
+                control_mostrar_respuesta = 1
+
+            elif self.funcion_uni4.text() != '' and self.puntoInicial_uni4.text() != '' and self.h_uni4.text() == '' and self.nivel_uni4.text() != '':
+                self.mensajesAlerta(3,4)
+                control_mostrar_respuesta = 1
+
+            elif self.funcion_uni4.text() != '' and self.puntoInicial_uni4.text() != '' and self.h_uni4.text() != '' and self.nivel_uni4.text() == '':
+                self.mensajesAlerta(3,10)
+                control_mostrar_respuesta = 1
+
+            elif self.funcion_uni4.text() == '' or self.puntoInicial_uni4.text() == '' or self.h_uni4.text() == '' or self.nivel_uni4.text() == '':
+                self.mensajesAlerta(3,5)
+                control_mostrar_respuesta = 1
+            
+            else:
+                nivel = int(self.nivel_uni4.text())
+                lst = metodos_uni4.metodo_richardson(funcion, puntoInicial, h, nivel)
 
         elif metodo == 13: # Trapecio simple
         
             if tabla_unidad4_si_no == 0:
-                print(metodo)
-                a = float(self.a0_normal.text())
-                b = float(self.b0_normal.text())
-                if a > b:
+                cmb = self.comboBox_3.currentIndex()
+                
+                if cmb >= 0:
 
-                    control_mostrar_respuesta = 1
+                    if self.a0_normal.text() == '' and self.b0_normal.text() == '' and funcion == '':
+                        self.mensajesAlerta(3,6)
+                        control_mostrar_respuesta = 1
+                    elif self.a0_normal.text() == '' and self.b0_normal.text() != '' and funcion != '':
+                        self.mensajesAlerta(3,7)
+                        control_mostrar_respuesta = 1
+                    elif self.a0_normal.text() != '' and self.b0_normal.text() == '' and funcion != '':
+                        self.mensajesAlerta(3,8)
+                        control_mostrar_respuesta = 1
+                    elif self.a0_normal.text() != '' and self.b0_normal.text() != '' and funcion == '':
+                        self.mensajesAlerta(3,9)
+                        control_mostrar_respuesta = 1
+                    elif self.a0_normal.text() == '' or self.b0_normal.text() == '' or funcion == '':
+                        self.mensajesAlerta(3,5)
+                        control_mostrar_respuesta = 1
+
+                    else:
+                        a = float(self.a0_normal.text())
+                        b = float(self.b0_normal.text())
+
+                        if a > b:
+                            self.mensajesAlerta(3,12)
+                            control_mostrar_respuesta = 1
+                        else:
+                            lst = metodos_uni4.regla_del_trapecio_simple(funcion,a,b,[], 0)
                 else:
-                    lst = metodos_uni4.regla_del_trapecio_simple(funcion,a,b,[], 0)
+                    self.mensajesAlerta(3,13)
+                    control_mostrar_respuesta = 1
             else:
                 a = listaXapoyo[len(listaXapoyo)-1]
                 b = listaXapoyo[0]
 
                 if a > b:
-                    print('El limite inferior no puede ser mayor al limite superior')
+                    self.mensajesAlerta(3,12)
+                    control_mostrar_respuesta = 1
                 else:
                     lst = metodos_uni4.regla_del_trapecio_simple(
                     '', a, b, puntos, 0)
@@ -3107,20 +3381,51 @@ class Ui_MainWindow(object):
         elif metodo == 14: # Trapecio Compuesto
    
             if tabla_unidad4_si_no == 0:
-                n = int(self.puntoInicial_uni4.text())
-                a = float(self.a0_normal.text())
-                b = float(self.b0_normal.text())
-                if a > b:
-                    print('El limite inferior no puede ser mayor al limite superior')
+                cmb = self.comboBox_3.currentIndex()
+                
+                if cmb >= 0:
+                    n = self.puntoInicial_uni4.text()
+
+                    if self.a0_normal.text() == '' and self.b0_normal.text() == '' and funcion == '' and n == '':
+                        self.mensajesAlerta(3,5)
+                        control_mostrar_respuesta = 1
+                    elif self.a0_normal.text() == '' and self.b0_normal.text() != '' and funcion != '' and n != '':
+                        self.mensajesAlerta(3,7)
+                        control_mostrar_respuesta = 1
+                    elif self.a0_normal.text() != '' and self.b0_normal.text() == '' and funcion != '' and n != '':
+                        self.mensajesAlerta(3,8)
+                        control_mostrar_respuesta = 1
+                    elif self.a0_normal.text() != '' and self.b0_normal.text() != '' and funcion == '' and n != '':
+                        self.mensajesAlerta(3,9)
+                        control_mostrar_respuesta = 1
+                    elif self.a0_normal.text() != '' and self.b0_normal.text() != '' and funcion != '' and n == '':
+                        self.mensajesAlerta(3,10)
+                        control_mostrar_respuesta = 1
+                    elif self.a0_normal.text() == '' or self.b0_normal.text() == '' or funcion == '' or n == '':
+                        self.mensajesAlerta(3,5)
+                        control_mostrar_respuesta = 1
+                        
+                    else:
+                        n = int(self.puntoInicial_uni4.text())
+                        a = float(self.a0_normal.text())
+                        b = float(self.b0_normal.text())
+                        
+                        if a > b:
+                            self.mensajesAlerta(3,12)
+                            control_mostrar_respuesta = 1
+                        else:
+                            lst = metodos_uni4.regla_del_trapecio_compuesta(
+                            funcion, a,b,n, [],0)
                 else:
-                    lst = metodos_uni4.regla_del_trapecio_compuesta(
-                    funcion, a,b,n, [],0)
+                    self.mensajesAlerta(3,13)
+                    control_mostrar_respuesta = 1
             else:
                 a = listaXapoyo[len(listaXapoyo)-1]
                 b = listaXapoyo[0]
                 n = len(listaXapoyo)-1
                 if a > b:
-                    print('El limite inferior no puede ser mayor al limite superior')
+                    self.Mensajes_error(3,12)
+                    control_mostrar_respuesta = 1
                 else:
                     lst = metodos_uni4.regla_del_trapecio_compuesta(
                     '', a,b,n, puntos,0)
@@ -3131,18 +3436,44 @@ class Ui_MainWindow(object):
         elif metodo == 16: # simpson 1/3 simple
                 
             if tabla_unidad4_si_no == 0:
-                a = float(self.a0_normal.text())
-                b = float(self.b0_normal.text())
-                if a > b:
-                    print('El limite inferior no puede ser mayor al limite superior')
+                cmb = self.comboBox_3.currentIndex()
+                
+                if cmb >= 0:
+
+                    if self.a0_normal.text() == '' and self.b0_normal.text() == '' and funcion == '':
+                        self.mensajesAlerta(3,6)
+                        control_mostrar_respuesta = 1
+                    elif self.a0_normal.text() == '' and self.b0_normal.text() != '' and funcion != '':
+                        self.mensajesAlerta(3,7)
+                        control_mostrar_respuesta = 1
+                    elif self.a0_normal.text() != '' and self.b0_normal.text() == '' and funcion != '':
+                        self.mensajesAlerta(3,8)
+                        control_mostrar_respuesta = 1
+                    elif self.a0_normal.text() != '' and self.b0_normal.text() != '' and funcion == '':
+                        self.mensajesAlerta(3,9)
+                        control_mostrar_respuesta = 1
+                    elif self.a0_normal.text() == '' or self.b0_normal.text() == '' or funcion == '':
+                        self.mensajesAlerta(3,5)
+                        control_mostrar_respuesta = 1
+
+                    else:
+                        a = float(self.a0_normal.text())
+                        b = float(self.b0_normal.text())
+                        if a > b:
+                            self.mensajesAlerta(3,12)
+                            control_mostrar_respuesta = 1
+                        else:
+                            lst = metodos_uni4.integracion_simpson_unTercio_simple(
+                            funcion, a, b, [], [])
                 else:
-                    lst = metodos_uni4.integracion_simpson_unTercio_simple(
-                    funcion, a, b, [], [])
+                    self.mensajesAlerta(3,13)
+                    control_mostrar_respuesta = 1
             else:
                 a = listaXapoyo[len(listaXapoyo)-1]
                 b = listaXapoyo[0]
                 if a > b:
-                    print('El limite inferior no puede ser mayor al limite superior')
+                    self.mensajesAlerta(3,12)
+                    control_mostrar_respuesta = 1
                 else: 
                     lst = metodos_uni4.integracion_simpson_unTercio_simple(
                     '', a, b, listaXapoyo, listaYapoyo)
@@ -3150,80 +3481,236 @@ class Ui_MainWindow(object):
         elif metodo == 17: # simpson 1/3 compuesto
             
             if tabla_unidad4_si_no == 0:
-                a = float(self.a0_normal.text())
-                b = float(self.b0_normal.text())
-                n = int(self.puntoInicial_uni4.text())
-                if a > b:
-                    print('El limite inferior no puede ser mayor al limite superior')
-                else: 
-                    lst = metodos_uni4.integracion_simpson_unTercio_compuesta(
-                    funcion, a, b, n, [],[])
+                cmb = self.comboBox_3.currentIndex()
+                if cmb >= 0:
+                    n = self.puntoInicial_uni4.text()
+                    if self.a0_normal.text() == '' and self.b0_normal.text() == '' and funcion == '' and n == '':
+                        self.mensajesAlerta(3,5)
+                        control_mostrar_respuesta = 1
+                    elif self.a0_normal.text() == '' and self.b0_normal.text() != '' and funcion != '' and n != '':
+                        self.mensajesAlerta(3,7)
+                        control_mostrar_respuesta = 1
+                    elif self.a0_normal.text() != '' and self.b0_normal.text() == '' and funcion != '' and n != '':
+                        self.mensajesAlerta(3,8)
+                        control_mostrar_respuesta = 1
+                    elif self.a0_normal.text() != '' and self.b0_normal.text() != '' and funcion == '' and n != '':
+                        self.mensajesAlerta(3,9)
+                        control_mostrar_respuesta = 1
+                    elif self.a0_normal.text() != '' and self.b0_normal.text() != '' and funcion != '' and n == '':
+                        self.mensajesAlerta(3,10)
+                        control_mostrar_respuesta = 1
+                    elif self.a0_normal.text() == '' or self.b0_normal.text() == '' or funcion == '' or n == '':
+                        self.mensajesAlerta(3,5)
+                        control_mostrar_respuesta = 1
+                        
+                    else:
+                        a = float(self.a0_normal.text())
+                        b = float(self.b0_normal.text())
+                        n = int(self.puntoInicial_uni4.text())
+                        if a > b:
+                            self.mensajesAlerta(3,12)
+                            control_mostrar_respuesta = 1
+                        else: 
+                            lst = metodos_uni4.integracion_simpson_unTercio_compuesta(funcion, a, b, n, [],[])
+                else:
+                    self.mensajesAlerta(3,13)
+                    control_mostrar_respuesta = 1
             else:
                 a = listaXapoyo[len(listaXapoyo)-1]
                 b = listaXapoyo[0]
                 n = len(listaXapoyo)-1
                 if a > b:
-                    print('El limite inferior no puede ser mayor al limite superior')
+                    self.mensajesAlerta(3,12)
                 else: 
                     lst = metodos_uni4.integracion_simpson_unTercio_compuesta(
                     '', a, b, n, listaXapoyo, listaYapoyo)
 
         elif metodo == 18: # simpson 3/8 simple
-            a = float(self.a0_normal.text())
-            b = float(self.b0_normal.text())
-            if a > b:
-                print('El limite inferior no puede ser mayor al limite superior')
+
+            if self.a0_normal.text() == '' and self.b0_normal.text() == '' and funcion == '':
+                self.mensajesAlerta(3,6)
+                control_mostrar_respuesta = 1
+            elif self.a0_normal.text() == '' and self.b0_normal.text() != '' and funcion != '':
+                self.mensajesAlerta(3,7)
+                control_mostrar_respuesta = 1
+            elif self.a0_normal.text() != '' and self.b0_normal.text() == '' and funcion != '':
+                self.mensajesAlerta(3,8)
+                control_mostrar_respuesta = 1
+            elif self.a0_normal.text() != '' and self.b0_normal.text() != '' and funcion == '':
+                self.mensajesAlerta(3,9)
+                control_mostrar_respuesta = 1
+            elif self.a0_normal.text() == '' or self.b0_normal.text() == '' or funcion == '':
+                self.mensajesAlerta(3,5)
+                control_mostrar_respuesta = 1
+            
             else:
-                lst = metodos_uni4.integracion_simpson_tresOctavos_simple(
-                funcion, a, b)
+                a = float(self.a0_normal.text())
+                b = float(self.b0_normal.text())
+                if a > b:
+                    self.mensajesAlerta(3,12)
+                    control_mostrar_respuesta = 1
+                else:
+                    lst = metodos_uni4.integracion_simpson_tresOctavos_simple(funcion, a, b)
 
         elif metodo == 19: # simpson 3/8 compuesto
-            a = float(self.a0_normal.text())
-            b = float(self.b0_normal.text())
-            n = int(self.puntoInicial_uni4.text())
 
-            if a > b:
-                print('El limite inferior no puede ser mayor al limite superior')
+            n = self.puntoInicial_uni4.text()
+
+            if self.a0_normal.text() == '' and self.b0_normal.text() == '' and funcion == '' and n == '':
+                self.mensajesAlerta(3,5)
+                control_mostrar_respuesta = 1
+            elif self.a0_normal.text() == '' and self.b0_normal.text() != '' and funcion != '' and n != '':
+                self.mensajesAlerta(3,7)
+                control_mostrar_respuesta = 1
+            elif self.a0_normal.text() != '' and self.b0_normal.text() == '' and funcion != '' and n != '':
+                self.mensajesAlerta(3,8)
+                control_mostrar_respuesta = 1
+            elif self.a0_normal.text() != '' and self.b0_normal.text() != '' and funcion == '' and n != '':
+                self.mensajesAlerta(3,9)
+                control_mostrar_respuesta = 1
+            elif self.a0_normal.text() != '' and self.b0_normal.text() != '' and funcion != '' and n == '':
+                self.mensajesAlerta(3,10)
+                control_mostrar_respuesta = 1
+            elif self.a0_normal.text() == '' or self.b0_normal.text() == '' or funcion == '' or n == '':
+                self.mensajesAlerta(3,5)
+                control_mostrar_respuesta = 1
+                    
             else:
-                lst = metodos_uni4.integracion_simpson_tresOctavos_compuesta(
-                funcion, a, b, n)
+                a = float(self.a0_normal.text())
+                b = float(self.b0_normal.text())
+                n = int(self.puntoInicial_uni4.text())
+
+                if a > b:
+                    self.mensajesAlerta(3,12)
+                    control_mostrar_respuesta = 1
+                else:
+                    lst = metodos_uni4.integracion_simpson_tresOctavos_compuesta(
+                    funcion, a, b, n)
 
         elif metodo == 20: # rosemberg
-            a = float(self.a0_normal.text())
-            b = float(self.b0_normal.text())
-            n = int(self.puntoInicial_uni4.text())
-            if a > b:
-                print('El limite inferior no puede ser mayor al limite superior')
+
+            n = self.puntoInicial_uni4.text()
+
+            if self.a0_normal.text() == '' and self.b0_normal.text() == '' and funcion == '' and n == '':
+                self.mensajesAlerta(3,5)
+                control_mostrar_respuesta = 1
+            elif self.a0_normal.text() == '' and self.b0_normal.text() != '' and funcion != '' and n != '':
+                self.mensajesAlerta(3,7)
+                control_mostrar_respuesta = 1
+            elif self.a0_normal.text() != '' and self.b0_normal.text() == '' and funcion != '' and n != '':
+                self.mensajesAlerta(3,8)
+                control_mostrar_respuesta = 1
+            elif self.a0_normal.text() != '' and self.b0_normal.text() != '' and funcion == '' and n != '':
+                self.mensajesAlerta(3,9)
+                control_mostrar_respuesta = 1
+            elif self.a0_normal.text() != '' and self.b0_normal.text() != '' and funcion != '' and n == '':
+                self.mensajesAlerta(3,10)
+                control_mostrar_respuesta = 1
+            elif self.a0_normal.text() == '' or self.b0_normal.text() == '' or funcion == '' or n == '':
+                self.mensajesAlerta(3,5)
+                control_mostrar_respuesta = 1 
             else:
-                lst = metodos_uni4.integracion_rosemberg(funcion, a, b, n)
+                a = float(self.a0_normal.text())
+                b = float(self.b0_normal.text())
+                n = int(self.puntoInicial_uni4.text())
+                if a > b:
+                    self.mensajesAlerta(3,12)
+                    control_mostrar_respuesta = 1
+                else:
+                    lst = metodos_uni4.integracion_rosemberg(funcion, a, b, n)
 
         elif metodo == 21: # cuadratura gaussiana
-            a = float(self.a0_normal.text())
-            b = float(self.b0_normal.text())
-            n = int(self.puntoInicial_uni4.text())
-            if a > b:
-                print('El limite inferior no puede ser mayor al limite superior')
+            n = self.puntoInicial_uni4.text()
+
+            if self.a0_normal.text() == '' and self.b0_normal.text() == '' and funcion == '' and n == '':
+                self.mensajesAlerta(3,5)
+                control_mostrar_respuesta = 1
+            elif self.a0_normal.text() == '' and self.b0_normal.text() != '' and funcion != '' and n != '':
+                self.mensajesAlerta(3,7)
+                control_mostrar_respuesta = 1
+            elif self.a0_normal.text() != '' and self.b0_normal.text() == '' and funcion != '' and n != '':
+                self.mensajesAlerta(3,8)
+                control_mostrar_respuesta = 1
+            elif self.a0_normal.text() != '' and self.b0_normal.text() != '' and funcion == '' and n != '':
+                self.mensajesAlerta(3,9)
+                control_mostrar_respuesta = 1
+            elif self.a0_normal.text() != '' and self.b0_normal.text() != '' and funcion != '' and n == '':
+                self.mensajesAlerta(3,10)
+                control_mostrar_respuesta = 1
+            elif self.a0_normal.text() == '' or self.b0_normal.text() == '' or funcion == '' or n == '':
+                self.mensajesAlerta(3,5)
+                control_mostrar_respuesta = 1
+                
             else:
-                lst = metodos_uni4.integracion_cuadratura_Gaussiana(
-                funcion, a, b, n)
+                a = float(self.a0_normal.text())
+                b = float(self.b0_normal.text())
+                n = int(self.puntoInicial_uni4.text())
+                if a > b:
+                    self.mensajesAlerta(3,12)
+                    control_mostrar_respuesta = 1
+                else:
+                    lst = metodos_uni4.integracion_cuadratura_Gaussiana(
+                    funcion, a, b, n)
 
         elif metodo == 22: # simpson adaptativo
-            a = float(self.a0_normal.text())
-            b = float(self.b0_normal.text())
-            tolerancia = float(self.puntoInicial_uni4.text())
-            if a > b:
-                print('El limite inferior no puede ser mayor al limite superior')
+            n = self.puntoInicial_uni4.text()
+
+            if self.a0_normal.text() == '' and self.b0_normal.text() == '' and funcion == '' and n == '':
+                self.mensajesAlerta(3,5)
+                control_mostrar_respuesta = 1
+            elif self.a0_normal.text() == '' and self.b0_normal.text() != '' and funcion != '' and n != '':
+                self.mensajesAlerta(3,7)
+                control_mostrar_respuesta = 1
+            elif self.a0_normal.text() != '' and self.b0_normal.text() == '' and funcion != '' and n != '':
+                self.mensajesAlerta(3,8)
+                control_mostrar_respuesta = 1
+            elif self.a0_normal.text() != '' and self.b0_normal.text() != '' and funcion == '' and n != '':
+                self.mensajesAlerta(3,9)
+                control_mostrar_respuesta = 1
+            elif self.a0_normal.text() != '' and self.b0_normal.text() != '' and funcion != '' and n == '':
+                self.mensajesAlerta(3,10)
+                control_mostrar_respuesta = 1
+            elif self.a0_normal.text() == '' or self.b0_normal.text() == '' or funcion == '' or n == '':
+                self.mensajesAlerta(3,5)
+                control_mostrar_respuesta = 1
+                
             else:
-                lst = metodos_uni4.integracion_simpson_unTercio_adaptativo(
-                tolerancia, a, b, funcion)
+                a = float(self.a0_normal.text())
+                b = float(self.b0_normal.text())
+                tolerancia = float(self.puntoInicial_uni4.text())
+                if a > b:
+                    self.mensajesAlerta(3,12)
+                    control_mostrar_respuesta = 1
+                else:
+                    lst = metodos_uni4.integracion_simpson_unTercio_adaptativo(
+                    tolerancia, a, b, funcion)
 
         elif metodo == 23: # boole
-            a = float(self.a0_normal.text())
-            b = float(self.b0_normal.text())
-            if a > b:
-                print('El limite inferior no puede ser mayor al limite superior')
+
+            if self.a0_normal.text() == '' and self.b0_normal.text() == '' and funcion == '':
+                self.mensajesAlerta(3,6)
+                control_mostrar_respuesta = 1
+            elif self.a0_normal.text() == '' and self.b0_normal.text() != '' and funcion != '':
+                self.mensajesAlerta(3,7)
+                control_mostrar_respuesta = 1
+            elif self.a0_normal.text() != '' and self.b0_normal.text() == '' and funcion != '':
+                self.mensajesAlerta(3,8)
+                control_mostrar_respuesta = 1
+            elif self.a0_normal.text() != '' and self.b0_normal.text() != '' and funcion == '':
+                self.mensajesAlerta(3,9)
+                control_mostrar_respuesta = 1
+            elif self.a0_normal.text() == '' or self.b0_normal.text() == '' or funcion == '':
+                self.mensajesAlerta(3,5)
+                control_mostrar_respuesta = 1
+
             else:
-                lst = metodos_uni4.integracion_Boole(a, b, funcion)
+                a = float(self.a0_normal.text())
+                b = float(self.b0_normal.text())
+                if a > b:
+                    self.mensajesAlerta(3,12)
+                    control_mostrar_respuesta = 1
+                else:
+                    lst = metodos_uni4.integracion_Boole(a, b, funcion)
 
         if control_mostrar_respuesta == 0:
             self.tableWidget.setVisible(False)
@@ -3245,10 +3732,6 @@ class Ui_MainWindow(object):
         cifras = self.lineEdit_5.text()  # numero de cifras significativas
         funcion = self.lineEdit.text()  # función a evaluar
 
-
-        control = 0
-
-        # Limpiamos la tabla antes de llenarla
         self.tableWidget.clear()
         self.tableWidget.setColumnCount(0)
         self.tableWidget.setRowCount(0)
@@ -3265,31 +3748,67 @@ class Ui_MainWindow(object):
         brush_2 = QtGui.QBrush(QtGui.QColor(134, 135, 208))
         brush_2.setStyle(QtCore.Qt.SolidPattern)
 
+        control = 0
+
+        # Limpiamos la tabla antes de llenarla
+        self.tableWidget.clear()
+        self.tableWidget.setColumnCount(0)
+        self.tableWidget.setRowCount(0)
+
+
         # tabla de biseccion - hasta secante
         
         control = 0
 
-        if metodo != 0 and x1 == '' and x2 == '' and x3 == '' and funcion == '' and cifras == '':
-                self.mensajesAlerta(1,1)
+        if metodo >= 1 and metodo <= 5:
+
+            if metodo != 0 and x1 == '' and x2 == '' and x3 == '' and funcion == '' and cifras == '':
+                    self.mensajesAlerta(4,1)
+                    control = 1
+            elif metodo != 0 and x1 != '' and x2 != '' and x3 != '' and funcion == '' and cifras != '':
+                self.mensajesAlerta(4,2)
                 control = 1
-        elif metodo != 0 and x1 != '' and x2 != '' and x3 != '' and funcion == '' and cifras != '':
-            self.mensajesAlerta(1,2)
-            control = 1
-        elif metodo != 0 and x1 == '' and x2 != '' and x3 != '' and funcion != '' and cifras != '':
-            self.mensajesAlerta(1,3)
-            control = 1
-        elif metodo != 0 and x1 != '' and x2 == '' and x3 != '' and funcion != '' and cifras != '':
-            self.mensajesAlerta(1,4)
-            control = 1
-        elif metodo != 0 and x1 != '' and x2 != '' and x3 != '' and funcion != '' and cifras == '':
-            self.mensajesAlerta(1,7)
-            control = 1
-        elif metodo != 0 and x1 != '' and x2 != '' and x3 == '' and funcion != '' and cifras != '':
-            self.mensajesAlerta(1,5)
-            control = 1
-        elif metodo != 0 and (x1 == '' or x2 == '' and x3 == '' or funcion == '' or cifras == ''):
-            self.mensajesAlerta(1,6)
-            control = 1
+            elif metodo != 0 and x1 == '' and x2 != '' and x3 != '' and funcion != '' and cifras != '':
+                self.mensajesAlerta(4,3)
+                control = 1
+            elif metodo != 0 and x1 != '' and x2 == '' and x3 != '' and funcion != '' and cifras != '':
+                self.mensajesAlerta(4,4)
+                control = 1
+            elif metodo != 0 and x1 != '' and x2 != '' and x3 != '' and funcion != '' and cifras == '':
+                self.mensajesAlerta(4,7)
+                control = 1
+            elif metodo != 0 and x1 != '' and x2 != '' and x3 == '' and funcion != '' and cifras != '':
+                self.mensajesAlerta(4,5)
+                control = 1
+            elif metodo != 0 and (x1 == '' or x2 == '' and x3 == '' or funcion == '' or cifras == ''):
+                self.mensajesAlerta(4,6)
+                control = 1
+
+        elif metodo >= 6 and metodo <= 7:
+            orden = self.lineOrden.text()
+
+            if metodo != 0 and x1 == '' and x2 == '' and x3 == '' and funcion == '' and cifras == '' and orden == '':
+                    self.mensajesAlerta(4,1)
+                    control = 1
+            elif metodo != 0 and x1 != '' and x2 != '' and x3 != '' and funcion == '' and cifras != '' and orden == '':
+                self.mensajesAlerta(4,2)
+                control = 1
+            elif metodo != 0 and x1 == '' and x2 != '' and x3 != '' and funcion != '' and cifras != '' and orden == '':
+                self.mensajesAlerta(4,3)
+                control = 1
+            elif metodo != 0 and x1 != '' and x2 == '' and x3 != '' and funcion != '' and cifras != '' and orden == '':
+                self.mensajesAlerta(4,4)
+                control = 1
+            elif metodo != 0 and x1 != '' and x2 != '' and x3 != '' and funcion != '' and cifras == '' and orden == '':
+                self.mensajesAlerta(4,7)
+                control = 1
+            elif metodo != 0 and x1 != '' and x2 != '' and x3 == '' and funcion != '' and cifras != '' and orden == '':
+                self.mensajesAlerta(4,5)
+                control = 1
+            elif metodo != 0 and (x1 == '' or x2 == '' and x3 == '' or funcion == '' or cifras == '' or orden == ''):
+                self.mensajesAlerta(4,6)
+                control = 1
+
 
         if control == 0:
 
@@ -3297,7 +3816,7 @@ class Ui_MainWindow(object):
             x1Prueba = float((x1))
             x2Prueba = float((x2))
             x3Prueba = float((x3))
-            cifrasPrueba = float((cifras))
+            cifrasPrueba = int((cifras))
 
             # Llamamos al metodo que corresponda para obtener la respuesta y la guardamos en lst
             if metodo == 1:
@@ -3320,7 +3839,7 @@ class Ui_MainWindow(object):
             self.tableWidget.verticalHeader().setDefaultAlignment(QtCore.Qt.AlignHCenter)
             rows = len(lst)  # Numero de filas
             columns = len(lst[0])  # Numero de columnas
-            len_Col = int(930/columns) # Tamaño que tendran las columnas
+            len_Col = int(930/columns)-5 # Tamaño que tendran las columnas
 
             # Aplicamos unas configuraciones a la tabla
             self.tableWidget.setColumnCount(columns)
@@ -3328,40 +3847,48 @@ class Ui_MainWindow(object):
             self.tableWidget.verticalHeader().setVisible(False)
             self.tableWidget.horizontalHeader().setVisible(False)
 
+            font = QtGui.QFont()
+            font.setFamily("Segoe UI")
+            font.setPointSize(10)
+            font.setBold(True)
+            font.setWeight(75)
+
+            brush = QtGui.QBrush(QtGui.QColor(242, 242, 242))
+            brush.setStyle(QtCore.Qt.NoBrush)
+
+            brush_2 = QtGui.QBrush(QtGui.QColor(134, 135, 208))
+            brush_2.setStyle(QtCore.Qt.SolidPattern)
+
             for row in range(rows):  # Primer for recorre las filas en Listado_Resultante
-                        # Segundo for recorre las columnas en Listado_Resultante
-                        for column in range(columns):
-                            if row == 0:  # Encabezado o header
+                # Segundo for recorre las columnas en Listado_Resultante
+                for column in range(columns):
+                    item = QtWidgets.QTableWidgetItem()
+                    item.setTextAlignment(QtCore.Qt.AlignCenter)
+                    item.setFont(font)
+                    item.setBackground(brush)
+                    item.setForeground(brush_2)
+                    item.setFlags(QtCore.Qt.ItemIsEditable|QtCore.Qt.ItemIsDragEnabled|QtCore.Qt.ItemIsUserCheckable)
 
-                                item = QtWidgets.QTableWidgetItem()
-                                item.setTextAlignment(QtCore.Qt.AlignCenter)
-                                item.setFlags(QtCore.Qt.ItemIsEditable|QtCore.Qt.ItemIsDragEnabled|QtCore.Qt.ItemIsUserCheckable)
+                    if row == 0:  # Encabezado o header
+                        salida = lst[row][column]
+                        item.setText(str(salida))
 
-                                salida = lst[row][column]
-                                item.setText(str(salida))
-
-                                self.tableWidget.setItem(row, column, item)
-                                self.tableWidget.setColumnWidth(column, len_Col)
-                            else:
-
-                                item = QtWidgets.QTableWidgetItem()
-                                item.setTextAlignment(QtCore.Qt.AlignCenter)
-                                item.setFlags(QtCore.Qt.ItemIsEditable|QtCore.Qt.ItemIsDragEnabled|QtCore.Qt.ItemIsUserCheckable)
-                            
-                                if column == 0:
-                                    salida = (lst[row][column])
-                                    item.setText(str(salida))
-                                    self.tableWidget.setItem(row, column, item)
-                                    self.tableWidget.setColumnWidth(column, len_Col)
-                                else:
-                                    salida = "%.5f" % float(lst[row][column])
-                                    item.setText(str(salida))
-                                    self.tableWidget.setItem(row, column, item)
-                                    self.tableWidget.setColumnWidth(column, len_Col)  
+                        self.tableWidget.setItem(row, column, item)
+                        self.tableWidget.setColumnWidth(column, len_Col)
+                    else:
+                        if column == 0:
+                            salida = (lst[row][column])
+                            item.setText(str(salida))
+                            self.tableWidget.setItem(row, column, item)
+                            self.tableWidget.setColumnWidth(column, len_Col)
+                        else:
+                            salida = "%.5f" % float(lst[row][column])
+                            item.setText(str(salida))
+                            self.tableWidget.setItem(row, column, item)
+                            self.tableWidget.setColumnWidth(column, len_Col)  
 
             self.tableWidget.setVisible(True)
           
-
     def control_agregar_columna_tabla_Unidad3(self):
         global cuantasFilasYColumnas
         global etiquetaHermite
@@ -3741,7 +4268,9 @@ class Ui_MainWindow(object):
                 self.encontrar_puntos_para_metodos_unidad3(metodo) 
 
         elif unidad == 3:  # Metodos de la unidad 4
-            if metodo >= 2:
+            if metodo >= 0 and metodo  <= 1:
+                self.mensajesAlerta(3,0)
+            elif metodo >= 2:
                 self.insertar_datos_a_tabla_unidad4(metodo)
         
         elif unidad == 4: # Metodos de la unidad 5
@@ -3910,10 +4439,68 @@ class Ui_MainWindow(object):
                 self.main.ui.label.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:11pt;\">Se que no parecen muy importante</span></p><p align=\"center\"><span style=\" font-size:12pt;\"></span></p>pero debes seleccionar una opción en los <p align=\"center\"><span style=\" font-size:11pt;\">radio button</span></p></body></html>")
                 self.main.show()
 
-        elif unidad == 4:      # Mensajes de validacion unidad 5
+        elif unidad == 3:      # Mensajes de validacion unidad 4
             if numero_mensaje == 0:
                 self.main = Mensajes_error()
                 self.main.ui.label.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">!Hey¡ Creo que olvidamos la</span></p><p align=\"center\"><span style=\" font-size:12pt;\">parte de seleccionar un metodo</span></p></body></html>")
+                self.main.show()
+            elif numero_mensaje == 1:
+                self.main = Mensajes_error()
+                self.main.ui.label.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:11pt;\">Necesito que llenes esos tres</span></p><p align=\"center\"><span style=\" font-size:12pt;\">campos de arriba para poder realizar</span></p><p align=\"center\"><span style=\" font-size:12pt;\">mi trabajo</span></p></body></html>")
+                self.main.show()
+            elif numero_mensaje == 2:
+                self.main = Mensajes_error()
+                self.main.ui.label.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:11pt;\">Espero que no olvides las llaves de</span></p><p align=\"center\"><span style=\" font-size:12pt;\">tu casa como acabas de olvidar escribir</span></p><p align=\"center\"><span style=\" font-size:12pt;\">la función</span></p></body></html>")
+                self.main.show()
+            elif numero_mensaje == 3:
+                self.main = Mensajes_error()
+                self.main.ui.label.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:11pt;\">Espero que no olvides tu telefono</span></p><p align=\"center\"><span style=\" font-size:12pt;\">tu casa como acabas de olvidar escribir</span></p><p align=\"center\"><span style=\" font-size:12pt;\">el punto inicial</span></p></body></html>")
+                self.main.show()
+            elif numero_mensaje == 4:
+                self.main = Mensajes_error()
+                self.main.ui.label.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:11pt;\">Espero que no olvides las llaves de</span></p><p align=\"center\"><span style=\" font-size:12pt;\">tu casa como acabas de olvidar escribir</span></p><p align=\"center\"><span style=\" font-size:12pt;\">el valor de h</span></p></body></html>")
+                self.main.show()
+            elif numero_mensaje == 5:
+                self.main = Mensajes_error()
+                self.main.ui.label.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:11pt;\">Podria apostar un millon de dolares</span></p><p align=\"center\"><span style=\" font-size:12pt;\">a que nos falta un campo por llenar</span></p><p align=\"center\"><span style=\" font-size:12pt;\">¿Gane cierto?</span></p></body></html>")
+                self.main.show()
+            elif numero_mensaje == 6:
+                self.main = Mensajes_error()
+                self.main.ui.label.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:11pt;\">Te dejare unos pasos a seguir... :</span></p><p align=\"center\"><span style=\" font-size:12pt;\">1)Ingresa los limites de la integral</span></p><p align=\"center\"><span style=\" font-size:12pt;\">2)Escribe una función</span></p></body></html>")
+                self.main.show()
+            elif numero_mensaje == 7:
+                self.main = Mensajes_error()
+                self.main.ui.label.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:11pt;\">El limite inferior se encuentra muy</span></p><p align=\"center\"><span style=\" font-size:12pt;\">pero muy triste</span></p><p align=\"center\"><span style=\" font-size:12pt;\">¿Como pudiste olvidarlo?</span></p></body></html>")
+                self.main.show()
+            elif numero_mensaje == 8:
+                self.main = Mensajes_error()
+                self.main.ui.label.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:11pt;\">El limite superior se encuentra muy</span></p><p align=\"center\"><span style=\" font-size:12pt;\">pero muy triste</span></p><p align=\"center\"><span style=\" font-size:12pt;\">¿Como pudiste olvidarlo?</span></p></body></html>")
+                self.main.show()
+            elif numero_mensaje == 9:
+                self.main = Mensajes_error()
+                self.main.ui.label.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:11pt;\">La leyenda de la super integral</span></p><p align=\"center\"><span style=\" font-size:12pt;\">invisible parece ser real, tristemente</span></p><p align=\"center\"><span style=\" font-size:12pt;\">no puedo resolverla...</span></p></body></html>")
+                self.main.show()
+            elif numero_mensaje == 10:
+                self.main = Mensajes_error()
+                self.main.ui.label.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:11pt;\">Me parece que aún nos falta</span></p><p align=\"center\"><span style=\" font-size:12pt;\">ingresar datos que seguramente son</span></p><p align=\"center\"><span style=\" font-size:12pt;\">muy importantes</span></p></body></html>")
+                self.main.show()
+            elif numero_mensaje == 11:
+                self.main = Mensajes_error()
+                self.main.ui.label.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:11pt;\">N = intervalos, juega un papel</span></p><p align=\"center\"><span style=\" font-size:12pt;\">muy importante tanto que si no lo</span></p><p align=\"center\"><span style=\" font-size:12pt;\">ingresas no podre resolverlo</span></p></body></html>")
+                self.main.show()
+            elif numero_mensaje == 12:
+                self.main = Mensajes_error()
+                self.main.ui.label.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:11pt;\">El limite inferior no puede ser</span></p><p align=\"center\"><span style=\" font-size:12pt;\">mayor al limite superior</span></p><p align=\"center\"><span style=\" font-size:12pt;\"></span></p></body></html>")
+                self.main.show()
+            elif numero_mensaje == 13:
+                self.main = Mensajes_error()
+                self.main.ui.label.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:11pt;\">Recuerda que debes seleccionar</span></p><p align=\"center\"><span style=\" font-size:12pt;\">si quieres trabajar con una función</span></p><p align=\"center\"><span style=\" font-size:12pt;\">o con datos</span></p></body></html>")
+                self.main.show()
+
+        elif unidad == 4:      # Mensajes de validacion unidad 5
+            if numero_mensaje == 0:
+                self.main = Mensajes_error()
+                self.main.ui.label.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">!Hey¡ Creo que olvidamos la</span></p><p align=\"center\"><span style=\" font-size:12pt;\">parte de ingresar los datos</span></p></body></html>")
                 self.main.show()
             elif numero_mensaje == 1:
                 self.main = Mensajes_error()
@@ -3929,7 +4516,7 @@ class Ui_MainWindow(object):
                 self.main.show()
             elif numero_mensaje == 4:
                 self.main = Mensajes_error()
-                self.main.ui.label.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">El valor Y0 fue muy pequeño...</span></p><p align=\"center\"><span style=\" font-size:12pt;\">Te lo digo porque desaparecio</span></p></body></html>")
+                self.main.ui.label.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">El valor Y1 fue muy pequeño...</span></p><p align=\"center\"><span style=\" font-size:12pt;\">Te lo digo porque desaparecio</span></p></body></html>")
                 self.main.show()
             elif numero_mensaje == 5:
                 self.main = Mensajes_error()
@@ -3937,15 +4524,16 @@ class Ui_MainWindow(object):
                 self.main.show()
             elif numero_mensaje == 6:
                 self.main = Mensajes_error()
-                self.main.ui.label.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:11pt;\">Tengo la sencación que olvidamos algo</span></p><p align=\"center\"><span style=\" font-size:12pt;\">Podrias revisar que nos falta?</span></p></body></html>")
+                self.main.ui.label.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:11pt;\">Tengo la sencación que olvidamos algo</span></p><p align=\"center\"><span style=\" font-size:12pt;\">¿Podrias revisar que nos falta?</span></p></body></html>")
                 self.main.show()
             elif numero_mensaje == 7:
                 self.main = Mensajes_error()
                 self.main.ui.label.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:11pt;\">¡PIENSA RAPIDO!</span></p><p align=\"center\"><span style=\" font-size:12pt;\">Mira a tu derecha y hacia arriba</span></p></body></html>")
                 self.main.show()
-            elif numero_mensaje == 8:
-                self.main = Mensajes_error()
-                self.main.ui.label.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:11pt;\">Pobrecito el valor de orden</span></p><p align=\"center\"><span style=\" font-size:12pt;\">siempre se olvidad de ingresarlo</span></p></body></html>")
-                self.main.show()
+           
+            
+
+            
+            
             
 

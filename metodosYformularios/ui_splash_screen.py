@@ -25,7 +25,7 @@ class Ui_SplashScreen(object):
         self.circularProgress.setGeometry(QRect(10, 10, 300, 300))
         self.circularProgress.setStyleSheet(u"QFrame{\n"
 "	border-radius: 150px;\n"
-"	background-color: qconicalgradient(cx:0.5, cy:0.5, angle:90, stop:0.749 rgba(255, 0, 127, 0), stop:0.750 rgba(85, 170, 255, 255));\n"
+"	background-color: qconicalgradient(cx:0.5, cy:0.5, angle:90, stop:0.749 rgba(255, 0, 127, 0), stop:0.750 rgba(232, 137, 137));\n"
 "}")
         self.circularProgress.setFrameShape(QFrame.NoFrame)
         self.circularProgress.setFrameShadow(QFrame.Raised)
