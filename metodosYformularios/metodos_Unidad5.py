@@ -12,6 +12,7 @@ from sympy.simplify.radsimp import fraction, numer
 from fractions import Fraction
 from sympy.solvers.ode.ode import dsolve
 from sympy import*
+from tabulate import tabulate 
 
 x = sp.Symbol('x')
 t = sp.Symbol('t')
@@ -43,10 +44,8 @@ def evaluarFuncion(funcion, valor, valor2, seDeriva, ordenDerivada):
 
 def evaluarFuncionTaylor(funcion, y_valor, t_valor):
     
-        resultado = sp.sympify(funcion).subs(
-            [(x, valor), (e, cmath.e), (y, valor2)])
+        resultado = sp.sympify(funcion).subs([(y, y_valor), (t, t_valor)])
         return resultado
-
 
 def encontrarDerivada(funcion, queDerivada):
     funcioon = sp.sympify(funcion)
@@ -190,6 +189,9 @@ def metodo_Euler_Mejorado(funcion, x_Inicial, y_Inicial, x_Final, n_intervalos):
 
 def metodo_taylor(funcion,x_Inicial,y_inicial,x_Final, h, orden):
 
+    listaResultados = [] #Aqui guardamos las respuesta 
+    header = ['T','Yn']
+    listaResultados.append(header)
     lista_derivadas = [] #Aqui vamos a guardar las derivadas de orden 1,2,3...
     derivada_variable = funcion
     lista_derivadas.append(funcion) #la funcion es la primera derivada por ende devemos agregarla
@@ -198,12 +200,10 @@ def metodo_taylor(funcion,x_Inicial,y_inicial,x_Final, h, orden):
         if i == 0:
             derivada_variable = sp.simplify(funcion) + encontrarDerivadaTaylor(funcion,i+1)
             lista_derivadas.append(derivada_variable)
-            print(lista_derivadas)
         else:
             derivada_variable = derivada_variable + encontrarDerivadaTaylor(funcion,i+1)
             lista_derivadas.append(derivada_variable)
 
-    
     #formamos el polinomio para ir evaluando luego
 
     polinomio_evaluar = ''
@@ -223,29 +223,20 @@ def metodo_taylor(funcion,x_Inicial,y_inicial,x_Final, h, orden):
     control_evaluacion = x_Inicial 
     lista_valores_y = []
     lista_valores_y.append(y_inicial) #Agregamos el primer valor de y
+    contador_2 = 0
+    listaResultados.append([control_evaluacion,lista_valores_y[0]])
+
 
     while control_evaluacion < x_Final:
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-   # while control_salida  < x_Final:
+        lista_valores_y.append(evaluarFuncionTaylor(polinomio_evaluar,lista_valores_y[contador_2],control_evaluacion))
+        control_evaluacion += h
+        listaResultados.append([control_evaluacion,lista_valores_y[contador_2+1]])
+        contador_2 += 1 
         
-
     
+    print(tabulate(listaResultados))
 
-
-metodo_taylor('y-t',0,1,1,0.5,3)
+metodo_taylor('y-t',1,3,5,1,3)
 
 
 
