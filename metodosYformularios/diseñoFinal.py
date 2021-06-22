@@ -3298,7 +3298,7 @@ class Ui_MainWindow(object):
             x2Prueba = float((x2))
             x3Prueba = float((x3))
             cifrasPrueba = float((cifras))
-            
+
             # Llamamos al metodo que corresponda para obtener la respuesta y la guardamos en lst
             if metodo == 1:
                 lst = metodos_uni5.metodo_Euler_Adelante(funcion, x1Prueba, x2Prueba, x3Prueba, cifrasPrueba)
@@ -3328,27 +3328,36 @@ class Ui_MainWindow(object):
             self.tableWidget.verticalHeader().setVisible(False)
             self.tableWidget.horizontalHeader().setVisible(False)
 
-            for row in range(rows):  # Primer for recorre las filas en lst
-                # Segundo for recorre las columnas en lst
-                for column in range(columns):
+            for row in range(rows):  # Primer for recorre las filas en Listado_Resultante
+                        # Segundo for recorre las columnas en Listado_Resultante
+                        for column in range(columns):
+                            if row == 0:  # Encabezado o header
 
-                    item = QtWidgets.QTableWidgetItem()
-                    item.setTextAlignment(QtCore.Qt.AlignCenter)
-                    item.setFont(font)
-                    item.setBackground(brush)
-                    item.setForeground(brush_2)
-                    item.setFlags(QtCore.Qt.ItemIsEditable|QtCore.Qt.ItemIsDragEnabled|QtCore.Qt.ItemIsUserCheckable)
+                                item = QtWidgets.QTableWidgetItem()
+                                item.setTextAlignment(QtCore.Qt.AlignCenter)
+                                item.setFlags(QtCore.Qt.ItemIsEditable|QtCore.Qt.ItemIsDragEnabled|QtCore.Qt.ItemIsUserCheckable)
 
-                    if row == 0:  # Encabezado o header
-                        salida = lst[row][column]
-                        item.setText(str(salida))
-                        self.tableWidget.setItem(row, column, item)
-                        self.tableWidget.setColumnWidth(column, len_Col)
-                    else:
-                        salida = "%.5f" % float(lst[row][column])
-                        item.setText(str(salida))
-                        self.tableWidget.setItem(row, column, item)
-                        self.tableWidget.setColumnWidth(column, len_Col)  
+                                salida = lst[row][column]
+                                item.setText(str(salida))
+
+                                self.tableWidget.setItem(row, column, item)
+                                self.tableWidget.setColumnWidth(column, len_Col)
+                            else:
+
+                                item = QtWidgets.QTableWidgetItem()
+                                item.setTextAlignment(QtCore.Qt.AlignCenter)
+                                item.setFlags(QtCore.Qt.ItemIsEditable|QtCore.Qt.ItemIsDragEnabled|QtCore.Qt.ItemIsUserCheckable)
+                            
+                                if column == 0:
+                                    salida = (lst[row][column])
+                                    item.setText(str(salida))
+                                    self.tableWidget.setItem(row, column, item)
+                                    self.tableWidget.setColumnWidth(column, len_Col)
+                                else:
+                                    salida = "%.5f" % float(lst[row][column])
+                                    item.setText(str(salida))
+                                    self.tableWidget.setItem(row, column, item)
+                                    self.tableWidget.setColumnWidth(column, len_Col)  
 
             self.tableWidget.setVisible(True)
           
