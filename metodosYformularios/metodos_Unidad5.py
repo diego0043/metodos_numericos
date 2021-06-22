@@ -46,6 +46,11 @@ def encontrarDerivada(funcion, queDerivada):
     gxValor = sp.diff(funcioon, x, queDerivada)
     return gxValor
 
+def encontrarDerivadaTaylor(funcion, queDerivada):
+    funcioon = sp.sympify(funcion)
+    gxValor = sp.diff(funcioon, t, queDerivada)
+    return gxValor
+
 # <-------------------------------- metodos de Euler ------------------------------>
 def metodo_Euler_Adelante(funcion, x_Inicial, y_Inicial, x_Final, n_intervalos):
 
@@ -176,8 +181,9 @@ def metodo_Euler_Mejorado(funcion, x_Inicial, y_Inicial, x_Final, n_intervalos):
 
 # <-------------------------------- metodo de Taylor ------------------------------>
 
-def metodo_taylor(funcion,x_Inicial,y_inicial,x_Final, h):
+def metodo_taylor(funcion,x_Inicial,y_inicial,x_Final, h, orden):
 
+    '''
     y = sp.Function('y')
 
     func = Eq(y(t).diff(),y(t)-t**2) #Creamos la funcion
@@ -187,11 +193,32 @@ def metodo_taylor(funcion,x_Inicial,y_inicial,x_Final, h):
     edo_sol = sp.dsolve(func,y(t),ics=CI)
     pprint(edo_sol.subs(t,x_Final))
 
-
-    '''
         el problema que esta dando es que no se le puede
         mandar texto a la función 
     '''
+
+    lista_derivadas = [] #Aqui vamos a guardar las derivadas de orden 1,2,3...
+    derivada_variable = funcion
+    lista_derivadas.append(funcion) #la funcion es la primera derivada por ende devemos agregarla
+
+    for i in range(0,orden-1,1):
+        if i == 0:
+            derivada_variable = sp.simplify(funcion) + encontrarDerivadaTaylor(funcion,1)
+            lista_derivadas.append(derivada_variable)
+            print(lista_derivadas)
+        else:
+            derivada_variable = derivada_variable + encontrarDerivadaTaylor(lista_derivadas[i-1],1)
+            lista_derivadas.append(derivada_variable)
+        
+    print(lista_derivadas)
+
+
+metodo_taylor('y-t',1,1,1,1,3)
+
+
+
+
+
 
 #Aqui practicamente solo llamamos al metodo solamente agarramos la lista y el punto inicial ya que
 # si usamos la funcion falla
