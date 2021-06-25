@@ -3448,11 +3448,11 @@ class Ui_MainWindow(object):
                     self.mensajesAlerta(3, 13)
                     control_mostrar_respuesta = 1
             else:
-                a = listaXapoyo[len(listaXapoyo)-1]
-                b = listaXapoyo[0]
+                b = listaXapoyo[len(listaXapoyo)-1]
+                a = listaXapoyo[0]
                 n = len(listaXapoyo)-1
                 if a > b:
-                    self.Mensajes_error(3, 12)
+                    self.mensajesAlerta(3, 12)
                     control_mostrar_respuesta = 1
                 else:
                     lst = metodos_uni4.regla_del_trapecio_compuesta(
@@ -3514,8 +3514,8 @@ class Ui_MainWindow(object):
                     self.mensajesAlerta(3, 13)
                     control_mostrar_respuesta = 1
             else:
-                a = listaXapoyo[len(listaXapoyo)-1]
-                b = listaXapoyo[0]
+                b = listaXapoyo[len(listaXapoyo)-1]
+                a = listaXapoyo[0]
                 if a > b:
                     self.mensajesAlerta(3, 12)
                     control_mostrar_respuesta = 1

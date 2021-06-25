@@ -7,6 +7,7 @@ from PyQt5.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont, QFont
                          QIcon, QKeySequence, QLinearGradient, QPalette, QPainter, QPixmap, QRadialGradient)
 from PyQt5.QtWidgets import *
 
+
 # Importamos la carpeta donde estan los metodos numéricos
 from metodosYformularios import *
 
