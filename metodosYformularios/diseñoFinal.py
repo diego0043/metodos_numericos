@@ -3886,7 +3886,7 @@ class Ui_MainWindow(object):
             elif metodo == 6:
                 cifrasPrueba = int(cifras)
                 lst = metodos_uni5.metodo_Runge_Kutta(
-                    funcion, x1Prueba, x2Prueba, x3Prueba, cifrasPrueba, int(self.lineOrden.text()))
+                    funcion, x1Prueba, x2Prueba, x3Prueba, cifrasPrueba, int(self.lineOrden.text()),0)
             elif metodo == 7:
                 cifrasPrueba = int(cifras)
                 lst = metodos_uni5.Adam_Bashforth_Moulton(

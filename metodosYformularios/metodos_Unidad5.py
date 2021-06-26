@@ -334,11 +334,8 @@ def metodo_Runge_Kutta(funcion, x_Inicial, y_Inicial, x_Final, n_Intervalos, ord
                 lista_Y.append(lista_Y[i]+((h/6)*(k1+(2*k2)+(2*k3)+k4)))
 
             # Armamos la salida final
-            lista_Salida_Final.append("Orden 4:\n")
             for i in range(0, len(lista_X), 1):
-                lista_Salida_Final.append("Iteracion: "+str(i+1)+"\n" +
-                                          "X: "+str(lista_X[i])+"\n" +
-                                          "Yn: "+str(lista_Y[i])+"\n")
+                lista_Salida_Final.append([i+1,lista_X[i],lista_Y[i]])
 
             if tipoRespuesta == 0:
                 return lista_Salida_Final
