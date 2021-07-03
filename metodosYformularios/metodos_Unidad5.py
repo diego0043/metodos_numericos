@@ -45,7 +45,7 @@ def evaluarFuncion(funcion, valor, valor2, seDeriva, ordenDerivada):
 
 def evaluarFuncionTaylor(funcion, y_valor, t_valor):
 
-    resultado = sp.sympify(funcion).subs([(y, y_valor), (t, t_valor)])
+    resultado = sp.sympify(funcion).subs([(y, y_valor), (x, t_valor)])
     return resultado
 
 
@@ -57,7 +57,7 @@ def encontrarDerivada(funcion, queDerivada):
 
 def encontrarDerivadaTaylor(funcion, queDerivada):
     funcioon = sp.sympify(funcion)
-    gxValor = sp.diff(funcioon, t, queDerivada)
+    gxValor = sp.diff(funcioon, x, queDerivada)
     return gxValor
 
 # <-------------------------------- metodos de Euler ------------------------------>
@@ -94,7 +94,6 @@ def metodo_Euler_Adelante(funcion, x_Inicial, y_Inicial, x_Final, n_intervalos):
 
     return lista_Salida_Final
 
-
 def metodo_Euler_Atras(funcion, x_Inicial, y_Inicial, x_Final, n_intervalos):
 
     # Variables a utilizar
@@ -129,7 +128,6 @@ def metodo_Euler_Atras(funcion, x_Inicial, y_Inicial, x_Final, n_intervalos):
 
     return(lista_Salida_Final)
 
-
 def metodo_Euler_Centrado(funcion, x_Inicial, y_Inicial, x_Final, n_intervalos):
 
     # Variables a utilizar
@@ -158,7 +156,6 @@ def metodo_Euler_Centrado(funcion, x_Inicial, y_Inicial, x_Final, n_intervalos):
         lista_Salida_Final.append([i+1, lista_X[i], lista_Y[i]])
 
     return(lista_Salida_Final)
-
 
 def metodo_Euler_Mejorado(funcion, x_Inicial, y_Inicial, x_Final, n_intervalos):
     # Variables a utilizar
@@ -195,7 +192,6 @@ def metodo_Euler_Mejorado(funcion, x_Inicial, y_Inicial, x_Final, n_intervalos):
 
 # <-------------------------------- metodo de Taylor ------------------------------>
 
-
 def metodo_taylor(funcion, x_Inicial, y_inicial, x_Final, h, orden):
 
     listaResultados = []  # Aqui guardamos las respuesta
@@ -209,8 +205,7 @@ def metodo_taylor(funcion, x_Inicial, y_inicial, x_Final, h, orden):
 
     for i in range(0, orden-1, 1):
         if i == 0:
-            derivada_variable = sp.simplify(
-                funcion) + encontrarDerivadaTaylor(funcion, i+1)
+            derivada_variable = sp.simplify(funcion) + encontrarDerivadaTaylor(funcion, i+1)
             lista_derivadas.append(derivada_variable)
         else:
             derivada_variable = derivada_variable + \
@@ -249,7 +244,6 @@ def metodo_taylor(funcion, x_Inicial, y_inicial, x_Final, h, orden):
         contador_2 += 1
 
     return listaResultados
-
 
 def metodo_Runge_Kutta(funcion, x_Inicial, y_Inicial, x_Final, n_Intervalos, orden, tipoRespuesta):
 
@@ -343,7 +337,6 @@ def metodo_Runge_Kutta(funcion, x_Inicial, y_Inicial, x_Final, n_Intervalos, ord
                 return lista_Y
 
 # <-------------------------------- metodos de multipasos ------------------------------>
-
 
 def Adam_Bashforth_Moulton(funcion, x_Inicial, y_Inicial, x_Final, n_Intervalos, pasos):
     # Con esta condicion controlaremos que el usuario ingrese un buen paso
